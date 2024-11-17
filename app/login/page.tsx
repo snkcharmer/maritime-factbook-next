@@ -24,6 +24,7 @@ export default function LoginPage() {
       <div>
         <label>Email:</label>
         <input
+          className="text-black"
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
