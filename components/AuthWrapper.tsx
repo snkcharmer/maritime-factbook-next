@@ -1,6 +1,7 @@
+'use client';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {

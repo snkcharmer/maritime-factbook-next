@@ -1,8 +1,9 @@
-import AuthWrapper from '../../components/AuthWrapper';
+'use client';
+import AuthWrapper from '@/components/AuthWrapper';
+import { RootState } from '@/redux/store';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
 
-export default function DashboardPage() {
+export default function Dashboard() {
   const user = useSelector((state: RootState) => state.auth.user);
 
   return (
