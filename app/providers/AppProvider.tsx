@@ -1,10 +1,11 @@
 'use client';
 import React, { ReactNode } from 'react';
-import { Provider as ReduxProvider } from 'react-redux';
 import { MantineProvider } from '@mantine/core';
 import { RootStyleRegistry } from '../EmotionRootStyleRegistry';
 import { MantineEmotionProvider, emotionTransform } from '@mantine/emotion';
-import { store } from '@/redux/store';
+import { AuthProvider } from '@/app/context/AuthContext';
+// import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { NavigationProgress } from '@mantine/nprogress';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -12,17 +13,20 @@ type AppProviderProps = {
 
 export default function AppProvider({ children }: AppProviderProps) {
   return (
-    <ReduxProvider store={store}>
+    // <ProtectedRoute>
+    <AuthProvider>
       <RootStyleRegistry>
         <MantineEmotionProvider>
           <MantineProvider
             defaultColorScheme="light"
             stylesTransform={emotionTransform}
           >
+            <NavigationProgress />
             {children}
           </MantineProvider>
         </MantineEmotionProvider>
       </RootStyleRegistry>
-    </ReduxProvider>
+    </AuthProvider>
+    // {/* </ProtectedRoute> */}
   );
 }

@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/nprogress/styles.css';
 
 import React from 'react';
 import './globals.css';

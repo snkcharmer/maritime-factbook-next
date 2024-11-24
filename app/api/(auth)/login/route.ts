@@ -2,13 +2,9 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
   try {
-    console.log('Incoming request:', req);
-
     const { email, password } = await req.json();
-    console.log('Parsed data:', { email, password });
-    console.log('apiKey', process.env.NEXT_PUBLIC_API_KEY);
 
-    // Forward to backend or implement your logic here
+    // Forward to the backend or your login logic here
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
       {
@@ -32,7 +28,7 @@ export async function POST(req: Request) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error in POST /api/login:', error);
+    console.error('Error in POST /api/auth/login:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
