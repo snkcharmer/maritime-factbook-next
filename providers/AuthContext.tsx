@@ -2,12 +2,8 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  clearTokens,
-  getAccessToken,
-  setTokens,
-} from '../auth/utils/localStorage';
-import { IUser } from '@/app/types';
+import { clearTokens, getAccessToken, setTokens } from '@/utils/localStorage';
+import { IUser } from '@/types';
 
 interface AuthContextProps {
   user: IUser | null;

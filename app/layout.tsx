@@ -3,7 +3,7 @@ import '@mantine/nprogress/styles.css';
 
 import React from 'react';
 import './globals.css';
-import AppProvider from '@/app/providers/AppProvider';
+import AppProvider from '@/providers/AppProvider';
 
 export const metadata = {
   metadataBase: new URL('https://mantine-admin.vercel.app/'),

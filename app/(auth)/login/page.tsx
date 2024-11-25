@@ -1,6 +1,6 @@
 'use client';
-import { useLogin } from '@/app/hooks';
-import { loginSchema } from '@/app/validations';
+import { useLogin } from '@/hooks';
+import { loginSchema } from '@/validations';
 import {
   Anchor,
   Button,

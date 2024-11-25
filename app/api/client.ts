@@ -4,7 +4,7 @@ import {
   getRefreshToken,
   setTokens,
   clearTokens,
-} from '@/app/auth/utils/localStorage';
+} from '@/utils/localStorage';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '',

@@ -1,9 +1,9 @@
 'use client';
 import React, { ReactNode } from 'react';
 import { MantineProvider } from '@mantine/core';
-import { RootStyleRegistry } from '../EmotionRootStyleRegistry';
+import { RootStyleRegistry } from '../app/EmotionRootStyleRegistry';
 import { MantineEmotionProvider, emotionTransform } from '@mantine/emotion';
-import { AuthProvider } from '@/app/context/AuthContext';
+import { AuthProvider } from '@/providers/AuthContext';
 // import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { NavigationProgress } from '@mantine/nprogress';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { IAuthResponse } from '@/app/types';
+import { IAuthResponse } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -33,7 +33,7 @@ export const useLogin = () => {
 
       const data: IAuthResponse = await res.json();
 
-      localStorage.setItem('authToken', data.accessToken); 
+      localStorage.setItem('authToken', data.accessToken);
       localStorage.setItem('user', JSON.stringify(data.user));
 
       router.push('/dashboard');

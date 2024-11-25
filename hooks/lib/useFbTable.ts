@@ -1,6 +1,6 @@
 'use client';
 
-import { IFbTableData } from '@/app/types';
+import { IFbTableData } from '@/types';
 import { useState } from 'react';
 
 export const useFbTable = () => {

@@ -10,7 +10,7 @@ import {
   Text,
 } from '@mantine/core';
 import { IconTrash, IconPlus } from '@tabler/icons-react';
-import { useFbTable } from '@/app/hooks';
+import { useFbTable } from '@/hooks';
 
 export default function DynamicTableMaker() {
   const { createFbTable } = useFbTable();

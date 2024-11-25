@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import { Container, Text, Loader, Paper, Button } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/app/hooks';
+import { useUser } from '@/hooks';
 import { nprogress } from '@mantine/nprogress';
-import { IUser } from '@/app/types';
+import { IUser } from '@/types';
 
 export default function Dashboard() {
   const { logout } = useUser();
