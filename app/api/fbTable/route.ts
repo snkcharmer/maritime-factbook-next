@@ -32,13 +32,16 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const userId = req.url.split('/').pop();
+    const url = new URL(req.url);
+    const userId = url.searchParams.get('userId');
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${userId}`
-    );
+    const endpoint = userId
+      ? `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${userId}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/fbTable`;
+    const response = await fetch(endpoint);
 
     if (!response.ok) {
+      console.log('testtestresponse', response);
       return NextResponse.json(
         { error: 'No fbTable entries found' },
         { status: 404 }

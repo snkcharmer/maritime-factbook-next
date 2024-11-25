@@ -20,7 +20,8 @@ export const useUser = () => {
     const userData = localStorage.getItem('user');
 
     if (token && userData) {
-      setUser(JSON.parse(userData));
+      const parsedData = JSON.parse(userData);
+      setUser({ ...parsedData, id: parsedData._id });
     } else {
       setUser(null);
     }

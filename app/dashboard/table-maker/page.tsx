@@ -1,16 +1,36 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, TextInput, Table, ActionIcon, Text } from '@mantine/core';
+import {
+  Button,
+  TextInput,
+  Table,
+  ActionIcon,
+  Text,
+  Select,
+  Stack,
+  SimpleGrid,
+} from '@mantine/core';
 import { IconTrash, IconPlus } from '@tabler/icons-react';
-import { useFbTable } from '@/hooks';
+import { useFbTable, useUser } from '@/hooks';
+import { CategoryEnum, ChartTypeEnum } from '@/context/enum';
 
 export default function DynamicTableMaker() {
   const { createFbTable } = useFbTable();
+  const { user } = useUser();
+
   const [headers, setHeaders] = useState<
     { label: string; subHeaders: string[] }[]
   >([{ label: 'Main Header 1', subHeaders: ['Sub Header 1'] }]);
+
   const [tableData, setTableData] = useState<string[][]>([['']]);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryEnum | null>(
+    null
+  );
+  const [selectedChartType, setSelectedChartType] =
+    useState<ChartTypeEnum | null>(null);
+  const [tableName, setTableName] = useState<string>('');
+  const [tableSource, setTableSource] = useState<string>('');
 
   // Add a new main header
   const addMainHeader = () => {
@@ -55,8 +75,6 @@ export default function DynamicTableMaker() {
       ]);
     });
   };
-
-  console.log('testtest', headers);
 
   // Add a new row
   const addRow = () => {
@@ -141,42 +159,62 @@ export default function DynamicTableMaker() {
     setTableData((prev) => prev.filter((_, idx) => idx !== rowIndex));
   };
 
+  // Save the table
   const saveTable = async () => {
-    const payload = { headers: headers, rows: tableData };
+    const payload = { headers, rows: tableData };
 
     try {
       const res = await createFbTable({
-        userId: '67421e3179165160fe9dd7d1',
-        name: 'Test',
-        source: 'Isan Local',
-        chartType: 'bar',
+        category: selectedCategory,
+        userId: user?.id,
+        name: tableName,
+        source: tableSource,
+        chartType: selectedChartType,
         data: payload,
       });
       console.log(res);
     } catch (err) {
       console.log(err);
     }
-    // const response = await fetch("/api/save-table", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(payload),
-    // });
-    // if (response.ok) {
-    //   alert("Table saved successfully!");
-    // } else {
-    //   alert("Failed to save table.");
-    // }
   };
 
   return (
-    // <Paper shadow="sm" radius="md" p="lg">
     <>
       <Text size="lg" fw={500} mb="md">
         Dynamic Table Maker
       </Text>
+      <Stack gap={10}>
+        <TextInput
+          value={tableName}
+          onChange={(e) => setTableName(e.target.value)}
+          placeholder="Enter Table Name"
+          label="Table Name"
+        />
+        <TextInput
+          value={tableSource}
+          onChange={(e) => setTableSource(e.target.value)}
+          placeholder="Enter Table Source"
+          label="Table Source"
+        />
+        <SimpleGrid cols={2}>
+          <Select
+            value={selectedCategory || ''}
+            onChange={(value) => setSelectedCategory(value as CategoryEnum)}
+            data={Object.values(CategoryEnum)}
+            placeholder="Select Category"
+            label="Category"
+          />
+          <Select
+            value={selectedChartType || ''}
+            onChange={(value) => setSelectedChartType(value as ChartTypeEnum)}
+            data={Object.values(ChartTypeEnum)}
+            placeholder="Select Chart Type"
+            label="Chart Type"
+          />
+        </SimpleGrid>
+      </Stack>
 
-      {/* Table Editing Form */}
-      <Table withTableBorder withColumnBorders>
+      <Table withTableBorder withColumnBorders mt="md">
         <thead>
           {/* Main Headers Row */}
           <tr>
@@ -262,15 +300,8 @@ export default function DynamicTableMaker() {
             </tr>
           ))}
           <tr>
-            <td
-              colSpan={
-                headers.reduce(
-                  (sum, header) => sum + header.subHeaders.length,
-                  0
-                ) + 1
-              }
-            >
-              <Button variant="light" size="xs" fullWidth onClick={addRow}>
+            <td colSpan={headers.length}>
+              <Button variant="light" size="xs" onClick={addRow}>
                 <IconPlus size={14} /> Add Row
               </Button>
             </td>
@@ -278,46 +309,9 @@ export default function DynamicTableMaker() {
         </tbody>
       </Table>
 
-      <Text size="lg" fw={500} mt="lg" mb="sm">
-        Live Preview of Your Table
-      </Text>
-
-      {/* Table Preview */}
-      <Table striped border={2} borderColor="black">
-        <thead>
-          {/* Main Headers */}
-          <tr>
-            {headers.map((header, idx) => (
-              <th key={idx} colSpan={header.subHeaders.length || 1}>
-                {header.label || ''}
-              </th>
-            ))}
-          </tr>
-          {/* Sub-Headers */}
-          <tr>
-            {headers.map((header) =>
-              header.subHeaders.map((subHeader, idx) => (
-                <th key={idx}>{subHeader || ''}</th>
-              ))
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((row, idx) => (
-            <tr key={idx}>
-              {row.map((cell, cellIdx) => (
-                <td key={cellIdx} align={cellIdx > 0 ? 'center' : 'left'}>
-                  {cell || '-'}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Button mt="lg" fullWidth variant="filled" onClick={saveTable}>
+      <Button fullWidth mt="xl" onClick={saveTable}>
         Save Table
       </Button>
     </>
-    // </Paper>
   );
 }

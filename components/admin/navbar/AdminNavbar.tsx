@@ -1,5 +1,5 @@
 import { IconGauge, IconTable } from '@tabler/icons-react';
-import { Group, ScrollArea, Text } from '@mantine/core';
+import { Code, Group, ScrollArea, Text } from '@mantine/core';
 import { LinksGroup } from './AdminLinksGroup';
 import { createStyles } from '@mantine/emotion';
 import { UserButton } from './UserButton';
@@ -59,7 +59,8 @@ export function AdminNavbar() {
             width={32}
             height={32}
           />
-          <Text>Maritime Manpower Factbook</Text>
+          <Text>Factbook Dashboard</Text>
+          <Code fw={700}>Beta</Code>
         </Group>
       </div>
 
