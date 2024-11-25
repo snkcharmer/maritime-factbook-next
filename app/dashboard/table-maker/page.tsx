@@ -1,14 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Button,
-  TextInput,
-  Paper,
-  Table,
-  ActionIcon,
-  Text,
-} from '@mantine/core';
+import { Button, TextInput, Table, ActionIcon, Text } from '@mantine/core';
 import { IconTrash, IconPlus } from '@tabler/icons-react';
 import { useFbTable } from '@/hooks';
 
@@ -176,7 +169,8 @@ export default function DynamicTableMaker() {
   };
 
   return (
-    <Paper shadow="sm" radius="md" p="lg">
+    // <Paper shadow="sm" radius="md" p="lg">
+    <>
       <Text size="lg" fw={500} mb="md">
         Dynamic Table Maker
       </Text>
@@ -323,6 +317,7 @@ export default function DynamicTableMaker() {
       <Button mt="lg" fullWidth variant="filled" onClick={saveTable}>
         Save Table
       </Button>
-    </Paper>
+    </>
+    // </Paper>
   );
 }

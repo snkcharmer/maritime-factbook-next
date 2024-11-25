@@ -1,5 +1,8 @@
 import '@mantine/core/styles.css';
 import '@mantine/nprogress/styles.css';
+import '@mantine/core/styles.layer.css';
+import 'mantine-datatable/styles.layer.css';
+import './layout.css';
 
 import React from 'react';
 import './globals.css';
