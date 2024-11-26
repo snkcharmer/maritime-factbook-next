@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { Box } from "@mantine/core";
-import type { ReactNode } from "react";
-import classes from "./LandingContainer.module.css";
+import { Container } from '@mantine/core';
+import type { ReactNode } from 'react';
 
 interface LandingContainerProps {
   children: ReactNode;
 }
 
 export function LandingContainer({ children }: LandingContainerProps) {
-  return <Box className={classes.box}>{children}</Box>;
+  return (
+    <Container size="lg" className="flex flex-col gap-10">
+      {children}
+    </Container>
+  );
 }

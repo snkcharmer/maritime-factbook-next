@@ -5,21 +5,16 @@ import {
   IconBrandYoutube,
 } from '@tabler/icons-react';
 import { ActionIcon, Container, Group, Text } from '@mantine/core';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import { createStyles } from '@mantine/emotion';
+import Image from 'next/image';
 
 const data = [
   {
     title: 'About',
-    links: [
-      { label: 'Features', link: '#' },
-      { label: 'Pricing', link: '#' },
-      { label: 'Support', link: '#' },
-      { label: 'Forums', link: '#' },
-    ],
+    links: [{ label: 'Forums', link: '#' }],
   },
   {
-    title: 'Project',
+    title: 'Categories',
     links: [
       { label: 'Contribute', link: '#' },
       { label: 'Media assets', link: '#' },
@@ -64,18 +59,15 @@ export default function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <Container className={classes.inner}>
+      <Container className={classes.inner} size="lg">
         <div className={classes.logo}>
-          <MantineLogo size={30} />
-          <Text size="xs" c="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
-          </Text>
+          <Image src="/bagong-pilipinas.png" alt="" width={150} height={150} />
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
-      <Container className={classes.afterFooter}>
+      <Container className={classes.afterFooter} size="lg">
         <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+          © 2024 National Maritime Polytechnic. All rights reserved.
         </Text>
 
         <Group
@@ -109,7 +101,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   logo: {
-    maxWidth: '200px',
+    maxWidth: '400px',
 
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       display: 'flex',

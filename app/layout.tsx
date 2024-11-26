@@ -7,6 +7,9 @@ import './layout.css';
 import React from 'react';
 import './globals.css';
 import AppProvider from '@/providers/AppProvider';
+import { Header } from '@/components/landing/Header';
+import { Footer } from '@/components/reusable';
+import { LandingContainer } from '@/components/landing/LandingContainer';
 
 export const metadata = {
   metadataBase: new URL('https://mantine-admin.vercel.app/'),
@@ -43,7 +46,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <Header />
+          <LandingContainer>{children}</LandingContainer>
+          <Footer />
+        </AppProvider>
       </body>
     </html>
   );

@@ -15,6 +15,7 @@ import {
   Button,
   Center,
   Collapse,
+  Container,
   Divider,
   Drawer,
   Group,
@@ -29,7 +30,7 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { createStyles } from '@mantine/emotion';
 import Link from 'next/link';
-import { MantineLogo } from '@mantinex/mantine-logo';
+import Image from 'next/image';
 
 const mockdata = [
   {
@@ -91,83 +92,88 @@ export function Header() {
   ));
 
   return (
-    <Box pb={120}>
+    <>
       <header className={classes.header}>
-        <Group justify="space-between" h="100%">
-          <MantineLogo size={30} />
+        <Container size="lg">
+          <Group justify="space-between" h="100%">
+            <Group gap={8}>
+              <Image src="/logo.png" alt="" width={50} height={50} />
+              <Text>Maritime Manpower Factbook</Text>
+            </Group>
 
-          <Group h="100%" gap={0} visibleFrom="sm">
-            <a href="/" className={classes.link}>
-              Home
-            </a>
-            <HoverCard
-              width={600}
-              position="bottom"
-              radius="md"
-              shadow="md"
-              withinPortal
-            >
-              <HoverCard.Target>
-                <a href="#" className={classes.link}>
-                  <Center inline>
-                    <Box component="span" mr={5}>
-                      Features
-                    </Box>
-                    <IconChevronDown size={16} color={theme.colors.blue[6]} />
-                  </Center>
-                </a>
-              </HoverCard.Target>
+            <Group h="100%" gap={0} visibleFrom="sm">
+              <Link href="/" className={classes.link}>
+                Home
+              </Link>
+              <HoverCard
+                width={600}
+                position="bottom"
+                radius="md"
+                shadow="md"
+                withinPortal
+              >
+                <HoverCard.Target>
+                  <a href="#" className={classes.link}>
+                    <Center inline>
+                      <Box component="span" mr={5}>
+                        Features
+                      </Box>
+                      <IconChevronDown size={16} color={theme.colors.blue[6]} />
+                    </Center>
+                  </a>
+                </HoverCard.Target>
 
-              <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                <Group justify="space-between" px="md">
-                  <Text fw={500}>Features</Text>
-                  <Anchor href="#" fz="xs">
-                    View all
-                  </Anchor>
-                </Group>
-
-                <Divider my="sm" />
-
-                <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group justify="space-between">
-                    <div>
-                      <Text fw={500} fz="sm">
-                        Get started
-                      </Text>
-                      <Text size="xs" c="dimmed">
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant="default">Get started</Button>
+                <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
+                  <Group justify="space-between" px="md">
+                    <Text fw={500}>Features</Text>
+                    <Anchor href="#" fz="xs">
+                      View all
+                    </Anchor>
                   </Group>
-                </div>
-              </HoverCard.Dropdown>
-            </HoverCard>
-            <a href="#" className={classes.link}>
-              Learn
-            </a>
-            <a href="#" className={classes.link}>
-              Academy
-            </a>
-          </Group>
 
-          <Group visibleFrom="sm">
-            <Button component={Link} href="/login" variant="default">
-              Log in
-            </Button>
-            <Button>Sign up</Button>
-          </Group>
+                  <Divider my="sm" />
 
-          <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-          />
-        </Group>
+                  <SimpleGrid cols={2} spacing={0}>
+                    {links}
+                  </SimpleGrid>
+
+                  <div className={classes.dropdownFooter}>
+                    <Group justify="space-between">
+                      <div>
+                        <Text fw={500} fz="sm">
+                          Get started
+                        </Text>
+                        <Text size="xs" c="dimmed">
+                          Their food sources have decreased, and their numbers
+                        </Text>
+                      </div>
+                      <Button variant="default">Get started</Button>
+                    </Group>
+                  </div>
+                </HoverCard.Dropdown>
+              </HoverCard>
+              <a href="#" className={classes.link}>
+                Learn
+              </a>
+              <a href="#" className={classes.link}>
+                Academy
+              </a>
+            </Group>
+
+            <Group visibleFrom="sm">
+              <Button component={Link} href="/login" variant="default">
+                Log in
+              </Button>
+              <Button>Sign up</Button>
+            </Group>
+
+            <Burger
+              opened={drawerOpened}
+              onClick={toggleDrawer}
+              hiddenFrom="sm"
+            />
+          </Group>
+        </Container>
       </header>
 
       <Drawer
@@ -211,15 +217,14 @@ export function Header() {
           </Group>
         </ScrollArea>
       </Drawer>
-    </Box>
+    </>
   );
 }
 
 const useStyles = createStyles((theme) => ({
   header: {
-    height: '60px',
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
+    paddingTop: '0.8rem',
+    paddingBottom: '0.8rem',
     borderBottom: `1px solid ${theme.colors.gray[3]}`,
   },
 

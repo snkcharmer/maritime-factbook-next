@@ -24,3 +24,54 @@ table tr,
 table td {
   border: 1px solid #000;
 }
+
+.dark-bg-btn {
+  background: #101e47;
+  padding: 0.5rem 1rem;
+  font-size: 12px;
+  color: #fff !important;
+  border: 1px solid #101e47;
+  transition: all 0.5s ease;
+}
+
+.dark-bg-btn:hover {
+  background: #fff;
+  color: #101e47 !important;
+}
+
+/* Style for the entire scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar for horizontal scrolling */
+}
+
+/* Style for the scrollbar track (background) */
+::-webkit-scrollbar-track {
+  background: var(--mantine-color-gray-1); /* Light track color */
+  border-radius: 4px; /* Rounded corners for the track */
+}
+
+/* Style for the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: var(--mantine-color-gray-7); /* Darker thumb color */
+  border-radius: 4px; /* Rounded corners for the thumb */
+  border: 2px solid var(--mantine-color-gray-1); /* Adds padding and separation */
+}
+
+/* Hover effect for the scrollbar thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mantine-color-gray-8); /* Slightly darker on hover */
+}
+
+/* Style for the scrollbar corner (if present) */
+::-webkit-scrollbar-corner {
+  background: var(
+    --mantine-color-gray-2
+  ); /* Matches the track for a seamless look */
+}
+
+/* Add support for Firefox using the scrollbar-width property */
+* {
+  scrollbar-width: thin; /* Thin scrollbar */
+  scrollbar-color: var(--mantine-color-gray-7) var(--mantine-color-gray-1); /* Thumb and track colors */
+}

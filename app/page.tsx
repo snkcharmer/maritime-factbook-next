@@ -1,15 +1,11 @@
-import { Header } from '@/components/landing/Header';
-import { Categories } from '@/components/landing/Categories';
-
-import { LandingContainer } from '@/components/landing/LandingContainer';
-import { Footer } from '@/components/reusable';
+import CategoriesSection from '@/components/landing/CategoriesSection';
+import Hero from '@/components/landing/Hero';
 
 export default function Home() {
   return (
-    <LandingContainer>
-      <Header />
-      <Categories />
-      <Footer />
-    </LandingContainer>
+    <>
+      <Hero />
+      <CategoriesSection />
+    </>
   );
 }
