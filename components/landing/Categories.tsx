@@ -1,14 +1,7 @@
 'use client';
-import {
-  Group,
-  Text,
-  Accordion,
-  Button,
-  Stack,
-  ScrollArea,
-} from '@mantine/core';
+import { Group, Text, Accordion, Button, Stack } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
-import { IconAlignLeft, IconChevronRight, IconLink } from '@tabler/icons-react';
+import { IconLink } from '@tabler/icons-react';
 
 interface NestedItem {
   id: string;

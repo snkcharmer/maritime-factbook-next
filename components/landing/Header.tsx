@@ -9,7 +9,6 @@ import {
   IconNotification,
 } from '@tabler/icons-react';
 import {
-  Anchor,
   Box,
   Burger,
   Button,
@@ -19,9 +18,7 @@ import {
   Divider,
   Drawer,
   Group,
-  HoverCard,
   ScrollArea,
-  SimpleGrid,
   Text,
   ThemeIcon,
   UnstyledButton,
@@ -101,7 +98,7 @@ export function Header() {
               <Text>Maritime Manpower Factbook</Text>
             </Group>
 
-            <Group h="100%" gap={0} visibleFrom="sm">
+            {/* <Group h="100%" gap={0} visibleFrom="sm">
               <Link href="/" className={classes.link}>
                 Home
               </Link>
@@ -158,7 +155,7 @@ export function Header() {
               <a href="#" className={classes.link}>
                 Academy
               </a>
-            </Group>
+            </Group> */}
 
             <Group visibleFrom="sm">
               <Button component={Link} href="/login" variant="default">
