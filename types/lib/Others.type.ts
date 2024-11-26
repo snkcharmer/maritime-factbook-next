@@ -1,5 +1,5 @@
 export interface IDefaultAPI {
-  id?: string;
+  _id?: string;
   created?: string;
   updated?: string | null;
   deleted?: string | null;

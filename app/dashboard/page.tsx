@@ -1,14 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Container, Text, Loader, Button } from '@mantine/core';
+import { Container, Text, Loader } from '@mantine/core';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/hooks';
-import { nprogress } from '@mantine/nprogress';
 import { IUser } from '@/types';
 
 export default function Dashboard() {
-  const { logout } = useUser();
   const [userData, setUserData] = useState<IUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -39,17 +36,11 @@ export default function Dashboard() {
   }
 
   return (
-    // <Container size="lg" py={40}>
-    // <Paper shadow="sm">
     <>
-      <Text size="xl">Welcome, {userData.name}!</Text>
-      {/* Render other user information here */}
-      <Text>Email: {userData.email}</Text>
-      <Text>Role: {userData.role}</Text>
-      <Button onClick={() => logout()}>Logout</Button>
-      <Button onClick={() => nprogress.start()}>Start</Button>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
+      fugiat quisquam itaque nesciunt tempore consequuntur corporis nisi?
+      Obcaecati expedita rerum nam ut enim odit, iure earum sed voluptatum,
+      tenetur veniam?
     </>
-    // {/* </Paper> */}
-    // </Container>
   );
 }

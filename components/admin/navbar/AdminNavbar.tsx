@@ -9,17 +9,17 @@ const mockdata = [
   { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
   { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
   { label: 'Tables', icon: IconTable, link: '/dashboard/tables' },
-  // {
-  //   label: 'Market news',
-  //   icon: IconNotes,
-  //   initiallyOpened: true,
-  //   links: [
-  //     { label: 'Overview', link: '/link1' },
-  //     { label: 'Forecasts', link: '/link2' },
-  //     { label: 'Outlook', link: '/link3' },
-  //     { label: 'Real time', link: '/link4' },
-  //   ],
-  // },
+  {
+    label: 'Table Management',
+    icon: IconTable,
+    initiallyOpened: true,
+    links: [
+      { label: 'Overview', link: '/link1' },
+      { label: 'Forecasts', link: '/link2' },
+      { label: 'Outlook', link: '/link3' },
+      { label: 'Real time', link: '/link4' },
+    ],
+  },
   // {
   //   label: 'Releases',
   //   icon: IconCalendarStats,
@@ -56,10 +56,10 @@ export function AdminNavbar() {
           <Image
             src="/logo.png"
             alt="Maritime Manpower Factbook"
-            width={32}
-            height={32}
+            width={43}
+            height={43}
           />
-          <Text>Factbook Dashboard</Text>
+          <Text>Dashboard</Text>
           <Code fw={700}>Beta</Code>
         </Group>
       </div>

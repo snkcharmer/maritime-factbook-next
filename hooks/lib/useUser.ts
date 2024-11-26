@@ -2,13 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-
-interface IUser {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-}
+import { IUser } from '@/types';
 
 export const useUser = () => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -20,8 +14,7 @@ export const useUser = () => {
     const userData = localStorage.getItem('user');
 
     if (token && userData) {
-      const parsedData = JSON.parse(userData);
-      setUser({ ...parsedData, id: parsedData._id });
+      setUser(JSON.parse(userData));
     } else {
       setUser(null);
     }
@@ -33,7 +26,7 @@ export const useUser = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     setUser(null);
-    router.push('/login');
+    router.push('/');
   };
 
   return { user, loading, isLoggedIn: !!user, logout };

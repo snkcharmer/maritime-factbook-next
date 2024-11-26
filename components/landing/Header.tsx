@@ -76,6 +76,7 @@ export function Header() {
         <ThemeIcon size={34} variant="default" radius="md">
           <item.icon size={22} color={theme.colors.blue[6]} />
         </ThemeIcon>
+
         <div>
           <Text size="sm" fw={500}>
             {item.title}
@@ -93,10 +94,12 @@ export function Header() {
       <header className={classes.header}>
         <Container size="lg">
           <Group justify="space-between" h="100%">
-            <Group gap={8}>
-              <Image src="/logo.png" alt="" width={50} height={50} />
-              <Text>Maritime Manpower Factbook</Text>
-            </Group>
+            <Link href="/">
+              <Group gap={8}>
+                <Image src="/logo.png" alt="" width={50} height={50} />
+                <Text>Maritime Manpower Factbook</Text>
+              </Group>
+            </Link>
 
             {/* <Group h="100%" gap={0} visibleFrom="sm">
               <Link href="/" className={classes.link}>

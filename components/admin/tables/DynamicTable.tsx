@@ -15,38 +15,38 @@ const DynamicTable = () => {
     }
   };
 
-  const tableData = {
-    headers: [
-      {
-        label: 'Main Header 1',
-        subHeaders: ['Sub Header 1'],
-      },
-      {
-        label: 'Header 2',
-        subHeaders: ['Sub Header 2', 'Sub Header 3', 'Sub Header 4'],
-      },
-    ],
-    rows: [
-      ['Leyte', '1', '2', '3'],
-      ['Samar', '4', '5', '6'],
-    ],
-  };
+  // const tableData = {
+  //   headers: [
+  //     {
+  //       label: 'Main Header 1',
+  //       subHeaders: ['Sub Header 1'],
+  //     },
+  //     {
+  //       label: 'Header 2',
+  //       subHeaders: ['Sub Header 2', 'Sub Header 3', 'Sub Header 4'],
+  //     },
+  //   ],
+  //   rows: [
+  //     ['Leyte', '1', '2', '3'],
+  //     ['Samar', '4', '5', '6'],
+  //   ],
+  // };
 
-  const generateHeaders = () => {
-    const mainHeaders = tableData.headers.map((header) => (
-      <th key={header.label} colSpan={header.subHeaders.length}>
-        {header.label}
-      </th>
-    ));
+  // const generateHeaders = () => {
+  //   const mainHeaders = tableData.headers.map((header) => (
+  //     <th key={header.label} colSpan={header.subHeaders.length}>
+  //       {header.label}
+  //     </th>
+  //   ));
 
-    const subHeaders = tableData.headers.flatMap((header) =>
-      header.subHeaders.map((sub, index) => (
-        <th key={`${header.label}-sub-${index}`}>{sub}</th>
-      ))
-    );
+  //   const subHeaders = tableData.headers.flatMap((header) =>
+  //     header.subHeaders.map((sub, index) => (
+  //       <th key={`${header.label}-sub-${index}`}>{sub}</th>
+  //     ))
+  //   );
 
-    return { mainHeaders, subHeaders };
-  };
+  //   return { mainHeaders, subHeaders };
+  // };
 
   const generateRows = () => {
     return data?.data.tables.map((row, rowIndex) => (
@@ -57,7 +57,7 @@ const DynamicTable = () => {
     ));
   };
 
-  const { mainHeaders, subHeaders } = generateHeaders();
+  // const { mainHeaders, subHeaders } = generateHeaders();
 
   useEffect(() => {
     if (!loading) {
