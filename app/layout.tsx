@@ -4,9 +4,10 @@ import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
 import './layout.css';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import './globals.css';
 import AppProvider from '@/providers/AppProvider';
+import Loading from './loading';
 
 export const metadata = {
   metadataBase: new URL('https://mantine-admin.vercel.app/'),
@@ -46,7 +47,9 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </AppProvider>
       </body>
     </html>
   );

@@ -1,10 +1,10 @@
 'use client';
 import { useFbCategory, useFbSubCategory } from '@/hooks';
-import { IFbCategory, IFbSubCategoryByCategoryResponse } from '@/types';
+import { IFbSubCategoryByCategoryResponse } from '@/types';
 import { Group, Text, Accordion, Stack, Skeleton, Button } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import { IconLink } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface AccordionLabelProps {
   label: string;
@@ -22,15 +22,13 @@ function AccordionLabel({ label }: AccordionLabelProps) {
 
 export function Categories() {
   const { classes } = useStyles();
-  const { fetchFbCategories, data, loading } = useFbCategory();
+  const { fetchFbCategories, data: categories, loading } = useFbCategory();
   const {
     fetchFbSubCategoriesByCategoryId,
     data: subCategories,
     loading: fetchingSubCategories,
     resetData,
   } = useFbSubCategory<IFbSubCategoryByCategoryResponse>();
-  const [categories, setCategories] = useState<IFbCategory[]>([]);
-
   const handleFetchCategories = async () => {
     await fetchFbCategories();
   };
@@ -47,12 +45,6 @@ export function Categories() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (data) {
-      setCategories(data.data.tables);
-    }
-  }, [data]);
 
   const renderNestedAccordion = () => {
     console.log(
@@ -74,7 +66,7 @@ export function Categories() {
     ));
   };
 
-  const items = categories.map((item) => (
+  const items = categories?.data.map((item) => (
     <Accordion.Item value={String(item.id)} key={item.id}>
       <Accordion.Control>
         <AccordionLabel label={item.name} />
@@ -101,7 +93,7 @@ export function Categories() {
         <Accordion
           chevronPosition="right"
           variant="contained"
-          defaultValue={categories[0]?.id}
+          defaultValue={categories?.data[0].id}
           onChange={(val) => fetchSubCategories(String(val))}
         >
           {items}

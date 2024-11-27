@@ -1,13 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Container, Text, Loader } from '@mantine/core';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { IUser } from '@/types';
 
 export default function Dashboard() {
-  const [userData, setUserData] = useState<IUser | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -19,21 +15,21 @@ export default function Dashboard() {
       return;
     }
 
-    setUserData(JSON.parse(storedUser));
-    setLoading(false);
+    // setUserData(JSON.parse(storedUser));
+    // setLoading(false);
   }, [router]);
 
-  if (loading) {
-    return (
-      <Container size="lg" py={40}>
-        <Loader />
-      </Container>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <Container size="lg" py={40}>
+  //       <Loader />
+  //     </Container>
+  //   );
+  // }
 
-  if (!userData) {
-    return <Text>User data not found</Text>;
-  }
+  // if (!userData) {
+  //   return <Text>User data not found</Text>;
+  // }
 
   return (
     <>
