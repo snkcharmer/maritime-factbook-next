@@ -166,7 +166,7 @@ export default function DynamicTableMaker() {
     try {
       const res = await createFbTable({
         category: selectedCategory,
-        userId: user?._id,
+        userId: user?.id,
         name: tableName,
         source: tableSource,
         chartType: selectedChartType,

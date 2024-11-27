@@ -75,7 +75,7 @@ export function Categories() {
   };
 
   const items = categories.map((item) => (
-    <Accordion.Item value={String(item._id)} key={item._id}>
+    <Accordion.Item value={String(item.id)} key={item.id}>
       <Accordion.Control>
         <AccordionLabel label={item.name} />
       </Accordion.Control>
@@ -101,7 +101,7 @@ export function Categories() {
         <Accordion
           chevronPosition="right"
           variant="contained"
-          defaultValue={categories[0]?._id}
+          defaultValue={categories[0]?.id}
           onChange={(val) => fetchSubCategories(String(val))}
         >
           {items}
