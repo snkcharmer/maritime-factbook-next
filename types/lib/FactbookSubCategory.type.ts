@@ -8,7 +8,7 @@ export interface IFbSubCategory extends IDefaultAPI {
 }
 
 export interface IFbSubCategoryByCategoryResponse {
-  success: boolean;
+  fbCategoryId: string;
   data: IFbSubCategory[];
 }
 

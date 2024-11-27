@@ -22,7 +22,11 @@ function AccordionLabel({ label }: AccordionLabelProps) {
 
 export function Categories() {
   const { classes } = useStyles();
-  const { fetchFbCategories, data: categories, loading } = useFbCategory();
+  const {
+    fetchFbCategories,
+    data: categories,
+    loading,
+  } = useFbCategory<IFbSubCategoryByCategoryResponse>();
   const {
     fetchFbSubCategoriesByCategoryId,
     data: subCategories,
@@ -34,7 +38,6 @@ export function Categories() {
   };
 
   const fetchSubCategories = async (id: string) => {
-    console.log('id', id);
     resetData();
     await fetchFbSubCategoriesByCategoryId(id);
   };

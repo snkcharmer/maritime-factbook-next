@@ -4,50 +4,58 @@ import { LinksGroup } from './AdminLinksGroup';
 import { createStyles } from '@mantine/emotion';
 import { UserButton } from './UserButton';
 import Image from 'next/image';
+import { IFbSubCategoryByCategoryResponse } from '@/types';
+import { useEffect } from 'react';
+import { useFbCategory } from '@/hooks';
 
-const mockdata = [
-  { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
-  { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
-  { label: 'Tables', icon: IconTable, link: '/dashboard/tables' },
-  {
-    label: 'Table Management',
-    icon: IconTable,
-    initiallyOpened: true,
-    links: [
-      { label: 'Overview', link: '/link1' },
-      { label: 'Forecasts', link: '/link2' },
-      { label: 'Outlook', link: '/link3' },
-      { label: 'Real time', link: '/link4' },
-    ],
-  },
-  // {
-  //   label: 'Releases',
-  //   icon: IconCalendarStats,
-  //   links: [
-  //     { label: 'Upcoming releases', link: '/' },
-  //     { label: 'Previous releases', link: '/' },
-  //     { label: 'Releases schedule', link: '/' },
-  //   ],
-  // },
-  // { label: 'Analytics', icon: IconPresentationAnalytics },
-  // { label: 'Contracts', icon: IconFileAnalytics },
-  // { label: 'Settings', icon: IconAdjustments },
-  // {
-  //   label: 'Security',
-  //   icon: IconLock,
-  //   links: [
-  //     { label: 'Enable 2FA', link: '/' },
-  //     { label: 'Change password', link: '/' },
-  //     { label: 'Recovery codes', link: '/' },
-  //   ],
-  // },
-];
+// const arrLinks = [
+//   { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
+//   { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
+//   // { label: 'Tables', icon: IconTable, link: '/dashboard/tables' },
+//   {
+//     label: 'Resource Categories',
+//     icon: IconTable,
+//     initiallyOpened: true,
+//     links: [
+//       { label: 'Overview', link: '/link1' },
+//       { label: 'Forecasts', link: '/link2' },
+//       { label: 'Outlook', link: '/link3' },
+//       { label: 'Real time', link: '/link4' },
+//     ],
+//   },
+// ];
 
 export function AdminNavbar() {
   const { classes } = useStyles();
-  const links = mockdata.map((item) => (
+
+  const { data: categories, fetchFbCategories } =
+    useFbCategory<IFbSubCategoryByCategoryResponse>();
+
+  const categoryLinks =
+    categories?.data.map((category) => ({
+      label: category.name,
+      link: `/dashboard/resource-categories/${category.id}`,
+    })) || [];
+
+  const arrLinks = [
+    { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
+    { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
+    {
+      label: 'Resource Categories',
+      icon: IconTable,
+      initiallyOpened: true,
+      links: categoryLinks, // Use the dynamic category links here
+    },
+  ];
+
+  const links = arrLinks.map((item) => (
     <LinksGroup {...item} key={item.label} />
   ));
+
+  useEffect(() => {
+    fetchFbCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <nav className={classes.navbar}>

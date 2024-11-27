@@ -36,7 +36,6 @@ export function LinksGroup({
       className={classes.link}
       href={item.link}
       key={item.label}
-      onClick={(event) => event.preventDefault()}
     >
       {item.label}
     </Text>
