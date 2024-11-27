@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 
 type PageContainerProps = {
   children: ReactNode;
-  title: string;
+  title?: string;
   items?: { label: string; href: string }[];
 } & Pick<ContainerProps, 'fluid'>;
 
@@ -32,9 +32,12 @@ export const PageContainer = ({
         </Breadcrumbs>
       ) : null}
 
-      <Title order={4}>{title}</Title>
-
-      <Space h="lg" />
+      {title && (
+        <>
+          <Title order={4}>{title}</Title>
+          <Space h="lg" />
+        </>
+      )}
 
       {children}
     </Container>

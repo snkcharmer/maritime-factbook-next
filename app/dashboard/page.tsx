@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { PageContainer } from '@/components/reusable';
+import { DashboardContent } from '@/components/admin/dashboard/DashboardContent';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -15,22 +16,11 @@ export default function Dashboard() {
       router.push('/login');
       return;
     }
-
-    // setUserData(JSON.parse(storedUser));
-    // setLoading(false);
   }, [router]);
 
-  // if (loading) {
-  //   return (
-  //     <Container size="lg" py={40}>
-  //       <Loader />
-  //     </Container>
-  //   );
-  // }
-
-  // if (!userData) {
-  //   return <Text>User data not found</Text>;
-  // }
-
-  return <PageContainer title="Dashboard">test</PageContainer>;
+  return (
+    <PageContainer>
+      <DashboardContent />
+    </PageContainer>
+  );
 }

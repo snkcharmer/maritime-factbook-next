@@ -47,11 +47,6 @@ export function Categories() {
   }, []);
 
   const renderNestedAccordion = () => {
-    console.log(
-      'IFbSubCategoryByCategoryResponse',
-      subCategories,
-      fetchingSubCategories
-    );
     if (fetchingSubCategories) return <Skeleton height={50} radius="sm" />;
     if (!subCategories) return <>No data here ...</>;
     return subCategories?.data.map((item, idx) => (
