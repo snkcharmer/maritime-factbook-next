@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { PageContainer } from '@/components/reusable';
 
 export default function Dashboard() {
   const router = useRouter();
@@ -31,12 +32,5 @@ export default function Dashboard() {
   //   return <Text>User data not found</Text>;
   // }
 
-  return (
-    <>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-      fugiat quisquam itaque nesciunt tempore consequuntur corporis nisi?
-      Obcaecati expedita rerum nam ut enim odit, iure earum sed voluptatum,
-      tenetur veniam?
-    </>
-  );
+  return <PageContainer title="Dashboard">test</PageContainer>;
 }

@@ -27,7 +27,7 @@ export default function Admin({ children }: { children: React.ReactNode }) {
       </AppShell.Navbar>
 
       <AppShell.Main>
-        <Container mt={70} size="xl">
+        <Container mt={80} size="xl">
           {children}
         </Container>
       </AppShell.Main>
