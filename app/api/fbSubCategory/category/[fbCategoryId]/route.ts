@@ -5,7 +5,7 @@ export async function GET(
   { params }: { params: { fbCategoryId: string } }
 ) {
   try {
-    const { fbCategoryId } = params;
+    const { fbCategoryId } = await params;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbSubCategory/category/${fbCategoryId}`

@@ -9,9 +9,9 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
+import { ROUTES } from '@/constants';
 
 interface AdminLinksGroupProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   label: string;
   initiallyOpened?: boolean;
@@ -85,7 +85,7 @@ export function AdminLinksGroup() {
   const singleMock = {
     label: 'Dashboard',
     icon: IconChevronRight,
-    link: '/dashboard',
+    link: ROUTES.dashboard,
   };
 
   return (

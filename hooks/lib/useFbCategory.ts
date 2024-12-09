@@ -5,7 +5,7 @@ import { IFbCategory } from '@/types';
 import { handleRequest } from '@/utils/handleRequest';
 
 export const useFbCategory = <T>() => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<T | null>(null);
 
@@ -21,6 +21,15 @@ export const useFbCategory = <T>() => {
   const getFbCategoryById = async (id: string) => {
     return handleRequest<IFbCategory>(
       `/api/fbCategory/${id}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  const getFbCategoryBySlug = (slug: string) => {
+    return handleRequest<IFbCategory>(
+      `/api/fbCategory/slug/${slug}`,
       setLoading,
       setError,
       setData
@@ -77,6 +86,7 @@ export const useFbCategory = <T>() => {
     data,
     fetchFbCategories,
     getFbCategoryById,
+    getFbCategoryBySlug,
     createFbCategory,
     updateFbCategory,
     deleteFbCategory,

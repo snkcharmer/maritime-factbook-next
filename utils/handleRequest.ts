@@ -2,7 +2,7 @@ export const handleRequest = async <T>(
   endpoint: string,
   setLoading: (loading: boolean) => void,
   setError: (error: string | null) => void,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   setData?: (data: T | any) => void, // Adjusted to work with the generic type T
   options: RequestInit = {}
 ): Promise<{ success: boolean; data?: T; error?: string }> => {

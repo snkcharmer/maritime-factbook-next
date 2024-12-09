@@ -1,4 +1,5 @@
 import CategoriesSection from '@/components/landing/CategoriesSection';
+import CategoryList from '@/components/landing/CategoryList';
 import { Header } from '@/components/landing/Header';
 import Hero from '@/components/landing/Hero';
 import { LandingContainer } from '@/components/landing/LandingContainer';
@@ -11,6 +12,7 @@ export default function Home() {
       <Header />
       <LandingContainer>
         <Hero />
+        <CategoryList />
         <CategoriesSection />
       </LandingContainer>
       <Footer />

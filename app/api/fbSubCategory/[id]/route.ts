@@ -5,7 +5,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbSubCategory/${id}`
@@ -34,7 +34,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const updatedData = await req.json();
 
     const response = await fetch(
@@ -71,7 +71,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbSubCategory/${id}`,

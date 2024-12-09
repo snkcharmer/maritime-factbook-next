@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: 'Failed to create fbTable entry' },
+        { error: 'Failed to create table' },
         { status: 400 }
       );
     }

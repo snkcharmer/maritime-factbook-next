@@ -1,79 +1,98 @@
 'use client';
 
 import { useState } from 'react';
-import { IFbTable, TFbTableResponse } from '@/types';
+import { IFbTable } from '@/types';
+import { handleRequest } from '@/utils/handleRequest';
 
-export const useFbTable = () => {
-  const [loading, setLoading] = useState(false);
+export const useFbTable = <T>() => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<TFbTableResponse | null>(null);
-
-  // Generic API handler
-  const handleRequest = async <T>(
-    endpoint: string,
-    options: RequestInit = {}
-  ): Promise<{ success: boolean; data?: T; error?: string }> => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const res = await fetch(endpoint, options);
-
-      if (!res.ok) {
-        const errorResponse = await res.json();
-        setError(errorResponse.error || 'Failed to process the request');
-        return { success: false, error: errorResponse.error };
-      }
-
-      const result = await res.json();
-      setData(result);
-      return { success: true, data: result };
-    } catch (err) {
-      console.error(err);
-      setError('An unexpected error occurred');
-      return { success: false, error: 'An unexpected error occurred' };
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [data, setData] = useState<T | null>(null);
 
   // Fetch all fbTables
   const fetchFbTables = async () => {
-    return handleRequest<IFbTable[]>(`/api/fbTable`);
+    return handleRequest<IFbTable[]>(
+      `/api/fbTable`,
+      setLoading,
+      setError,
+      setData
+    );
   };
 
   // Fetch fbTable by userId
   const getFbTableByUserId = async (userId: string) => {
-    return handleRequest<IFbTable>(`/api/fbTable/${userId}`);
+    return handleRequest<IFbTable>(
+      `/api/fbTable/${userId}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  // Fetch fbTable by slug
+  const getFbTableBySlug = async (slug: string) => {
+    return handleRequest<IFbTable>(
+      `/api/fbTable/${slug}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  const getFbTableByFbCategoryId = async (id: string) => {
+    return handleRequest<IFbTable[]>(
+      `/api/fbTable/fbCategory/${id}`,
+      setLoading,
+      setError,
+      setData
+    );
   };
 
   // Create a new fbTable
   const createFbTable = async (fbTableData: Partial<IFbTable>) => {
-    return handleRequest<IFbTable>(`/api/fbTable`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fbTableData),
-    });
+    return handleRequest<IFbTable>(
+      `/api/fbTable`,
+      setLoading,
+      setError,
+      setData,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(fbTableData),
+      }
+    );
   };
 
   // Update an existing fbTable
   const updateFbTable = async (fbTableId: string, updatedData: IFbTable) => {
-    return handleRequest<IFbTable>(`/api/fbTable/${fbTableId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedData),
-    });
+    return handleRequest<IFbTable>(
+      `/api/fbTable/${fbTableId}`,
+      setLoading,
+      setError,
+      setData,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+      }
+    );
   };
 
   // Delete an fbTable
   const deleteFbTable = async (fbTableId: string) => {
-    return handleRequest<void>(`/api/fbTable/${fbTableId}`, {
-      method: 'DELETE',
-    });
+    return handleRequest<void>(
+      `/api/fbTable/${fbTableId}`,
+      setLoading,
+      setError,
+      setData,
+      {
+        method: 'DELETE',
+      }
+    );
   };
 
   return {
@@ -82,6 +101,8 @@ export const useFbTable = () => {
     data,
     fetchFbTables,
     getFbTableByUserId,
+    getFbTableBySlug,
+    getFbTableByFbCategoryId,
     createFbTable,
     updateFbTable,
     deleteFbTable,

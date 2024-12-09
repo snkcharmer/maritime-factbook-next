@@ -1,17 +1,19 @@
-import { ChartTypeEnum } from '@/context/enum';
+import { ChartTypesEnum } from '@/context/enum';
 import { IDefaultAPI } from './Others.type';
 import { IPaginatedResponse } from './Pagination.type';
 import { IUser } from './User.type';
+import { IFbCategory } from './FactbookCategory.type';
 
 export interface IFbTable extends IDefaultAPI {
   userId: string;
-  category: string | null;
+  fbCategoryId: string | null;
   name: string;
-  chartType: ChartTypeEnum | null;
+  slug: string;
+  chartType: ChartTypesEnum | null;
   source: string;
-  user?: IUser;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
+  user?: IUser;
+  fbCategory?: IFbCategory;
 }
 
 export type TFbTableResponse = IPaginatedResponse<IFbTable>;

@@ -1,3 +1,4 @@
+import { ROUTES } from '@/constants';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -14,12 +15,12 @@ export function middleware(req: NextRequest) {
 
   // Redirect logic for protected and public routes
   if (!token && !isPublicPath) {
-    url.pathname = '/login';
+    url.pathname = ROUTES.login;
     return NextResponse.redirect(url);
   }
 
   if (token && isPublicPath) {
-    url.pathname = '/dashboard';
+    url.pathname = ROUTES.dashboard;
     return NextResponse.redirect(url);
   }
 

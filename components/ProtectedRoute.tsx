@@ -1,5 +1,6 @@
 'use client';
 
+import { ROUTES } from '@/constants';
 import { useUser } from '@/hooks';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
@@ -14,7 +15,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   useEffect(() => {
     if (!loading && !isLoggedIn) {
-      router.push('/login');
+      router.push(ROUTES.login);
     }
   }, [isLoggedIn, loading, router]);
 

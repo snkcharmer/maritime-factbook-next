@@ -20,7 +20,7 @@ import { useUser } from '@/hooks';
 export function AdminHeader() {
   const { logout, user } = useUser();
   const { classes } = useStyles();
-  const [userMenuOpened, setUserMenuOpened] = useState(false);
+  const [userMenuOpened, setUserMenuOpened] = useState<boolean>(false);
 
   return (
     <div className={classes.header}>

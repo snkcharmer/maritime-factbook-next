@@ -1,121 +1,78 @@
 import { NextResponse } from 'next/server';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+// Helper function to send requests to the external API
+async function fetchFromApi(endpoint: string, options: RequestInit = {}) {
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}`, options);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return NextResponse.json(errorData, { status: response.status });
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error(`Error during API request to ${endpoint}:`, error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
+// POST: Create a new user
 export async function POST(req: Request) {
-  try {
-    const fbTableData = await req.json();
-
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/fbTable`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(fbTableData),
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to create fbTable entry' },
-        { status: 400 }
-      );
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error in POST /api/fbTable:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  const userData = await req.json();
+  return fetchFromApi('/user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  });
 }
 
-// Get fbTable entries for a user
+// GET: Fetch all users or a specific user by ID
 export async function GET(req: Request) {
-  try {
-    const userId = req.url.split('/').pop(); // Assuming userId is passed as URL parameter
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get('id');
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${userId}`
-    );
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'No fbTable entries found' },
-        { status: 404 }
-      );
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error in GET /api/fbTable:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  const endpoint = userId ? `/user/${userId}` : '/user';
+  return fetchFromApi(endpoint);
 }
 
-// Update an existing fbTable entry
+// PATCH: Update an existing user by ID
 export async function PATCH(req: Request) {
-  try {
-    const fbTableId = req.url.split('/').pop(); // Assuming fbTable ID is passed in the URL
-    const fbTableData = await req.json();
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get('id');
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${fbTableId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(fbTableData),
-      }
-    );
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to update fbTable entry' },
-        { status: 400 }
-      );
-    }
-
-    const data = await response.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error in PATCH /api/fbTable:', error);
+  if (!userId) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: 'User ID is required for updates' },
+      { status: 400 }
     );
   }
+
+  const userData = await req.json();
+  return fetchFromApi(`/user/${userId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  });
 }
 
-// Delete a fbTable entry
+// DELETE: Delete a user by ID
 export async function DELETE(req: Request) {
-  try {
-    const fbTableId = req.url.split('/').pop(); // Assuming fbTable ID is passed in the URL
+  const { searchParams } = new URL(req.url);
+  const userId = searchParams.get('id');
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${fbTableId}`,
-      {
-        method: 'DELETE',
-      }
-    );
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to delete fbTable entry' },
-        { status: 400 }
-      );
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error in DELETE /api/fbTable:', error);
+  if (!userId) {
     return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
+      { error: 'User ID is required for deletion' },
+      { status: 400 }
     );
   }
+
+  return fetchFromApi(`/user/${userId}`, { method: 'DELETE' });
 }

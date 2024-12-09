@@ -1,3 +1,8 @@
+export enum UserRoleEnum {
+  ADMIN = 'admin',
+  DATA_PROVIDER = 'data_provider',
+}
+
 export enum CategoryEnum {
   WorldSeaborneTrade = 'World Seaborne Trade and Global Supply & Demand Statistics',
   PhilippineMaritimeManpower = 'Philippine Maritime Manpower Data',

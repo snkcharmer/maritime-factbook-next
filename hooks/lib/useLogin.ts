@@ -1,12 +1,13 @@
 'use client';
 
+import { ROUTES } from '@/constants';
 import { IAuthResponse } from '@/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export const useLogin = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const login = async (values: { email: string; password: string }) => {
@@ -36,7 +37,7 @@ export const useLogin = () => {
       localStorage.setItem('authToken', data.accessToken);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      router.push('/dashboard');
+      router.push(ROUTES.dashboard);
       return { success: true, data };
     } catch (err) {
       console.error('Login error:', err);

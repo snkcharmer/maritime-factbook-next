@@ -2,13 +2,13 @@
 
 import { Flex, Grid, GridCol, Select } from '@mantine/core';
 import { useState } from 'react';
+import { WelcomeCard } from './WelcomeCard';
 import { categoryData } from './ContextData';
 import { OverviewCardUI } from './OverviewCardUI';
-import { WelcomeCard } from './WelcomeCard';
 
 type CategoryKey = keyof typeof categoryData;
 
-export function DashboardContent() {
+export function DataProviderDashboardContent() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>(
     'WoSeaTradeGlobSupDem'
   );

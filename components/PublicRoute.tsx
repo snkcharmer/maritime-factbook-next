@@ -1,5 +1,6 @@
 'use client';
 
+import { ROUTES } from '@/constants';
 import { useUser } from '@/hooks';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
@@ -14,7 +15,7 @@ export const PublicRoute = ({ children }: PublicRouteProps) => {
 
   useEffect(() => {
     if (!loading && isLoggedIn) {
-      router.push('/dashboard');
+      router.push(ROUTES.dashboard);
     }
   }, [isLoggedIn, loading, router]);
 

@@ -3,10 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { IUser } from '@/types';
+import { handleRequest } from '@/utils/handleRequest';
 
-export const useUser = () => {
+export const useUser = <T>() => {
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<T | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,5 +32,17 @@ export const useUser = () => {
     router.push('/');
   };
 
-  return { user, loading, isLoggedIn: !!user, logout };
+  const fetchAllUsers = async () => {
+    return handleRequest<IUser[]>(`/api/user`, setLoading, setError, setData);
+  };
+
+  return {
+    user,
+    loading,
+    error,
+    data,
+    isLoggedIn: !!user,
+    logout,
+    fetchAllUsers,
+  };
 };

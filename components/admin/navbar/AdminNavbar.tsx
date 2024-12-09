@@ -1,50 +1,54 @@
-import { IconGauge, IconTable } from '@tabler/icons-react';
+import { IconFolderCog, IconGauge, IconTable } from '@tabler/icons-react';
 import { Code, Group, ScrollArea, Text } from '@mantine/core';
 import { LinksGroup } from './AdminLinksGroup';
 import { createStyles } from '@mantine/emotion';
-import { UserButton } from './UserButton';
 import Image from 'next/image';
-import { IFbSubCategoryByCategoryResponse } from '@/types';
+import { TFbCategoryResponse } from '@/types';
 import { useEffect } from 'react';
 import { useFbCategory } from '@/hooks';
-
-// const arrLinks = [
-//   { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
-//   { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
-//   // { label: 'Tables', icon: IconTable, link: '/dashboard/tables' },
-//   {
-//     label: 'Resource Categories',
-//     icon: IconTable,
-//     initiallyOpened: true,
-//     links: [
-//       { label: 'Overview', link: '/link1' },
-//       { label: 'Forecasts', link: '/link2' },
-//       { label: 'Outlook', link: '/link3' },
-//       { label: 'Real time', link: '/link4' },
-//     ],
-//   },
-// ];
+import { ADMIN_ROUTES, ROUTES } from '@/constants';
+import { UserButton } from '@/components/reusable';
+import { createPath } from '@/utils/route';
 
 export function AdminNavbar() {
   const { classes } = useStyles();
 
   const { data: categories, fetchFbCategories } =
-    useFbCategory<IFbSubCategoryByCategoryResponse>();
+    useFbCategory<TFbCategoryResponse>();
 
   const categoryLinks =
     categories?.data.map((category) => ({
       label: category.name,
-      link: `/dashboard/resource-categories/${category.id}`,
+      link: createPath({
+        path: ADMIN_ROUTES.resourceCategories,
+        dynamicParams: { fbCategorySlug: category.slug },
+      }),
     })) || [];
 
+  const managementLinks = [
+    {
+      label: 'Resource Categories',
+      link: ADMIN_ROUTES.resourceCategoriesManagement,
+    },
+  ];
+
   const arrLinks = [
-    { label: 'Dashboard', icon: IconGauge, link: '/dashboard' },
-    { label: 'Table Maker', icon: IconTable, link: '/dashboard/table-maker' },
+    { label: 'Dashboard', icon: IconGauge, link: ROUTES.dashboard },
+    {
+      label: 'Table Maker',
+      icon: IconTable,
+      link: ADMIN_ROUTES.dashboardTableMaker,
+    },
     {
       label: 'Resource Categories',
       icon: IconTable,
-      initiallyOpened: true,
+      // initiallyOpened: true,
       links: categoryLinks, // Use the dynamic category links here
+    },
+    {
+      label: 'Management',
+      icon: IconFolderCog,
+      links: managementLinks,
     },
   ];
 

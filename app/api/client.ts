@@ -5,6 +5,7 @@ import {
   setTokens,
   clearTokens,
 } from '@/utils/localStorage';
+import { ROUTES } from '@/constants';
 
 const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '',
@@ -37,7 +38,7 @@ apiClient.interceptors.response.use(
           return apiClient(originalRequest);
         } catch {
           clearTokens();
-          window.location.href = '/login';
+          window.location.href = ROUTES.login;
         }
       }
     }

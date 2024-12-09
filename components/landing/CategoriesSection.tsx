@@ -45,7 +45,6 @@ export const MOCKDATA = [
 ];
 
 interface FeatureProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: React.FC<any>;
   title: React.ReactNode;
   description: React.ReactNode;

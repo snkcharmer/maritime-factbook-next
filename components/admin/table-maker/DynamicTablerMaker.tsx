@@ -15,16 +15,13 @@ import {
   Drawer,
 } from '@mantine/core';
 import { IconTrash, IconPlus, IconLink } from '@tabler/icons-react';
-import { useFbCategory, useFbSubCategory, useFbTable, useUser } from '@/hooks';
-import { ChartTypeEnum } from '@/context/enum';
-import { IFbSubCategoryByCategoryResponse } from '@/types';
+import { useFbCategory, useFbTable, useUser } from '@/hooks';
+import { ChartTypesEnum } from '@/context/enum';
+import { IFbSubCategoryByCategoryResponse, TFbTableResponse } from '@/types';
 import { useDisclosure } from '@mantine/hooks';
-import { FakeSkeleton } from '@/components/reusable';
-
-interface IDefaultOption {
-  label: string;
-  value: string;
-}
+import { FakeSkeleton, Toastify } from '@/components/reusable';
+import { createPath } from '@/utils/route';
+import { ADMIN_ROUTES } from '@/constants';
 
 export default function DynamicTableMaker() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -34,16 +31,10 @@ export default function DynamicTableMaker() {
     loading: fetchingCategories,
   } = useFbCategory<IFbSubCategoryByCategoryResponse>();
   const {
-    data: subCategories,
-    fetchFbSubCategoriesByCategoryId,
-    loading: fetchingSubCategories,
-    resetData: resetSubCategories,
-  } = useFbSubCategory<IFbSubCategoryByCategoryResponse>();
-  const {
     data: fbTables,
     fetchFbTables,
     loading: fetchingFbTables,
-  } = useFbTable();
+  } = useFbTable<TFbTableResponse>();
   const { createFbTable } = useFbTable();
   const { user } = useUser();
 
@@ -52,13 +43,12 @@ export default function DynamicTableMaker() {
   >([{ label: 'Main Header 1', subHeaders: ['Sub Header 1'] }]);
 
   const [tableData, setTableData] = useState<string[][]>([['']]);
-  const [selectedCategory, setSelectedCategory] =
-    useState<IDefaultOption | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   //   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
   //     null
   //   );
   const [selectedChartType, setSelectedChartType] =
-    useState<ChartTypeEnum | null>(null);
+    useState<ChartTypesEnum | null>(null);
   const [tableName, setTableName] = useState<string>('');
   const [tableSource, setTableSource] = useState<string>('');
 
@@ -189,22 +179,36 @@ export default function DynamicTableMaker() {
     setTableData((prev) => prev.filter((_, idx) => idx !== rowIndex));
   };
 
+  const resetForm = () => {
+    setHeaders([{ label: 'Main Header 1', subHeaders: ['Sub Header 1'] }]);
+    setTableData([['']]);
+    setSelectedCategory(null);
+    setTableName('');
+    setSelectedChartType(null);
+    setTableSource('');
+  };
+
   // Save the table
   const saveTable = async () => {
     const payload = { headers, rows: tableData };
-
     try {
       const res = await createFbTable({
-        category: selectedCategory?.label || '',
+        fbCategoryId: selectedCategory || '',
         userId: user?.id,
         name: tableName,
         source: tableSource,
         chartType: selectedChartType,
         data: payload,
       });
+      if (!res.success) {
+        Toastify({ message: res.error || '', type: 'warning' });
+        return;
+      }
+      resetForm();
+      Toastify({ message: 'Table successfully saved.', type: 'success' });
       console.log(res);
     } catch (err) {
-      console.log(err);
+      console.log('error', err);
     }
   };
 
@@ -218,11 +222,9 @@ export default function DynamicTableMaker() {
       <Stack gap={10}>
         <SimpleGrid cols={2}>
           <Select
-            value={selectedCategory?.value || ''}
-            onChange={(_, obj) => {
-              resetSubCategories();
-              setSelectedCategory(obj);
-              fetchFbSubCategoriesByCategoryId(String(obj.value));
+            value={selectedCategory || ''}
+            onChange={(val) => {
+              setSelectedCategory(val);
             }}
             data={
               categories?.data.map(({ name, id }) => ({
@@ -235,32 +237,18 @@ export default function DynamicTableMaker() {
             disabled={fetchingCategories}
           />
 
-          <Select
-            value={tableName || ''}
-            onChange={(value) => setTableName(String(value))}
-            data={
-              subCategories?.data.map(({ name }) => ({
-                label: name,
-                value: name,
-              })) || []
-            }
-            placeholder="Select Sub-category"
-            label="Sub-category"
-            disabled={fetchingSubCategories}
+          <TextInput
+            value={tableName}
+            onChange={(e) => setTableName(e.target.value)}
+            placeholder="Enter Table Name"
+            label="Table Name"
           />
-
-          {/* <TextInput
-                value={tableName}
-                onChange={(e) => setTableName(e.target.value)}
-                placeholder="Enter Table Name"
-                label="Table Name"
-            /> */}
         </SimpleGrid>
         <SimpleGrid cols={2}>
           <Select
             value={selectedChartType || ''}
-            onChange={(value) => setSelectedChartType(value as ChartTypeEnum)}
-            data={Object.values(ChartTypeEnum)}
+            onChange={(value) => setSelectedChartType(value as ChartTypesEnum)}
+            data={Object.values(ChartTypesEnum)}
             placeholder="Select Chart Type"
             label="Chart Type"
           />
@@ -298,6 +286,14 @@ export default function DynamicTableMaker() {
             fbTables?.data.map((val, idx) => {
               return (
                 <Button
+                  component="a"
+                  href={createPath({
+                    path: ADMIN_ROUTES.resourceCategoriesTable,
+                    dynamicParams: {
+                      fbCategorySlug: String(val.fbCategory?.slug),
+                      fbTableSlug: val.slug,
+                    },
+                  })}
                   variant="default"
                   leftSection={<IconLink size={16} />}
                   key={idx}

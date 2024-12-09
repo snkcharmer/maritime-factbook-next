@@ -6,6 +6,7 @@ import { MantineEmotionProvider, emotionTransform } from '@mantine/emotion';
 import { AuthProvider } from '@/providers/AuthContext';
 // import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { NavigationProgress } from '@mantine/nprogress';
+import { ToastContainer } from 'react-toastify';
 
 type AppProviderProps = {
   children: ReactNode;
@@ -21,6 +22,7 @@ export default function AppProvider({ children }: AppProviderProps) {
             defaultColorScheme="light"
             stylesTransform={emotionTransform}
           >
+            <ToastContainer />
             <NavigationProgress />
             {children}
           </MantineProvider>

@@ -4,6 +4,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { clearTokens, getAccessToken, setTokens } from '@/utils/localStorage';
 import { IUser } from '@/types';
+import { ROUTES } from '@/constants';
 
 interface AuthContextProps {
   user: IUser | null;
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     setAccessToken(null);
     clearTokens();
-    router.push('/login');
+    router.push(ROUTES.login);
   };
 
   return (

@@ -5,7 +5,7 @@ import { IFbSubCategory, IFbSubCategoryByCategoryResponse } from '@/types';
 import { handleRequest } from '@/utils/handleRequest';
 
 export const useFbSubCategory = <T>() => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<T | null>(null);
 
