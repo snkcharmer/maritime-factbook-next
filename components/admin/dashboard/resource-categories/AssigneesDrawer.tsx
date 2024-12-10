@@ -22,9 +22,6 @@ const AssigneesDrawer = (props: IAssigneesDrawerProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fbTableId]);
-
-  console.log('test', loading, data);
-
   return (
     <Drawer
       opened={opened}

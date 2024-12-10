@@ -1,4 +1,5 @@
 'use client';
+import { Toastify } from '@/components/reusable';
 import { useLogin } from '@/hooks';
 import { loginSchema } from '@/validations';
 import {
@@ -15,6 +16,7 @@ import {
 } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
 
 export default function Login() {
   const { login, loading, error } = useLogin();
@@ -36,6 +38,10 @@ export default function Login() {
         }
       },
     });
+
+  useEffect(() => {
+    if (error) Toastify({ message: String(error), type: 'error' });
+  }, [error]);
 
   return (
     <Container size={420} my={40}>
@@ -83,11 +89,6 @@ export default function Login() {
           <Button type="submit" fullWidth mt="xl" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign in'}
           </Button>
-          {error && (
-            <Text color="red" size="sm" mt="sm">
-              {error}
-            </Text>
-          )}
         </form>
       </Paper>
     </Container>

@@ -8,6 +8,7 @@ export interface IFbTableAssignee extends IDefaultAPI {
   fbTableId: string;
   user?: IUser;
   fbTable?: IFbTable;
+  data: any;
 }
 
 export type TFbTableAssigneeResponse = IPaginatedResponse<IFbTableAssignee>;

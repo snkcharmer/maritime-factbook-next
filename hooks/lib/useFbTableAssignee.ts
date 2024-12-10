@@ -41,6 +41,40 @@ export const useFbTableAssignee = <T>() => {
     );
   };
 
+  const getFbTableAssigneeById = async (id: string) => {
+    return handleRequest<IFbTableAssignee>(
+      `/api/fbTableAssignee/${id}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  const fetchFbTableAssigneeByFbTableId = async (fbTableId: string) => {
+    return handleRequest<IFbTableAssignee[]>(
+      `/api/fbTableAssignee/fbTable/${fbTableId}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  const updateFbTableAssignee = async (id: string, data: IFbTableAssignee) => {
+    return handleRequest<IFbTableAssignee>(
+      `/api/fbTableAssignee/${id}`,
+      setLoading,
+      setError,
+      setData,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
+  };
+
   return {
     loading,
     error,
@@ -48,5 +82,8 @@ export const useFbTableAssignee = <T>() => {
     assignTableToUser,
     fetchFbTableAssignees,
     fetchFbTableAssigneeByUserId,
+    getFbTableAssigneeById,
+    updateFbTableAssignee,
+    fetchFbTableAssigneeByFbTableId,
   };
 };

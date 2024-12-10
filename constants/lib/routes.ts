@@ -19,6 +19,9 @@ export const ROUTES = {
   get assignedTables() {
     return `${this.dashboard}/assigned-tables` as const;
   },
+  get assignedTablesView() {
+    return `${this.assignedTables}/[fbTableSlug]` as const;
+  },
   get activityLog() {
     return `${this.dashboard}/activity-log` as const;
   },

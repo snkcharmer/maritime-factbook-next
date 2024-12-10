@@ -32,7 +32,16 @@ export const useFbTable = <T>() => {
   // Fetch fbTable by slug
   const getFbTableBySlug = async (slug: string) => {
     return handleRequest<IFbTable>(
-      `/api/fbTable/${slug}`,
+      `/api/fbTable/slug/${slug}`,
+      setLoading,
+      setError,
+      setData
+    );
+  };
+
+  const getFbTableById = async (id: string) => {
+    return handleRequest<IFbTable>(
+      `/api/fbTable/${id}`,
       setLoading,
       setError,
       setData
@@ -66,7 +75,11 @@ export const useFbTable = <T>() => {
   };
 
   // Update an existing fbTable
-  const updateFbTable = async (fbTableId: string, updatedData: IFbTable) => {
+  const updateFbTable = async (
+    fbTableId: string,
+    updatedData: Partial<IFbTable>
+  ) => {
+    console.log('updateFbTable', { data: updatedData.data });
     return handleRequest<IFbTable>(
       `/api/fbTable/${fbTableId}`,
       setLoading,
@@ -77,7 +90,7 @@ export const useFbTable = <T>() => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify({ data: updatedData.data }),
       }
     );
   };
@@ -103,6 +116,7 @@ export const useFbTable = <T>() => {
     getFbTableByUserId,
     getFbTableBySlug,
     getFbTableByFbCategoryId,
+    getFbTableById,
     createFbTable,
     updateFbTable,
     deleteFbTable,

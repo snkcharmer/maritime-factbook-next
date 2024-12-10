@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -24,15 +25,17 @@ ChartJS.register(
   Legend
 );
 
+export type TChartType = 'bar' | 'line' | 'pie';
+
 interface ChartProps {
-  chartType: 'bar' | 'line' | 'pie';
+  chartType: TChartType;
   tableData: {
     headers: { label: string; subHeaders: string[] }[];
     rows: string[][];
   };
 }
 
-export default function DynamicChart({ chartType, tableData }: ChartProps) {
+const DynamicChart = ({ chartType, tableData }: ChartProps) => {
   const validHeaders = tableData.headers.filter(
     (header) =>
       header.label.trim() !== '' &&
@@ -76,4 +79,6 @@ export default function DynamicChart({ chartType, tableData }: ChartProps) {
   }[chartType];
 
   return <ChartComponent data={data} />;
-}
+};
+
+export default DynamicChart;
