@@ -10,6 +10,9 @@ export const ADMIN_ROUTES = {
   get resourceCategoriesManagement() {
     return `${this.dashboard}/management/resource-categories` as const;
   },
+  get userAccountsManagement() {
+    return `${this.dashboard}/management/user-accounts` as const;
+  },
 };
 
 export const ROUTES = {

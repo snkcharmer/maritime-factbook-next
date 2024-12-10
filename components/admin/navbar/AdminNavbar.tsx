@@ -30,6 +30,10 @@ export function AdminNavbar() {
       label: 'Resource Categories',
       link: ADMIN_ROUTES.resourceCategoriesManagement,
     },
+    {
+      label: 'User Accounts',
+      link: ADMIN_ROUTES.userAccountsManagement,
+    },
   ];
 
   const arrLinks = [
