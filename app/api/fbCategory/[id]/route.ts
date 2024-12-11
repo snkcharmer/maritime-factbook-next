@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
+    const id = (await params).id;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbCategory/${id}`
@@ -21,21 +21,17 @@ export async function GET(
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error(`Error fetching fbCategory with ID ${params.id}:`, error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const updatedData = await req.json();
+    const id = (await params).id;
+    const updatedData = await req;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbCategory/${id}`,
@@ -58,20 +54,16 @@ export async function PATCH(
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error(`Error updating fbCategory with ID ${params.id}:`, error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
+    const id = (await params).id;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbCategory/${id}`,
@@ -89,10 +81,6 @@ export async function DELETE(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error(`Error deleting fbCategory with ID ${params.id}:`, error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

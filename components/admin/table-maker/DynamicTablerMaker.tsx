@@ -22,6 +22,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { FakeSkeleton, Toastify } from '@/components/reusable';
 import { createPath } from '@/utils/route';
 import { ADMIN_ROUTES } from '@/constants';
+import { TChartType } from '../dashboard/resource-categories/DynamicChart';
 
 export default function DynamicTableMaker() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -47,8 +48,9 @@ export default function DynamicTableMaker() {
   //   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
   //     null
   //   );
-  const [selectedChartType, setSelectedChartType] =
-    useState<ChartTypesEnum | null>(null);
+  const [selectedChartType, setSelectedChartType] = useState<TChartType | null>(
+    null
+  );
   const [tableName, setTableName] = useState<string>('');
   const [tableSource, setTableSource] = useState<string>('');
 
@@ -200,8 +202,8 @@ export default function DynamicTableMaker() {
         chartType: selectedChartType,
         data: payload,
       });
-      if (!res.success) {
-        Toastify({ message: res.error || '', type: 'warning' });
+      if (!res) {
+        Toastify({ message: res || '', type: 'warning' });
         return;
       }
       resetForm();
@@ -247,7 +249,7 @@ export default function DynamicTableMaker() {
         <SimpleGrid cols={2}>
           <Select
             value={selectedChartType || ''}
-            onChange={(value) => setSelectedChartType(value as ChartTypesEnum)}
+            onChange={(value) => setSelectedChartType(value as TChartType)}
             data={Object.values(ChartTypesEnum)}
             placeholder="Select Chart Type"
             label="Chart Type"

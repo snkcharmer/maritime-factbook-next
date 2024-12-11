@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  { params }: { params: { fbTableId: string } }
+  { params }: { params: Promise<{ fbTableId: string }> }
 ) {
   try {
     const { fbTableId } = await params;
@@ -21,13 +21,6 @@ export async function GET(
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error(
-      `Error fetching fbTableAssignee with ID ${params.fbTableId}:`,
-      error
-    );
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

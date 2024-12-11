@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  { params }: { params: { fbCategoryId: string } }
+  { params }: { params: Promise<{ fbCategoryId: string }> }
 ) {
   try {
     const { fbCategoryId } = await params;
@@ -21,13 +21,6 @@ export async function GET(
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error(
-      `Error fetching fbSubCategory with ID ${params.fbCategoryId}:`,
-      error
-    );
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
