@@ -1,6 +1,5 @@
 'use client';
-import { IconCheck } from '@tabler/icons-react';
-import { List, Text, ThemeIcon, Title } from '@mantine/core';
+import { Container, Text, Title } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import Image from 'next/image';
 
@@ -9,41 +8,23 @@ export default function Hero() {
   return (
     // <Container size={1200} py={50} maw={1100}>
     <div className={classes.inner}>
-      <div className={classes.content}>
-        <Title className={classes.title}>
-          Welcome to The Philippine Maritime Manpower Factbook!
-        </Title>
-        <Text c="dimmed" mt="md">
-          Build fully functional accessible web applications faster than ever –
-          Mantine includes more than 120 customizable components and hooks to
-          cover you in any situation
-        </Text>
+      <Container size="lg" className="flex items-center justify-between">
+        <div className={classes.content}>
+          <Title className={classes.title}>
+            Welcome to The Philippine Maritime Manpower Factbook!
+          </Title>
+          <Text c="white" mt="md">
+            The Philippine Maritime Manpower Factbook is a portal containing
+            consolidated relevant and updated maritime industry-related data and
+            statistics that seeks to provide a picture of the global and
+            Philippine maritime manpower sector, presented in facts and figures
+            that are derived from the data of various relevant data producer
+            agencies, researches, and published reports. This interactive
+            platform provides data that is readily accessible to industry
+            stakeholders in aid of policy formulation and program development.
+          </Text>
 
-        <List
-          mt={30}
-          spacing="sm"
-          size="sm"
-          icon={
-            <ThemeIcon size={20} radius="xl">
-              <IconCheck size={12} stroke={1.5} />
-            </ThemeIcon>
-          }
-        >
-          <List.Item>
-            <b>Generate Dynamic Tables</b> – customizable tables to organize and
-            display collected data efficiently
-          </List.Item>
-          <List.Item>
-            <b>Generate Dynamic Charts</b> – visualize gathered data through
-            flexible and interactive charts
-          </List.Item>
-          <List.Item>
-            <b>Export Data</b> – allow seamless export of collected data for
-            reporting and analysis.
-          </List.Item>
-        </List>
-
-        {/* <Group mt={30}>
+          {/* <Group mt={30}>
             <Button radius="xl" size="md" className={classes.control}>
               Get started
             </Button>
@@ -56,24 +37,28 @@ export default function Hero() {
               Source code
             </Button>
           </Group> */}
-      </div>
-      <Image
-        src="/hero.svg"
-        className={classes.image}
-        alt=""
-        width={200}
-        height={300}
-      />
+        </div>
+        <Image
+          src="/home-hero.webp"
+          className={classes.image}
+          alt=""
+          width={500}
+          height={600}
+        />
+      </Container>
     </div>
     // {/* </Container> */}
   );
 }
 const useStyles = createStyles((theme) => ({
   inner: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    paddingTop: '4rem',
+    paddingTop: '0rem',
     paddingBottom: '4rem',
+    alignItems: 'center',
+    background:
+      'linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero.jpg) 50%',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
   },
 
   content: {
@@ -87,7 +72,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   title: {
-    color: theme.colors.black,
+    color: 'white',
     fontFamily: `'Greycliff CF', ${theme.fontFamily}`,
     fontSize: '44px',
     lineHeight: 1.2,
@@ -105,8 +90,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   image: {
-    width: '376px',
-    height: '356px',
+    width: '500px',
+    height: '600px',
 
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
       display: 'none',
