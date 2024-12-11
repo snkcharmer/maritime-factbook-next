@@ -7,3 +7,4 @@ export * from './lib/FactbookCategory.type';
 export * from './lib/FactbookSubCategory.type';
 export * from './lib/Route.type';
 export * from './lib/FactbookTableAssignee.type';
+export * from './lib/UserCategory.type';

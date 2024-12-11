@@ -1,4 +1,9 @@
-import { IconFolderCog, IconGauge, IconTable } from '@tabler/icons-react';
+import {
+  IconFolderCog,
+  IconGauge,
+  IconTable,
+  IconUsersGroup,
+} from '@tabler/icons-react';
 import { Code, Group, ScrollArea, Text } from '@mantine/core';
 import { LinksGroup } from './AdminLinksGroup';
 import { createStyles } from '@mantine/emotion';
@@ -25,16 +30,16 @@ export function AdminNavbar() {
       }),
     })) || [];
 
-  const managementLinks = [
-    {
-      label: 'Resource Categories',
-      link: ADMIN_ROUTES.resourceCategoriesManagement,
-    },
-    {
-      label: 'User Accounts',
-      link: ADMIN_ROUTES.userAccountsManagement,
-    },
-  ];
+  // const managementLinks = [
+  //   {
+  //     label: 'Resource Categories',
+  //     link: ADMIN_ROUTES.resourceCategoriesManagement,
+  //   },
+  //   {
+  //     label: 'User Accounts',
+  //     link: ADMIN_ROUTES.userAccountsManagement,
+  //   },
+  // ];
 
   const arrLinks = [
     { label: 'Dashboard', icon: IconGauge, link: ROUTES.dashboard },
@@ -50,10 +55,15 @@ export function AdminNavbar() {
       links: categoryLinks, // Use the dynamic category links here
     },
     {
-      label: 'Management',
-      icon: IconFolderCog,
-      links: managementLinks,
+      label: 'User Management',
+      icon: IconUsersGroup,
+      link: ADMIN_ROUTES.userAccountsManagement,
     },
+    // {
+    //   label: 'Management',
+    //   icon: IconFolderCog,
+    //   links: managementLinks,
+    // },
   ];
 
   const links = arrLinks.map((item) => (

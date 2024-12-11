@@ -36,6 +36,16 @@ export const useUser = <T>() => {
     return handleRequest<IUser[]>(`/api/user`, setLoading, setError, setData);
   };
 
+  const createUser = async (userData: Partial<IUser>) => {
+    return handleRequest<IUser>(`/api/user`, setLoading, setError, setData, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+  };
+
   return {
     user,
     loading,
@@ -44,5 +54,6 @@ export const useUser = <T>() => {
     isLoggedIn: !!user,
     logout,
     fetchAllUsers,
+    createUser,
   };
 };

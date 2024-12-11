@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  IconChevronDown,
-  IconLogout,
-  IconSettings,
-  IconSwitchHorizontal,
-} from '@tabler/icons-react';
+import { IconChevronDown, IconLogout } from '@tabler/icons-react';
 import cx from 'clsx';
 import {
   Avatar,
@@ -53,15 +48,15 @@ export function AdminHeader() {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Label>Settings</Menu.Label>
-              <Menu.Item leftSection={<IconSettings size={16} stroke={1.5} />}>
+              {/* <Menu.Label>Settings</Menu.Label> */}
+              {/* <Menu.Item leftSection={<IconSettings size={16} stroke={1.5} />}>
                 Account settings
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconSwitchHorizontal size={16} stroke={1.5} />}
               >
                 Change account
-              </Menu.Item>
+              </Menu.Item> */}
               <Menu.Item
                 leftSection={<IconLogout size={16} stroke={1.5} />}
                 onClick={() => logout()}
@@ -69,7 +64,7 @@ export function AdminHeader() {
                 Logout
               </Menu.Item>
 
-              <Menu.Divider />
+              {/* <Menu.Divider /> */}
             </Menu.Dropdown>
           </Menu>
         </Group>

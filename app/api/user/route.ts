@@ -25,12 +25,33 @@ async function fetchFromApi(endpoint: string, options: RequestInit = {}) {
 
 // POST: Create a new user
 export async function POST(req: Request) {
-  const userData = await req.json();
-  return fetchFromApi('/user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
-  });
+  try {
+    const userData = await req.json();
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: 'Failed to create table' },
+        { status: 400 }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error('Error in POST /api/user:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }
 
 // GET: Fetch all users or a specific user by ID

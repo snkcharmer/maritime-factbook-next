@@ -4,3 +4,4 @@ export * from './lib/useFbTable';
 export * from './lib/useFbCategory';
 export * from './lib/useFbSubCategory';
 export * from './lib/useFbTableAssignee';
+export * from './lib/useUserCategory';
