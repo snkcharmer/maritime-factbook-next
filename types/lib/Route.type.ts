@@ -6,6 +6,12 @@ export interface TRouteParams {
   fbCategoryTable: {
     dynamicParams: { fbCategorySlug: string; fbTableSlug: string };
   };
+  resourceCategoriesHome: {
+    dynamicParams: { fbCategorySlug: string };
+  };
+  fbTableHome: {
+    dynamicParams: { fbTableSlug: string };
+  };
 }
 
 export type TRoute =
@@ -16,6 +22,14 @@ export type TRoute =
   | {
       path: `${typeof ROUTES.assignedTablesView}`;
       dynamicParams: TRouteParams['assignedTablesView']['dynamicParams'];
+    }
+  | {
+      path: `${typeof ROUTES.resourceCategoriesHome}`;
+      dynamicParams: TRouteParams['resourceCategoriesHome']['dynamicParams'];
+    }
+  | {
+      path: `${typeof ROUTES.fbTableHome}`;
+      dynamicParams: { fbCategorySlug: string; fbTableSlug: string };
     };
 
 export type TAdminRoute =

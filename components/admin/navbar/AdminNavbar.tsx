@@ -1,9 +1,4 @@
-import {
-  IconFolderCog,
-  IconGauge,
-  IconTable,
-  IconUsersGroup,
-} from '@tabler/icons-react';
+import { IconGauge, IconTable, IconUsersGroup } from '@tabler/icons-react';
 import { Code, Group, ScrollArea, Text } from '@mantine/core';
 import { LinksGroup } from './AdminLinksGroup';
 import { createStyles } from '@mantine/emotion';

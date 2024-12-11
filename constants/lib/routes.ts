@@ -16,6 +16,7 @@ export const ADMIN_ROUTES = {
 };
 
 export const ROUTES = {
+  home: '/',
   dashboard: '/dashboard',
   login: '/login',
   registration: '/registration',
@@ -27,5 +28,11 @@ export const ROUTES = {
   },
   get activityLog() {
     return `${this.dashboard}/activity-log` as const;
+  },
+  get resourceCategoriesHome() {
+    return `/resource-category/[fbCategorySlug]` as const;
+  },
+  get fbTableHome() {
+    return `${this.resourceCategoriesHome}/[fbTableSlug]` as const;
   },
 };

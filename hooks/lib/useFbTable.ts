@@ -79,7 +79,6 @@ export const useFbTable = <T>() => {
     fbTableId: string,
     updatedData: Partial<IFbTable>
   ) => {
-    console.log('updateFbTable', { data: updatedData.data });
     return handleRequest<IFbTable>(
       `/api/fbTable/${fbTableId}`,
       setLoading,
