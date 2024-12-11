@@ -17,7 +17,10 @@ const AssignedTableView = () => {
 
   const handleSave = async (data) => {
     try {
-      await updateFbTableAssignee(id as string, data);
+      await Promise.all([
+        updateFbTableAssignee(id as string, data),
+        getFbTableAssigneeById(id as string),
+      ]);
       Toastify({ message: 'Form submitted successfully.', type: 'success' });
     } catch (error) {
       Toastify({ message: JSON.stringify(error), type: 'error' });
@@ -35,8 +38,6 @@ const AssignedTableView = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fbTableAssignee]);
-
-  console.log('data', fbTable);
 
   return (
     <Stack>

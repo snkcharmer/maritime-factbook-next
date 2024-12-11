@@ -8,8 +8,16 @@ import { DynamicTable, Toastify } from '@/components/reusable';
 import { ITableData } from '@/components/reusable/lib/DynamicTable';
 import { useFbTable, useFbTableAssignee, useUser } from '@/hooks';
 import { IFbTable, IFbTableAssignee, TUserResponse } from '@/types';
-import { ActionIcon, Button, Group, Select, Stack, Text } from '@mantine/core';
-import { IconRefresh, IconUserPlus, IconUsersGroup } from '@tabler/icons-react';
+import {
+  Button,
+  Center,
+  Group,
+  Loader,
+  Select,
+  Stack,
+  Text,
+} from '@mantine/core';
+import { IconUserPlus, IconUsersGroup } from '@tabler/icons-react';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -21,6 +29,7 @@ const TableViewer = () => {
   const [openedAssignees, setOpenedAssignees] = useState<boolean>(false);
   const { data, getFbTableBySlug, updateFbTable } = useFbTable<IFbTable>();
   const [tableData, setTableData] = useState<ITableData | null>(null);
+  const [tableSyncing, setTableSyncing] = useState<boolean>(true);
 
   const filteredUser = users?.data.filter(({ id }) => id !== user?.id);
 
@@ -32,57 +41,55 @@ const TableViewer = () => {
 
   const handleSyncTables = async () => {
     try {
-      // Fetch tables assigned to the specific fbTableId
       const assignedTables = await fetchFbTableAssigneeByFbTableId(
         data?.id || ''
       );
-      console.log('Assigned Tables:', assignedTables);
-
       if (!Array.isArray(assignedTables)) {
-        console.error(
-          'Invalid data structure for assigned tables:',
-          assignedTables
-        );
+        console.error('Invalid assignedTables:', assignedTables);
         return;
       }
 
-      // Initialize an array to hold merged rows
       const mergedTable: any[] = [];
 
-      // Iterate over each assigned table to merge data
       assignedTables.forEach((table) => {
-        if (!Array.isArray(table.data)) {
-          console.warn('Table data is not an array:', table.data);
-          return;
-        }
+        if (!Array.isArray(table.data)) return;
 
-        // Extract the first element of the data array
         const tableData = table.data[0];
-        if (!tableData || !Array.isArray(tableData.rows)) {
-          console.warn('Table rows are missing or invalid:', tableData);
-          return;
-        }
+        if (!tableData || !Array.isArray(tableData.rows)) return;
 
-        // Merge and sum numeric cells in rows
         tableData.rows.forEach((row, rowIndex) => {
-          // Ensure the row is an array
-          if (!Array.isArray(row)) {
-            console.warn(`Row at index ${rowIndex} is not an array:`, row);
-            return;
-          }
+          if (!Array.isArray(row)) return;
 
-          // Initialize or merge row data in the mergedTable
           mergedTable[rowIndex] = mergedTable[rowIndex] || [];
+
           row.forEach((cell, colIndex) => {
-            // Skip the first column (colIndex 0) or non-numeric cells
-            if (colIndex === 0 || isNaN(Number(cell))) {
-              mergedTable[rowIndex][colIndex] = cell; // Keep non-numeric cell as-is
+            if (colIndex === 0) {
+              mergedTable[rowIndex][colIndex] = cell; // Copy non-numeric cells directly
               return;
             }
 
-            // Sum up numeric cells
-            mergedTable[rowIndex][colIndex] =
-              (mergedTable[rowIndex][colIndex] || 0) + Number(cell);
+            const cellValue = Number(cell) || 0;
+            const isSynced = row[colIndex + 1]?.isSynced || false;
+            const lastSyncedValue = row[colIndex + 2]?.lastSyncedValue || 0;
+
+            if (!mergedTable[rowIndex][colIndex]) {
+              mergedTable[rowIndex][colIndex] = 0;
+            }
+
+            if (!isSynced) {
+              const delta = cellValue - lastSyncedValue;
+              mergedTable[rowIndex][colIndex] += delta;
+            }
+          });
+        });
+
+        tableData.rows.forEach((row) => {
+          row.forEach((cell, colIndex) => {
+            if (colIndex === 0) return;
+            const cellValue = Number(cell) || 0;
+
+            row[colIndex + 1] = { isSynced: true }; // Mark as synced
+            row[colIndex + 2] = { lastSyncedValue: cellValue }; // Update last synced value
           });
         });
       });
@@ -92,7 +99,6 @@ const TableViewer = () => {
         return;
       }
 
-      // Log the merged table result
       await updateFbTable(String(data?.id), {
         data: {
           headers: data?.data[0].headers,
@@ -104,9 +110,10 @@ const TableViewer = () => {
         headers: data.data[0].headers,
         rows: mergedTable,
       });
-
-      Toastify({ message: 'Table successfully merged.', type: 'success' });
+      setTableSyncing(false);
+      Toastify({ message: 'Table successfully synced.', type: 'success' });
     } catch (error) {
+      setTableSyncing(false);
       Toastify({ message: JSON.stringify(error), type: 'error' });
       console.error('Error during sync:', error);
     }
@@ -122,7 +129,10 @@ const TableViewer = () => {
   }, [fbTableSlug]);
 
   useEffect(() => {
-    if (data && !tableData) setTableData(data.data[0]);
+    if (data && !tableData) {
+      handleSyncTables();
+      setTableData(data.data[0]);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
@@ -141,47 +151,56 @@ const TableViewer = () => {
         <Text>{data?.source}</Text>
       </Stack>
       <Group justify="space-between">
-        <Group>
-          <Button
-            onClick={() => setOpenedAssignUser(true)}
-            size="xs"
-            leftSection={<IconUserPlus size={18} />}
-          >
-            Assign Table
-          </Button>
-          <Button
-            onClick={() => setOpenedAssignees(true)}
-            variant="outline"
-            size="xs"
-            leftSection={<IconUsersGroup size={18} />}
-          >
-            Assignees
-          </Button>
-        </Group>
-        <ActionIcon
+        {/* <Group> */}
+        <Button
+          onClick={() => setOpenedAssignUser(true)}
+          size="xs"
+          leftSection={<IconUserPlus size={18} />}
+        >
+          Assign Table
+        </Button>
+        {/* </Group> */}
+        <Button
+          onClick={() => setOpenedAssignees(true)}
+          variant="outline"
+          size="xs"
+          leftSection={<IconUsersGroup size={18} />}
+        >
+          Assignees
+        </Button>
+        {/* <ActionIcon
           color="green"
           variant="filled"
           aria-label="Sync Tables"
           onClick={handleSyncTables}
         >
           <IconRefresh style={{ width: '70%', height: '70%' }} stroke={1.5} />
-        </ActionIcon>
+        </ActionIcon> */}
       </Group>
-      {tableData && <DynamicTable tableData={tableData} />}
-      <Select
-        label="Select Chart Type"
-        value={chartType}
-        onChange={(value) => setChartType(value as TChartType)}
-        // data={enumToDropdownOptions(ChartTypesEnum)}
-        data={[
-          { label: 'Bar', value: 'bar' },
-          { label: 'Line', value: 'line' },
-          { label: 'Pie', value: 'pie' },
-        ]}
-        defaultValue="bar"
-      />
-      {tableData && (
-        <DynamicChart chartType={chartType || 'bar'} tableData={tableData} />
+      {tableData && !tableSyncing ? (
+        <Stack>
+          <DynamicTable tableData={tableData} />
+          <Select
+            label="Select Chart Type"
+            value={chartType}
+            onChange={(value) => setChartType(value as TChartType)}
+            // data={enumToDropdownOptions(ChartTypesEnum)}
+            data={[
+              { label: 'Bar', value: 'bar' },
+              { label: 'Line', value: 'line' },
+              { label: 'Pie', value: 'pie' },
+            ]}
+            defaultValue="bar"
+          />
+          <DynamicChart chartType={chartType || 'bar'} tableData={tableData} />
+        </Stack>
+      ) : (
+        <Center mt={120}>
+          <Group>
+            <Loader color="blue" type="dots" />
+            Table Syncing ...
+          </Group>
+        </Center>
       )}
       <AssignTableModal
         opened={openedAssignUser}

@@ -2,10 +2,10 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  params: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = await params;
+    const id = (await params).id;
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${id}`

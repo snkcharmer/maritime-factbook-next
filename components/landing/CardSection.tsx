@@ -55,7 +55,7 @@ const data = [
 
 export default function CardSection() {
   return (
-    <SimpleGrid cols={2} spacing={30}>
+    <SimpleGrid cols={4} spacing={30}>
       {data.map((item, idx) => (
         <Card key={idx} {...item} />
       ))}
@@ -65,7 +65,7 @@ export default function CardSection() {
 
 const useStyles = createStyles((theme) => ({
   card: {
-    height: 440,
+    height: 340,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',

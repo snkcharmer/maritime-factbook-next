@@ -1,5 +1,3 @@
-import { NextApiRequest } from 'next';
-
 export const handleRequest = async <T>(
   endpoint: string,
   setLoading: (loading: boolean) => void,

@@ -51,6 +51,7 @@ const DynamicTable = ({
   };
 
   useEffect(() => {
+    console.log('rendered here 4', tableData);
     setEditableTableData(tableData);
   }, [tableData]);
 
@@ -66,7 +67,7 @@ const DynamicTable = ({
         <Table.Thead>
           {/* Render main headers */}
           <Table.Tr>
-            {editableTableData.headers.map((header, index) => (
+            {editableTableData?.headers?.map((header, index) => (
               <th key={index} colSpan={header.subHeaders.length || 1}>
                 {header.label}
               </th>
@@ -75,7 +76,7 @@ const DynamicTable = ({
 
           {/* Render subheaders */}
           <Table.Tr>
-            {editableTableData.headers.map((header, index) =>
+            {editableTableData?.headers?.map((header, index) =>
               header.subHeaders.length > 0 ? (
                 header.subHeaders.map((subHeader, subIndex) => (
                   <th key={`${index}-${subIndex}`}>{subHeader}</th>
@@ -88,7 +89,7 @@ const DynamicTable = ({
         </Table.Thead>
         <Table.Tbody>
           {/* Render rows */}
-          {editableTableData.rows.map((row, rowIndex) => (
+          {editableTableData?.rows?.map((row, rowIndex) => (
             <Table.Tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td key={`${rowIndex}-${cellIndex}`}>

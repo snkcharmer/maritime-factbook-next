@@ -159,13 +159,13 @@ export function Header() {
                 Academy
               </a>
             </Group> */}
-
+            {/* 
             <Group visibleFrom="sm">
               <Button component={Link} href="/login" variant="default">
                 Log in
               </Button>
               <Button>Sign up</Button>
-            </Group>
+            </Group> */}
 
             <Burger
               opened={drawerOpened}

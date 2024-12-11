@@ -6,8 +6,7 @@ import {
   IconMessage2,
   IconUser,
 } from '@tabler/icons-react';
-import { Grid, Space, Stack, Text, ThemeIcon, Title } from '@mantine/core';
-import { Categories } from './Categories';
+import { Space, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import CardSection from './CardSection';
 import BarChart from './charts/BarChartSection';
 
@@ -70,7 +69,11 @@ export default function CategoriesSection() {
   return (
     <Stack gap={30}>
       <Title>Featured publications</Title>
-      <Grid gutter={40}>
+      <CardSection />
+      <Title>Data visualizations</Title>
+      <Space h={40} />
+      <BarChart />
+      {/* <Grid gutter={40}>
         <Grid.Col span={{ base: 12, xs: 8 }}>
           <CardSection />
           <Space h={40} />
@@ -81,7 +84,7 @@ export default function CategoriesSection() {
         <Grid.Col span={{ base: 12, xs: 4 }}>
           <Categories />
         </Grid.Col>
-      </Grid>
+      </Grid> */}
     </Stack>
   );
 }
