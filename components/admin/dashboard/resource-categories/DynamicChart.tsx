@@ -1,84 +1,96 @@
-'use client';
-import React from 'react';
+import React, { useMemo } from "react";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement,
-  LineElement,
-  ArcElement,
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-import { Bar, Line, Pie } from 'react-chartjs-2';
+} from "chart.js";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  PointElement,
-  LineElement,
-  ArcElement,
   Title,
   Tooltip,
   Legend
 );
 
-export type TChartType = 'bar' | 'line' | 'pie';
+export type TChartType = "bar" | "line" | "pie";
 
-interface ChartProps {
-  chartType: TChartType;
-  tableData: {
-    headers: { label: string; subHeaders: string[] }[];
-    rows: string[][];
-  };
-}
-
-const DynamicChart = ({ chartType, tableData }: ChartProps) => {
-  const validHeaders = tableData.headers.filter(
-    (header) =>
-      header.label.trim() !== '' &&
-      header.subHeaders.some((sub) => sub.trim() !== '')
+const DynamicChart = ({ tableData }: { tableData: any }) => {
+  const xLabels = useMemo(
+    () => tableData?.headers[0]?.subHeaders?.slice(1) || [],
+    [tableData]
   );
 
-  const labels = validHeaders
-    .map((header) => header.subHeaders.filter((sub) => sub.trim() !== ''))
-    .flat();
-
-  const validSubHeaderIndices = tableData.headers
-    .map((header, headerIndex) =>
-      header.subHeaders
-        .map((sub, subIndex) => (sub.trim() !== '' ? subIndex : null))
-        .filter((index) => index !== null)
-        .map((subIndex) => headerIndex * header.subHeaders.length + subIndex)
-    )
-    .flat();
-
-  const datasets = tableData.rows.map((row, rowIndex) => ({
-    label: row[0],
-    data: validSubHeaderIndices.map((index) => Number(row[index + 1])),
-    backgroundColor: `rgba(${50 * rowIndex}, ${100 + rowIndex * 30}, ${
-      150 + rowIndex * 20
-    }, 0.5)`,
-    borderColor: `rgba(${50 * rowIndex}, ${100 + rowIndex * 30}, ${
-      150 + rowIndex * 20
-    }, 1)`,
-    borderWidth: 1,
-  }));
+  const datasets = useMemo(() => {
+    return (
+      tableData?.rows?.map((row: any, rowIndex: number) => ({
+        label: row[0],
+        data: row.slice(1).map((value: any) => Number(value) || 0),
+        backgroundColor: getColor(rowIndex),
+        borderColor: getColor(rowIndex),
+        borderWidth: 1,
+      })) || []
+    );
+  }, [tableData]);
 
   const data = {
-    labels,
-    datasets: chartType === 'pie' ? datasets.slice(0, 1) : datasets,
+    labels: xLabels,
+    datasets,
   };
 
-  const ChartComponent = {
-    bar: Bar,
-    line: Line,
-    pie: Pie,
-  }[chartType];
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Dynamic Bar Chart",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Years",
+        },
+      },
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Values",
+        },
+      },
+    },
+  };
 
-  return <ChartComponent data={data} />;
+  return (
+    <div style={{ width: "100%", height: "500px" }}>
+      <Bar data={data} />
+    </div>
+  );
+};
+
+const getColor = (index: number) => {
+  const colors = [
+    "#4285F4",
+    "#FBBC05",
+    "#EA4335",
+    "#34A853",
+    "#FF9900",
+    "#AA46BE",
+  ];
+  return colors[index % colors.length];
 };
 
 export default DynamicChart;

@@ -238,19 +238,19 @@ const TableViewer = () => {
           ) : (
             <UpsertTableMaker data={tableData} onSave={saveTable} />
           )}
-          <Select
+          {/* <Select
             label="Select Chart Type"
             value={chartType}
             onChange={(value) => setChartType(value as TChartType)}
-            // data={enumToDropdownOptions(ChartTypesEnum)}
+            data={enumToDropdownOptions(ChartTypesEnum)}
             data={[
               { label: "Bar", value: "bar" },
               { label: "Line", value: "line" },
               { label: "Pie", value: "pie" },
             ]}
             defaultValue="bar"
-          />
-          <DynamicChart chartType={chartType || "bar"} tableData={tableData} />
+          /> */}
+          <DynamicChart tableData={tableData} />
         </Stack>
       ) : (
         <Center mt={120}>

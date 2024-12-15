@@ -52,6 +52,8 @@ const DynamicTable = ({
     setEditableTableData(tableData);
   }, [tableData]);
 
+  console.log(editableTableData?.headers);
+
   return (
     <div>
       <Table
@@ -62,15 +64,17 @@ const DynamicTable = ({
         withRowBorders
       >
         <Table.Thead>
-          {/* Render main headers */}
+          {/* Main Header */}
           <Table.Tr>
-            {editableTableData?.headers?.map((header, index) => (
-              <th key={index} colSpan={header.subHeaders.length || 1}>
-                {header.label}
-              </th>
-            ))}
+            {editableTableData?.headers.map(
+              (header, index) =>
+                header.subHeaders.length && (
+                  <th key={index} colSpan={header.subHeaders.length || 1}>
+                    {header.label}
+                  </th>
+                )
+            )}
           </Table.Tr>
-
           {/* Render subheaders */}
           <Table.Tr>
             {editableTableData?.headers?.map((header, index) =>
