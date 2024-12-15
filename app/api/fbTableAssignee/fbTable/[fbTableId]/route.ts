@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
@@ -10,13 +10,6 @@ export async function GET(
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbTableAssignee/fbTable/${fbTableId}`
     );
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `fbTableAssignee with ID ${fbTableId} not found` },
-        { status: 404 }
-      );
-    }
 
     const data = await response.json();
     return NextResponse.json(data);

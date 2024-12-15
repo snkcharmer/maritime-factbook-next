@@ -1,5 +1,5 @@
-import { IFbTableAssignee } from '@/types';
-import { createPath, ROUTES } from '@/utils/route';
+import { IFbTableAssignee } from "@/types";
+import { createPath, ROUTES } from "@/utils/route";
 import {
   ActionIcon,
   Card,
@@ -8,8 +8,8 @@ import {
   rem,
   SimpleGrid,
   Text,
-} from '@mantine/core';
-import { IconDots, IconEdit } from '@tabler/icons-react';
+} from "@mantine/core";
+import { IconDots, IconEdit } from "@tabler/icons-react";
 
 interface IAssignedTablesProps {
   data: IFbTableAssignee[];
@@ -18,13 +18,11 @@ interface IAssignedTablesProps {
 const AssignedTables = (props: IAssignedTablesProps) => {
   const { data = [] } = props;
 
-  console.log(data);
-
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2, lg: 3 }}
-      spacing={{ base: 10, sm: 'xl' }}
-      verticalSpacing={{ base: 'md', sm: 'xl' }}
+      spacing={{ base: 10, sm: "xl" }}
+      verticalSpacing={{ base: "md", sm: "xl" }}
     >
       {data?.map((row, idx) => {
         return (

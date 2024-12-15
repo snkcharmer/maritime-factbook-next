@@ -21,7 +21,8 @@ body {
 }
 
 table tr,
-table td {
+table td,
+table th {
   border: 1px solid #000;
   padding: 4px 1rem;
 }

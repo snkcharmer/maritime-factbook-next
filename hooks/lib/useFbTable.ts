@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { IFbTable } from '@/types';
-import { handleRequest } from '@/utils/handleRequest';
+import { useState } from "react";
+import { IFbTable } from "@/types";
+import { handleRequest } from "@/utils/handleRequest";
 
 export const useFbTable = <T>() => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -65,9 +65,9 @@ export const useFbTable = <T>() => {
       setError,
       setData,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(fbTableData),
       }
@@ -85,11 +85,31 @@ export const useFbTable = <T>() => {
       setError,
       setData,
       {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ data: updatedData.data }),
+      }
+    );
+  };
+
+  // Update an existing fbTable and with all fbTableAssignees
+  const updateFbTableAndAssignees = async (
+    fbTableId: string,
+    data: Partial<IFbTable>
+  ) => {
+    return handleRequest<IFbTable>(
+      `/api/fbTable/${fbTableId}/sync-assignees`,
+      setLoading,
+      setError,
+      setData,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       }
     );
   };
@@ -102,7 +122,7 @@ export const useFbTable = <T>() => {
       setError,
       setData,
       {
-        method: 'DELETE',
+        method: "DELETE",
       }
     );
   };
@@ -118,6 +138,7 @@ export const useFbTable = <T>() => {
     getFbTableById,
     createFbTable,
     updateFbTable,
+    updateFbTableAndAssignees,
     deleteFbTable,
   };
 };

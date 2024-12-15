@@ -1,2 +1,3 @@
-import DynamicTableMaker from './DynamicTablerMaker';
-export { DynamicTableMaker };
+import DynamicTableMaker from "./DynamicTableMaker";
+import UpsertTableMaker from "./UpsertTableMaker";
+export { DynamicTableMaker, UpsertTableMaker };

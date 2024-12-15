@@ -1,6 +1,6 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import { Table, Button } from '@mantine/core';
+"use client";
+import React, { useEffect, useState } from "react";
+import { Table, Button, TextInput } from "@mantine/core";
 
 interface IHeader {
   label: string;
@@ -14,8 +14,8 @@ export interface ITableData {
 
 interface DynamicTableProps {
   tableData: ITableData;
-  isEdit?: boolean; // Prop to enable/disable edit mode
-  onSave?: (updatedTableData: ITableData) => void; // Callback to save updated data
+  isEdit?: boolean;
+  onSave?: (updatedTableData: ITableData) => void;
 }
 
 const DynamicTable = ({
@@ -26,7 +26,6 @@ const DynamicTable = ({
   const [editableTableData, setEditableTableData] =
     useState<ITableData>(tableData);
 
-  // Handle cell change
   const handleCellChange = (
     rowIndex: number,
     cellIndex: number,
@@ -41,17 +40,15 @@ const DynamicTable = ({
     });
   };
 
-  // Handle save
   const handleSave = () => {
     if (onSave) {
-      onSave(editableTableData); // Trigger the save callback
+      onSave(editableTableData);
     } else {
-      console.log('Saved table data:', editableTableData); // Log the saved data
+      console.log("Saved table data:", editableTableData);
     }
   };
 
   useEffect(() => {
-    console.log('rendered here 4', tableData);
     setEditableTableData(tableData);
   }, [tableData]);
 
@@ -93,22 +90,17 @@ const DynamicTable = ({
             <Table.Tr key={rowIndex}>
               {row.map((cell, cellIndex) => (
                 <td key={`${rowIndex}-${cellIndex}`}>
-                  {isEdit ? (
-                    <input
-                      type="text"
+                  {isEdit && cellIndex > 0 ? (
+                    <TextInput
+                      type="number"
                       value={cell}
                       onChange={(e) =>
                         handleCellChange(rowIndex, cellIndex, e.target.value)
                       }
-                      style={{
-                        border: 'none',
-                        width: '100%',
-                        background: 'transparent',
-                        outline: 'none',
-                      }}
+                      min={0}
                     />
                   ) : (
-                    cell // Display plain text when not in edit mode
+                    cell
                   )}
                 </td>
               ))}
@@ -117,9 +109,8 @@ const DynamicTable = ({
         </Table.Tbody>
       </Table>
 
-      {/* Save Button */}
       {isEdit && (
-        <Button onClick={handleSave} style={{ marginTop: '10px' }}>
+        <Button onClick={handleSave} style={{ marginTop: "10px" }}>
           Save Table
         </Button>
       )}
