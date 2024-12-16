@@ -52,11 +52,8 @@ const TableViewer = () => {
   const handleSyncTables = async () => {
     try {
       const assignedTables = await fetchFbTableAssigneeByFbTableId(
-        fbTableData?.id || ""
+        data?.id || ""
       );
-
-      if (!assignedTables) return setTableSyncing(false);
-
       if (!Array.isArray(assignedTables)) {
         console.error("Invalid assignedTables:", assignedTables);
         return;
@@ -107,26 +104,27 @@ const TableViewer = () => {
         });
       });
 
-      if (!fbTableData?.data?.[0]) {
-        console.error("Invalid `data` structure:", fbTableData);
+      if (!data?.data?.[0]) {
+        console.error("Invalid `data` structure:", data);
         return;
       }
-      await updateFbTable(String(fbTableData?.id), {
+
+      await updateFbTable(String(data?.id), {
         data: {
-          headers: fbTableData?.data[0].headers,
+          headers: data?.data[0].headers,
           rows: mergedTable,
         },
       });
 
       setTableData({
-        headers: fbTableData.data[0].headers,
+        headers: data.data[0].headers,
         rows: mergedTable,
       });
       setTableSyncing(false);
-      Toastify({ message: "Table successfully synced.", type: "success" });
+      // Toastify({ message: 'Table successfully synced.', type: 'success' });
     } catch (error) {
       setTableSyncing(false);
-      Toastify({ message: JSON.stringify(error), type: "error" });
+      // Toastify({ message: JSON.stringify(error), type: 'error' });
       console.error("Error during sync:", error);
     }
   };
