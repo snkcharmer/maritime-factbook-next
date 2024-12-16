@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import {
   IconBook,
   IconChartPie3,
@@ -7,7 +7,7 @@ import {
   IconCoin,
   IconFingerprint,
   IconNotification,
-} from '@tabler/icons-react';
+} from "@tabler/icons-react";
 import {
   Box,
   Burger,
@@ -23,42 +23,42 @@ import {
   ThemeIcon,
   UnstyledButton,
   useMantineTheme,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { createStyles } from '@mantine/emotion';
-import Link from 'next/link';
-import Image from 'next/image';
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { createStyles } from "@mantine/emotion";
+import Link from "next/link";
+import Image from "next/image";
 
 const mockdata = [
   {
     icon: IconCode,
-    title: 'Open source',
-    description: 'This Pokémon’s cry is very loud and distracting',
+    title: "Open source",
+    description: "This Pokémon’s cry is very loud and distracting",
   },
   {
     icon: IconCoin,
-    title: 'Free for everyone',
-    description: 'The fluid of Smeargle’s tail secretions changes',
+    title: "Free for everyone",
+    description: "The fluid of Smeargle’s tail secretions changes",
   },
   {
     icon: IconBook,
-    title: 'Documentation',
-    description: 'Yanma is capable of seeing 360 degrees without',
+    title: "Documentation",
+    description: "Yanma is capable of seeing 360 degrees without",
   },
   {
     icon: IconFingerprint,
-    title: 'Security',
-    description: 'The shell’s rounded shape and the grooves on its.',
+    title: "Security",
+    description: "The shell’s rounded shape and the grooves on its.",
   },
   {
     icon: IconChartPie3,
-    title: 'Analytics',
-    description: 'This Pokémon uses its flying ability to quickly chase',
+    title: "Analytics",
+    description: "This Pokémon uses its flying ability to quickly chase",
   },
   {
     icon: IconNotification,
-    title: 'Notifications',
-    description: 'Combusken battles with the intensely hot flames it spews',
+    title: "Notifications",
+    description: "Combusken battles with the intensely hot flames it spews",
   },
 ];
 
@@ -223,38 +223,38 @@ export function Header() {
 
 const useStyles = createStyles((theme) => ({
   header: {
-    paddingTop: '0.8rem',
-    paddingBottom: '0.8rem',
+    paddingTop: "0.8rem",
+    paddingBottom: "0.8rem",
     borderBottom: `1px solid ${theme.colors.gray[3]}`,
   },
 
   link: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    textDecoration: 'none',
+    textDecoration: "none",
     fontWeight: 500,
     fontSize: theme.fontSizes.sm,
     color: theme.colors.black,
 
     [`@media (max-width: ${theme.breakpoints.sm})`]: {
-      height: '42px',
-      width: '100%',
+      height: "42px",
+      width: "100%",
     },
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.colors.gray[0],
     },
   },
 
   subLink: {
-    width: '100%',
+    width: "100%",
     padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     borderRadius: theme.radius.md,
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.colors.gray[0],
     },
   },

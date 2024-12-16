@@ -1,7 +1,7 @@
-'use client';
-import { Container, Text, Title } from '@mantine/core';
-import { createStyles } from '@mantine/emotion';
-import Image from 'next/image';
+"use client";
+import { Container, Text, Title } from "@mantine/core";
+import { createStyles } from "@mantine/emotion";
+import Image from "next/image";
 
 export default function Hero() {
   const { classes } = useStyles();
@@ -11,9 +11,11 @@ export default function Hero() {
       <Container size="lg" className="flex items-center justify-between">
         <div className={classes.content}>
           <Title className={classes.title}>
-            Welcome to The Philippine Maritime Manpower Factbook!
+            Welcome to The
+            <br />
+            Philippine Maritime Manpower Factbook!
           </Title>
-          <Text c="white" mt="md">
+          <Text c="white" mt="md" className="text-justify">
             The Philippine Maritime Manpower Factbook is a portal containing
             consolidated relevant and updated maritime industry-related data and
             statistics that seeks to provide a picture of the global and
@@ -52,34 +54,34 @@ export default function Hero() {
 }
 const useStyles = createStyles((theme) => ({
   inner: {
-    paddingTop: '0rem',
-    paddingBottom: '4rem',
-    alignItems: 'center',
+    paddingTop: "0rem",
+    paddingBottom: "4rem",
+    alignItems: "center",
     background:
-      'linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero.jpg) 50%',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
+      "linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero.jpg) 50%",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
   },
 
   content: {
-    maxWidth: '480px',
+    maxWidth: "480px",
     marginRight: `calc(${theme.spacing.xl} * 3)`,
 
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      maxWidth: '100%',
+      maxWidth: "100%",
       marginRight: 0,
     },
   },
 
   title: {
-    color: 'white',
+    color: "white",
     fontFamily: `'Greycliff CF', ${theme.fontFamily}`,
-    fontSize: '44px',
+    fontSize: "44px",
     lineHeight: 1.2,
     fontWeight: 900,
 
     [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      fontSize: '28px',
+      fontSize: "28px",
     },
   },
 
@@ -90,18 +92,18 @@ const useStyles = createStyles((theme) => ({
   },
 
   image: {
-    width: '500px',
-    height: '600px',
+    width: "500px",
+    height: "600px",
 
     [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      display: 'none',
+      display: "none",
     },
   },
 
   highlight: {
-    position: 'relative',
+    position: "relative",
     backgroundColor: theme.colors.blue[0], // Use Mantine's predefined colors
     borderRadius: theme.radius.sm,
-    padding: '4px 12px',
+    padding: "4px 12px",
   },
 }));
