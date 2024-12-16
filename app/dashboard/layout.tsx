@@ -1,12 +1,12 @@
-'use client';
-import { AdminNavbar } from '@/components/admin/navbar/AdminNavbar';
-import { AdminHeader } from '@/components/admin/header/AdminHeader';
-import { AppShell, Burger, Container } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import React from 'react';
-import { useUser } from '@/hooks';
-import { UserRoleEnum } from '@/context/enum';
-import { DataProviderNavbar } from '@/components/data-provider/navbar/DataProviderNavbar';
+"use client";
+import { AdminNavbar } from "@/components/admin/navbar/AdminNavbar";
+import { AdminHeader } from "@/components/admin/header/AdminHeader";
+import { AppShell, Burger, Container } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import React from "react";
+import { useUser } from "@/hooks";
+import { UserRoleEnum } from "@/context/enum";
+import { DataProviderNavbar } from "@/components/data-provider/navbar/DataProviderNavbar";
 
 export default function Admin({ children }: { children: React.ReactNode }) {
   const { user } = useUser();
@@ -16,17 +16,16 @@ export default function Admin({ children }: { children: React.ReactNode }) {
     <AppShell
       navbar={{
         width: 300,
-        breakpoint: 'sm',
+        breakpoint: "sm",
         collapsed: { mobile: !opened },
       }}
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-        <AdminHeader />
+        <AdminHeader opened={opened} toggle={toggle} />
       </AppShell.Header>
 
-      <AppShell.Navbar>
+      <AppShell.Navbar className="w-auto">
         {user?.role === UserRoleEnum.ADMIN && <AdminNavbar />}
         {user?.role === UserRoleEnum.DATA_PROVIDER && <DataProviderNavbar />}
       </AppShell.Navbar>

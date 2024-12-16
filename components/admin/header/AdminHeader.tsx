@@ -1,18 +1,24 @@
-import { useState } from 'react';
-import { IconChevronDown, IconLogout } from '@tabler/icons-react';
-import cx from 'clsx';
+import { useState } from "react";
+import { IconChevronDown, IconLogout } from "@tabler/icons-react";
+import cx from "clsx";
 import {
   Avatar,
+  Burger,
   Container,
   Group,
   Menu,
   Text,
   UnstyledButton,
-} from '@mantine/core';
-import { createStyles } from '@mantine/emotion';
-import { useUser } from '@/hooks';
+} from "@mantine/core";
+import { createStyles } from "@mantine/emotion";
+import { useUser } from "@/hooks";
 
-export function AdminHeader() {
+interface IAdminHeaderProps {
+  opened: boolean;
+  toggle: () => void;
+}
+
+export function AdminHeader({ opened, toggle }: IAdminHeaderProps) {
   const { logout, user } = useUser();
   const { classes } = useStyles();
   const [userMenuOpened, setUserMenuOpened] = useState<boolean>(false);
@@ -21,13 +27,11 @@ export function AdminHeader() {
     <div className={classes.header}>
       <Container className={classes.mainSection} size="md" maw="100%">
         <Group justify="end">
-          {/*
-          <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" /> */}
-
+          <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
           <Menu
             width={260}
             position="bottom-end"
-            transitionProps={{ transition: 'pop-top-right' }}
+            transitionProps={{ transition: "pop-top-right" }}
             onClose={() => setUserMenuOpened(false)}
             onOpen={() => setUserMenuOpened(true)}
             withinPortal
@@ -87,14 +91,14 @@ const useStyles = createStyles((theme) => ({
     color: theme.black,
     padding: `${theme.spacing.xs} ${theme.spacing.sm}`,
     borderRadius: theme.radius.sm,
-    transition: 'background-color 100ms ease',
+    transition: "background-color 100ms ease",
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.white,
     },
 
     [`@media (max-width: ${theme.breakpoints.xs})`]: {
-      display: 'none',
+      display: "none",
     },
   },
 
@@ -103,31 +107,31 @@ const useStyles = createStyles((theme) => ({
   },
 
   tabsList: {
-    '&::before': {
-      display: 'none',
+    "&::before": {
+      display: "none",
     },
   },
 
   tab: {
     fontWeight: 500,
-    height: '38px',
-    backgroundColor: 'transparent',
-    position: 'relative',
-    bottom: '-1px',
+    height: "38px",
+    backgroundColor: "transparent",
+    position: "relative",
+    bottom: "-1px",
 
-    '&::before, &::after': {
+    "&::before, &::after": {
       backgroundColor: theme.colors.gray[2],
       content: '""',
     },
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.colors.gray[1],
     },
 
-    '&[data-active]': {
+    "&[data-active]": {
       backgroundColor: theme.white,
       borderColor: theme.colors.gray[2],
-      borderBottomColor: 'transparent',
+      borderBottomColor: "transparent",
     },
   },
 }));
