@@ -15,7 +15,7 @@ export default function Hero() {
             <br />
             Philippine Maritime Manpower Factbook!
           </Title>
-          <Text c="white" mt="md" className="text-justify">
+          <Text c="white" mt="md" className="text-justify" size="xl">
             The Philippine Maritime Manpower Factbook is a portal containing
             consolidated relevant and updated maritime industry-related data and
             statistics that seeks to provide a picture of the global and
