@@ -4,66 +4,119 @@ import {
   IconBrandTwitter,
   IconBrandYoutube,
 } from '@tabler/icons-react';
-import { ActionIcon, Container, Group, Text } from '@mantine/core';
+import { ActionIcon, Container, Group, SimpleGrid, Text } from '@mantine/core';
 import { createStyles } from '@mantine/emotion';
 import Image from 'next/image';
+import Link from 'next/link';
 
-const data = [
-  {
-    title: 'About',
-    links: [{ label: 'Forums', link: '#' }],
-  },
-  {
-    title: 'Categories',
-    links: [
-      { label: 'Contribute', link: '#' },
-      { label: 'Media assets', link: '#' },
-      { label: 'Changelog', link: '#' },
-      { label: 'Releases', link: '#' },
-    ],
-  },
-  {
-    title: 'Community',
-    links: [
-      { label: 'Join Discord', link: '#' },
-      { label: 'Follow on Twitter', link: '#' },
-      { label: 'Email newsletter', link: '#' },
-      { label: 'GitHub discussions', link: '#' },
-    ],
-  },
-];
+// const data = [
+//   {
+//     title: 'About',
+//     links: [{ label: 'Forums', link: '#' }],
+//   },
+//   {
+//     title: 'Categories',
+//     links: [
+//       { label: 'Contribute', link: '#' },
+//       { label: 'Media assets', link: '#' },
+//       { label: 'Changelog', link: '#' },
+//       { label: 'Releases', link: '#' },
+//     ],
+//   },
+//   {
+//     title: 'Community',
+//     links: [
+//       { label: 'Join Discord', link: '#' },
+//       { label: 'Follow on Twitter', link: '#' },
+//       { label: 'Email newsletter', link: '#' },
+//       { label: 'GitHub discussions', link: '#' },
+//     ],
+//   },
+// ];
 
 export default function Footer() {
   const { classes } = useStyles();
 
-  const groups = data.map((group) => {
-    const links = group.links.map((link, index) => (
-      <Text<'a'>
-        key={index}
-        className={classes.link}
-        component="a"
-        href={link.link}
-        onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </Text>
-    ));
+  // const groups = data.map((group) => {
+  //   const links = group.links.map((link, index) => (
+  //     <Text<'a'>
+  //       key={index}
+  //       className={classes.link}
+  //       component="a"
+  //       href={link.link}
+  //       onClick={(event) => event.preventDefault()}
+  //     >
+  //       {link.label}
+  //     </Text>
+  //   ));
 
-    return (
-      <div className={classes.wrapper} key={group.title}>
-        <Text className={classes.title}>{group.title}</Text>
-        {links}
-      </div>
-    );
-  });
+  //   return (
+  //     <div className={classes.wrapper} key={group.title}>
+  //       <Text className={classes.title}>{group.title}</Text>
+  //       {links}
+  //     </div>
+  //   );
+  // });
 
   return (
     <footer className={classes.footer}>
       <Container className={classes.inner} size="lg">
-        <div className={classes.logo}>
-          <Image src="/bagong-pilipinas.png" alt="" width={150} height={150} />
-        </div>
-        <div className={classes.groups}>{groups}</div>
+        <SimpleGrid
+          cols={{ base: 3, xs: 4, sm: 5, md: 6, lg: 7 }}
+          className="items-center"
+        >
+          <Link href="https://tesda.gov.ph/" className={classes.logo}>
+            <Image
+              src="/bagong-pilipinas.png"
+              alt=""
+              width={140}
+              height={140}
+            />
+          </Link>
+          <Link
+            href="https://dmw.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/dmw.png" alt="dmw" width={140} height={140} />
+          </Link>
+          <Link
+            href="https://marina.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/marina.png" alt="marina" width={140} height={140} />
+          </Link>
+          <Link
+            href="https://coastguard.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/pcg.png" alt="pcg" width={140} height={140} />
+          </Link>
+          <Link
+            href="https://ched.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/ched.png" alt="ched" width={140} height={140} />
+          </Link>
+          <Link
+            href="https://owwa.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/owwa.png" alt="owwa" width={140} height={140} />
+          </Link>
+          <Link
+            href="https://www.bsp.gov.ph/"
+            className={classes.logo}
+            target="_blank"
+          >
+            <Image src="/bsp.png" alt="bsp" width={140} height={140} />
+          </Link>
+        </SimpleGrid>
+        {/* <div className={classes.groups}>{groups}</div> */}
       </Container>
       <Container className={classes.afterFooter} size="lg">
         <Text c="dimmed" size="sm">

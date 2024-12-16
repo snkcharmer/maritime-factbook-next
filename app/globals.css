@@ -106,7 +106,7 @@ table th {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: linear-gradient(180deg, #101e47, #000);
+  background: linear-gradient(180deg, #0041ff, #000);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
   backdrop-filter: saturate(180%) blur(20px);
   color: white;

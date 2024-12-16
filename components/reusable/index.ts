@@ -6,6 +6,7 @@ import FakeSkeleton from './lib/faker/FakeSkeleton';
 import NoData from './lib/NoData';
 import Toastify from './lib/Toastify';
 import DynamicTable from './lib/DynamicTable';
+import SearchableAccordion from './lib/SearchableAccordion';
 
 export * from './lib/Logo';
 export * from './lib/UserButton';
@@ -18,4 +19,5 @@ export {
   NoData,
   Toastify,
   DynamicTable,
+  SearchableAccordion,
 };

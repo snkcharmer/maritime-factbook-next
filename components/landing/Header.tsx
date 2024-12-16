@@ -1,90 +1,69 @@
-"use client";
-import {
-  IconBook,
-  IconChartPie3,
-  IconChevronDown,
-  IconCode,
-  IconCoin,
-  IconFingerprint,
-  IconNotification,
-} from "@tabler/icons-react";
+'use client';
 import {
   Box,
-  Burger,
-  Button,
   Center,
-  Collapse,
   Container,
   Divider,
-  Drawer,
   Group,
-  ScrollArea,
+  HoverCard,
+  SimpleGrid,
   Text,
   ThemeIcon,
   UnstyledButton,
   useMantineTheme,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { createStyles } from "@mantine/emotion";
-import Link from "next/link";
-import Image from "next/image";
-
-const mockdata = [
-  {
-    icon: IconCode,
-    title: "Open source",
-    description: "This Pokémon’s cry is very loud and distracting",
-  },
-  {
-    icon: IconCoin,
-    title: "Free for everyone",
-    description: "The fluid of Smeargle’s tail secretions changes",
-  },
-  {
-    icon: IconBook,
-    title: "Documentation",
-    description: "Yanma is capable of seeing 360 degrees without",
-  },
-  {
-    icon: IconFingerprint,
-    title: "Security",
-    description: "The shell’s rounded shape and the grooves on its.",
-  },
-  {
-    icon: IconChartPie3,
-    title: "Analytics",
-    description: "This Pokémon uses its flying ability to quickly chase",
-  },
-  {
-    icon: IconNotification,
-    title: "Notifications",
-    description: "Combusken battles with the intensely hot flames it spews",
-  },
-];
+} from '@mantine/core';
+import { createStyles } from '@mantine/emotion';
+import Link from 'next/link';
+import Image from 'next/image';
+import { IconChevronDown, IconDatabase } from '@tabler/icons-react';
+import { ROUTES } from '@/constants';
+import { useFbCategory } from '@/hooks';
+import { TFbCategoryResponse } from '@/types';
+import { createPath } from '@/utils/route';
+import { useState, useEffect } from 'react';
+import { ICardItem, staticCardItems } from './CategoryList';
 
 export function Header() {
-  const { classes } = useStyles();
-
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
-    useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
+  const { classes } = useStyles();
+  const { data, fetchFbCategories } = useFbCategory<TFbCategoryResponse>();
+  const [cardItems, setCardItems] = useState<ICardItem[]>([]);
 
-  const links = mockdata.map((item) => (
-    <UnstyledButton className={classes.subLink} key={item.title}>
-      <Group wrap="nowrap" align="flex-start">
+  useEffect(() => {
+    fetchFbCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (data?.data) {
+      const mergedItems = data.data.map((item, index) => ({
+        title: item.name,
+        icon: staticCardItems[index]?.icon || IconDatabase, // Use corresponding static icon or default
+        href: createPath({
+          path: ROUTES.resourceCategoriesHome,
+          dynamicParams: { fbCategorySlug: item.slug },
+        }),
+        slug: item.slug,
+      }));
+      setCardItems(mergedItems);
+    }
+  }, [data]);
+
+  const links = cardItems.map((item, i) => (
+    <UnstyledButton
+      className={classes.subLink}
+      key={i}
+      component="a"
+      href={item.href}
+    >
+      <Group wrap="nowrap">
         <ThemeIcon size={34} variant="default" radius="md">
           <item.icon size={22} color={theme.colors.blue[6]} />
         </ThemeIcon>
 
-        <div>
-          <Text size="sm" fw={500}>
-            {item.title}
-          </Text>
-          <Text size="xs" c="dimmed">
-            {item.description}
-          </Text>
-        </div>
+        <Text size="sm" fw={500}>
+          {item.title}
+        </Text>
       </Group>
     </UnstyledButton>
   ));
@@ -101,7 +80,7 @@ export function Header() {
               </Group>
             </Link>
 
-            {/* <Group h="100%" gap={0} visibleFrom="sm">
+            <Group h="100%" gap={0} visibleFrom="sm">
               <Link href="/" className={classes.link}>
                 Home
               </Link>
@@ -116,7 +95,7 @@ export function Header() {
                   <a href="#" className={classes.link}>
                     <Center inline>
                       <Box component="span" mr={5}>
-                        Features
+                        Categories
                       </Box>
                       <IconChevronDown size={16} color={theme.colors.blue[6]} />
                     </Center>
@@ -125,10 +104,10 @@ export function Header() {
 
                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
                   <Group justify="space-between" px="md">
-                    <Text fw={500}>Features</Text>
-                    <Anchor href="#" fz="xs">
+                    <Text fw={500}>Categories</Text>
+                    {/* <Anchor href="#" fz="xs">
                       View all
-                    </Anchor>
+                    </Anchor> */}
                   </Group>
 
                   <Divider my="sm" />
@@ -137,7 +116,7 @@ export function Header() {
                     {links}
                   </SimpleGrid>
 
-                  <div className={classes.dropdownFooter}>
+                  {/* <div className={classes.dropdownFooter}>
                     <Group justify="space-between">
                       <div>
                         <Text fw={500} fz="sm">
@@ -149,16 +128,19 @@ export function Header() {
                       </div>
                       <Button variant="default">Get started</Button>
                     </Group>
-                  </div>
+                  </div> */}
                 </HoverCard.Dropdown>
               </HoverCard>
-              <a href="#" className={classes.link}>
-                Learn
+              <a href="#https://nmp.gov.ph/" className={classes.link}>
+                About NMP
               </a>
-              <a href="#" className={classes.link}>
-                Academy
+              <a
+                href="https://nmp.gov.ph/verification-of-certificate/contact/"
+                className={classes.link}
+              >
+                Contact Us
               </a>
-            </Group> */}
+            </Group>
             {/* 
             <Group visibleFrom="sm">
               <Button component={Link} href="/login" variant="default">
@@ -166,95 +148,47 @@ export function Header() {
               </Button>
               <Button>Sign up</Button>
             </Group> */}
-
-            <Burger
-              opened={drawerOpened}
-              onClick={toggleDrawer}
-              hiddenFrom="sm"
-            />
           </Group>
         </Container>
       </header>
-
-      <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        hiddenFrom="sm"
-        zIndex={1000000}
-      >
-        <ScrollArea h="calc(100vh - 80px" mx="-md">
-          <Divider my="sm" />
-
-          <a href="#" className={classes.link}>
-            Home
-          </a>
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center inline>
-              <Box component="span" mr={5}>
-                Features
-              </Box>
-              <IconChevronDown size={16} color={theme.colors.blue[6]} />
-            </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
-
-          <Divider my="sm" />
-
-          <Group justify="center" grow pb="xl" px="md">
-            <Button href="/login" component={Link} variant="default">
-              Log in
-            </Button>
-            <Button>Sign up</Button>
-          </Group>
-        </ScrollArea>
-      </Drawer>
     </>
   );
 }
 
 const useStyles = createStyles((theme) => ({
   header: {
-    paddingTop: "0.8rem",
-    paddingBottom: "0.8rem",
+    paddingTop: '0.8rem',
+    paddingBottom: '0.8rem',
     borderBottom: `1px solid ${theme.colors.gray[3]}`,
   },
 
   link: {
-    display: "flex",
-    alignItems: "center",
-    height: "100%",
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    textDecoration: "none",
+    textDecoration: 'none',
     fontWeight: 500,
     fontSize: theme.fontSizes.sm,
     color: theme.colors.black,
 
     [`@media (max-width: ${theme.breakpoints.sm})`]: {
-      height: "42px",
-      width: "100%",
+      height: '42px',
+      width: '100%',
     },
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: theme.colors.gray[0],
     },
   },
 
   subLink: {
-    width: "100%",
+    width: '100%',
     padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     borderRadius: theme.radius.md,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor: theme.colors.gray[0],
     },
   },

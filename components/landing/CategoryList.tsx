@@ -16,14 +16,14 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-interface ICardItem {
+export interface ICardItem {
   title: string;
   icon: Icon;
   href: string;
   slug: string;
 }
 
-const staticCardItems = [
+export const staticCardItems = [
   {
     icon: IconDatabase,
   },
