@@ -1,7 +1,7 @@
 "use client";
 import { AdminNavbar } from "@/components/admin/navbar/AdminNavbar";
 import { AdminHeader } from "@/components/admin/header/AdminHeader";
-import { AppShell, Burger, Container } from "@mantine/core";
+import { AppShell, Container } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
 import { useUser } from "@/hooks";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Grid, GridCol, Select, SimpleGrid, Stack, Title } from "@mantine/core";
+import { Grid, GridCol, Select, Stack, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
 // import { categoryData } from "./ContextData";
 import { useFbCategory, useFbTable } from "@/hooks";
