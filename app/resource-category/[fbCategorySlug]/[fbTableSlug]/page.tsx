@@ -165,6 +165,8 @@ const TableViewer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  console.log("tableData", tableData);
+
   return (
     <Stack>
       <Stack gap={0}>
@@ -179,7 +181,7 @@ const TableViewer = () => {
         <Text fw="bold">Source:</Text>
         <Text>{fbTableData?.source}</Text>
       </Stack>
-      <DynamicChart tableData={tableData} />
+      {tableData?.rows.length && <DynamicChart tableData={tableData} />}
       {tableData && !tableSyncing ? (
         <Stack>
           {!isEdit ? (
