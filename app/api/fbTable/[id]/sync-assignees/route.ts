@@ -8,8 +8,6 @@ export async function PATCH(
     const id = (await params).id;
     const updatedData = await req.json();
 
-    console.log(id, updatedData);
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${id}/sync-assignees`,
       {

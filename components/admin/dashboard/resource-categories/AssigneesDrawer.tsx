@@ -1,9 +1,9 @@
-import { FakeSkeleton } from '@/components/reusable';
-import { useFbTableAssignee } from '@/hooks';
-import { TFbTableAssigneeResponse } from '@/types';
-import { Button, Drawer, Stack } from '@mantine/core';
-import { IconLink } from '@tabler/icons-react';
-import React, { useEffect } from 'react';
+import { FakeSkeleton, NoData } from "@/components/reusable";
+import { useFbTableAssignee } from "@/hooks";
+import { IFbTableAssignee } from "@/types";
+import { Button, Drawer, Stack } from "@mantine/core";
+import { IconLink } from "@tabler/icons-react";
+import React, { useEffect } from "react";
 
 interface IAssigneesDrawerProps {
   fbTableId: string;
@@ -13,15 +13,16 @@ interface IAssigneesDrawerProps {
 
 const AssigneesDrawer = (props: IAssigneesDrawerProps) => {
   const { fbTableId, opened, onClose } = props;
-  const { fetchFbTableAssignees, data, loading } =
-    useFbTableAssignee<TFbTableAssigneeResponse>();
+  const { data, loading, fetchFbTableAssigneeByFbTableId } =
+    useFbTableAssignee<IFbTableAssignee[]>();
 
   useEffect(() => {
-    if (fbTableId) {
-      fetchFbTableAssignees();
+    if (fbTableId && opened) {
+      fetchFbTableAssigneeByFbTableId(fbTableId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fbTableId]);
+  }, [fbTableId, opened]);
+
   return (
     <Drawer
       opened={opened}
@@ -32,8 +33,8 @@ const AssigneesDrawer = (props: IAssigneesDrawerProps) => {
       <Stack align="stretch" justify="flex-start" gap="xs">
         {loading ? (
           <FakeSkeleton rows={5} />
-        ) : (
-          data?.data.map((val, idx) => {
+        ) : data && data.length ? (
+          data.map((val, idx) => {
             return (
               <Button
                 component="a"
@@ -54,6 +55,8 @@ const AssigneesDrawer = (props: IAssigneesDrawerProps) => {
               </Button>
             );
           })
+        ) : (
+          <NoData showButton={false} />
         )}
       </Stack>
     </Drawer>

@@ -52,8 +52,6 @@ const DynamicTable = ({
     setEditableTableData(tableData);
   }, [tableData]);
 
-  console.log(editableTableData?.headers);
-
   return (
     <div className="table-container">
       <Table

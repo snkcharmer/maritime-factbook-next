@@ -38,8 +38,6 @@ export function AdminDashboardContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]);
 
-  console.log("selectedCategory", selectedCategory);
-
   return (
     <Grid>
       {/* <GridCol span={{ sm: 12, md: 12, lg: 4 }}>

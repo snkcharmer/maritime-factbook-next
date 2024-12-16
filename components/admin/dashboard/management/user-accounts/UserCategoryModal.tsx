@@ -1,9 +1,9 @@
-'use client';
-import { Toastify } from '@/components/reusable';
-import { useUserCategory } from '@/hooks';
-import { userCategorySchema } from '@/validations';
-import { Modal, Button, TextInput } from '@mantine/core';
-import { Formik, Form } from 'formik';
+"use client";
+import { Toastify } from "@/components/reusable";
+import { useUserCategory } from "@/hooks";
+import { userCategorySchema } from "@/validations";
+import { Modal, Button, TextInput } from "@mantine/core";
+import { Formik, Form } from "formik";
 
 interface IUserCategoryModalProps {
   opened: boolean;
@@ -17,20 +17,19 @@ const UserCategoryModal = (props: IUserCategoryModalProps) => {
   return (
     <Modal opened={opened} onClose={onClose} title="Add User Category" centered>
       <Formik
-        initialValues={{ name: '', description: '' }}
+        initialValues={{ name: "", description: "" }}
         validationSchema={userCategorySchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            console.log(values);
             await createUserCategory(values);
             Toastify({
-              message: 'User category added successfully',
-              type: 'success',
+              message: "User category added successfully",
+              type: "success",
             });
             resetForm();
             onClose();
           } catch (error) {
-            Toastify({ message: JSON.stringify(error), type: 'warning' });
+            Toastify({ message: JSON.stringify(error), type: "warning" });
           }
         }}
       >
@@ -57,7 +56,7 @@ const UserCategoryModal = (props: IUserCategoryModalProps) => {
               disabled={isSubmitting}
               loading={isSubmitting}
             >
-              {isSubmitting ? 'Submitting' : 'Submit'}
+              {isSubmitting ? "Submitting" : "Submit"}
             </Button>
           </Form>
         )}
