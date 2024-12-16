@@ -7,23 +7,7 @@ import { DynamicTable, Toastify } from "@/components/reusable";
 import { ITableData } from "@/components/reusable/lib/DynamicTable";
 import { useFbTable, useFbTableAssignee, useUser } from "@/hooks";
 import { IFbTable, IFbTableAssignee, TUserResponse } from "@/types";
-import {
-  ActionIcon,
-  Button,
-  Center,
-  Group,
-  Loader,
-  SimpleGrid,
-  Space,
-  Stack,
-  Text,
-} from "@mantine/core";
-import {
-  IconRefresh,
-  IconTableAlias,
-  IconUserPlus,
-  IconUsersGroup,
-} from "@tabler/icons-react";
+import { Center, Group, Loader, Space, Stack, Text } from "@mantine/core";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
