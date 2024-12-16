@@ -4,3 +4,8 @@ export interface IDefaultAPI {
   updatedAt?: string | null;
   deletedAt?: string | null;
 }
+
+export interface ISelectOption {
+  label: string;
+  value: string;
+}

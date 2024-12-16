@@ -1,4 +1,4 @@
-import { IUser } from './User.type';
+import { IUser } from "./User.type";
 
 export interface IAuthResponse {
   user: IUser;
@@ -13,4 +13,14 @@ export interface IAuthContextProps {
   isAuthenticated: boolean;
   login: (user: IUser, accessToken: string, refreshToken: string) => void;
   logout: () => void;
+}
+
+export interface IZodValidationError {
+  success: boolean;
+  message: string;
+  details: Array<{
+    path: string;
+    message: string;
+    code: string;
+  }>;
 }

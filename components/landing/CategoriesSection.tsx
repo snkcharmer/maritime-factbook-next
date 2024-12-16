@@ -6,9 +6,8 @@ import {
   IconMessage2,
   IconUser,
 } from "@tabler/icons-react";
-import { Space, Stack, Text, ThemeIcon, Title } from "@mantine/core";
+import { Stack, Text, ThemeIcon, Title } from "@mantine/core";
 import CardSection from "./CardSection";
-import BarChart from "./charts/BarChartSection";
 
 export const MOCKDATA = [
   {

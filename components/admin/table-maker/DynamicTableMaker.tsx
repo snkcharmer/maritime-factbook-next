@@ -14,7 +14,6 @@ import {
 } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
 import { useFbCategory, useFbTable, useUser } from "@/hooks";
-import { ChartTypesEnum } from "@/context/enum";
 import { IFbSubCategoryByCategoryResponse, TFbTableResponse } from "@/types";
 import { useDisclosure } from "@mantine/hooks";
 import { FakeSkeleton, Toastify } from "@/components/reusable";
@@ -38,9 +37,7 @@ export default function DynamicTableMaker() {
   const { createFbTable } = useFbTable();
   const { user } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedChartType, setSelectedChartType] = useState<TChartType | null>(
-    "bar"
-  );
+  const [selectedChartType, setSelectedChartType] = useState<TChartType>("bar");
   const [tableName, setTableName] = useState<string>("");
   const [tableSource, setTableSource] = useState<string>("");
 
@@ -104,9 +101,9 @@ export default function DynamicTableMaker() {
         </SimpleGrid>
         <SimpleGrid cols={2}>
           <Select
-            value={selectedChartType || ""}
+            value={selectedChartType || "bar"}
             onChange={(value) => setSelectedChartType(value as TChartType)}
-            data={Object.values(ChartTypesEnum)}
+            data={["Bar"]}
             placeholder="Select Chart Type"
             label="Chart Type"
           />

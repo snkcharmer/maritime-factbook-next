@@ -1,4 +1,6 @@
-import { NextResponse } from 'next/server';
+import { IZodValidationError } from "@/types";
+import { parseZodErrors } from "@/utils/string";
+import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
@@ -36,22 +38,20 @@ export async function PATCH(
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbTableAssignee/${id}`,
       {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ data: updatedData }),
       }
     );
+    const data = await response.json();
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to update fbTableAssignee with ID ${id}` },
-        { status: 400 }
-      );
+    if (!data.success) {
+      const error = parseZodErrors(data as IZodValidationError);
+      return NextResponse.json(error);
     }
 
-    const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });

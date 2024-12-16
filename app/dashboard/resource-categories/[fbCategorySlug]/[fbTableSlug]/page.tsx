@@ -1,9 +1,7 @@
 "use client";
 import AssigneesDrawer from "@/components/admin/dashboard/resource-categories/AssigneesDrawer";
 import AssignTableModal from "@/components/admin/dashboard/resource-categories/AssignTableModal";
-import DynamicChart, {
-  TChartType,
-} from "@/components/admin/dashboard/resource-categories/DynamicChart";
+import DynamicChart from "@/components/admin/dashboard/resource-categories/DynamicChart";
 import { UpsertTableMaker } from "@/components/admin/table-maker";
 import { DynamicTable, Toastify } from "@/components/reusable";
 import { ITableData } from "@/components/reusable/lib/DynamicTable";
@@ -15,7 +13,8 @@ import {
   Center,
   Group,
   Loader,
-  Select,
+  SimpleGrid,
+  Space,
   Stack,
   Text,
 } from "@mantine/core";
@@ -32,7 +31,7 @@ const TableViewer = () => {
   const { fetchAllUsers, data: users, user } = useUser<TUserResponse>();
   const { fbTableSlug } = useParams();
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [chartType, setChartType] = useState<TChartType>("bar");
+  //   const [chartType, setChartType] = useState<TChartType>("bar");
   const [openedAssignUser, setOpenedAssignUser] = useState<boolean>(false);
   const [openedAssignees, setOpenedAssignees] = useState<boolean>(false);
   const { data, getFbTableBySlug, updateFbTable, updateFbTableAndAssignees } =
@@ -153,7 +152,7 @@ const TableViewer = () => {
   useEffect(() => {
     if (fbTableSlug) {
       getFbTableBySlug(fbTableSlug as string);
-      setChartType(data?.chartType || "bar");
+      // setChartType(data?.chartType || "bar");
       fetchAllUsers();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,18 +169,25 @@ const TableViewer = () => {
 
   return (
     <Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Resource Category:</Text>
-        <Text>{fbTableData?.fbCategory?.name}</Text>
-      </Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Table Name:</Text>
-        <Text>{fbTableData?.name}</Text>
-      </Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Source:</Text>
-        <Text>{fbTableData?.source}</Text>
-      </Stack>
+      <SimpleGrid cols={{ base: 1, sm: 2, lg: 2 }} className="items-center">
+        <div className="order-2 sm:order-1">
+          <DynamicChart tableData={tableData} />
+        </div>
+        <Stack className="order-1 sm:order-2">
+          <Stack gap={0}>
+            <Text fw="bold">Resource Category:</Text>
+            <Text>{fbTableData?.fbCategory?.name}</Text>
+          </Stack>
+          <Stack gap={0}>
+            <Text fw="bold">Table Name:</Text>
+            <Text>{fbTableData?.name}</Text>
+          </Stack>
+          <Stack gap={0}>
+            <Text fw="bold">Source:</Text>
+            <Text>{fbTableData?.source}</Text>
+          </Stack>
+        </Stack>
+      </SimpleGrid>
       <Group justify="space-between">
         <Group>
           <Button
@@ -250,7 +256,6 @@ const TableViewer = () => {
             ]}
             defaultValue="bar"
           /> */}
-          <DynamicChart tableData={tableData} />
         </Stack>
       ) : (
         <Center mt={120}>
@@ -260,6 +265,7 @@ const TableViewer = () => {
           </Group>
         </Center>
       )}
+      <Space h={300} />
       <AssignTableModal
         opened={openedAssignUser}
         onClose={handleCloseAssignUser}

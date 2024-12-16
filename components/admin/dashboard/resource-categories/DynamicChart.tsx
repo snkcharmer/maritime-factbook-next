@@ -44,38 +44,8 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
     datasets,
   };
 
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: true,
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Dynamic Bar Chart",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Years",
-        },
-      },
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: "Values",
-        },
-      },
-    },
-  };
-
   return (
-    <div style={{ width: "100%", height: "500px" }}>
+    <div style={{ width: "100%", height: "auto" }} className="">
       <Bar data={data} />
     </div>
   );

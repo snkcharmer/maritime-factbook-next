@@ -1,14 +1,14 @@
-import { IconGauge, IconTable, IconUsersGroup } from '@tabler/icons-react';
-import { Code, Group, ScrollArea, Text } from '@mantine/core';
-import { LinksGroup } from './AdminLinksGroup';
-import { createStyles } from '@mantine/emotion';
-import Image from 'next/image';
-import { TFbCategoryResponse } from '@/types';
-import { useEffect } from 'react';
-import { useFbCategory } from '@/hooks';
-import { ADMIN_ROUTES, ROUTES } from '@/constants';
-import { UserButton } from '@/components/reusable';
-import { createPath } from '@/utils/route';
+import { IconFolderCog, IconGauge, IconTable } from "@tabler/icons-react";
+import { Code, Group, ScrollArea, Text } from "@mantine/core";
+import { LinksGroup } from "./AdminLinksGroup";
+import { createStyles } from "@mantine/emotion";
+import Image from "next/image";
+import { TFbCategoryResponse } from "@/types";
+import { useEffect } from "react";
+import { useFbCategory } from "@/hooks";
+import { ADMIN_ROUTES, ROUTES } from "@/constants";
+import { UserButton } from "@/components/reusable";
+import { createPath } from "@/utils/route";
 
 export function AdminNavbar() {
   const { classes } = useStyles();
@@ -25,40 +25,44 @@ export function AdminNavbar() {
       }),
     })) || [];
 
-  // const managementLinks = [
-  //   {
-  //     label: 'Resource Categories',
-  //     link: ADMIN_ROUTES.resourceCategoriesManagement,
-  //   },
-  //   {
-  //     label: 'User Accounts',
-  //     link: ADMIN_ROUTES.userAccountsManagement,
-  //   },
-  // ];
+  const managementLinks = [
+    //     {
+    //       label: "Resource Categories",
+    //       link: ADMIN_ROUTES.resourceCategoriesManagement,
+    //     },
+    {
+      label: "User Accounts",
+      link: ADMIN_ROUTES.userAccountsManagement,
+    },
+    {
+      label: "Featured Publications",
+      link: ADMIN_ROUTES.userAccountsManagement,
+    },
+  ];
 
   const arrLinks = [
-    { label: 'Dashboard', icon: IconGauge, link: ROUTES.dashboard },
+    { label: "Dashboard", icon: IconGauge, link: ROUTES.dashboard },
     {
-      label: 'Table Maker',
+      label: "Table Maker",
       icon: IconTable,
       link: ADMIN_ROUTES.dashboardTableMaker,
     },
     {
-      label: 'Resource Categories',
+      label: "Resource Categories",
       icon: IconTable,
       // initiallyOpened: true,
       links: categoryLinks, // Use the dynamic category links here
     },
+    //     {
+    //       label: 'User Management',
+    //       icon: IconUsersGroup,
+    //       link: ADMIN_ROUTES.userAccountsManagement,
+    //     },
     {
-      label: 'User Management',
-      icon: IconUsersGroup,
-      link: ADMIN_ROUTES.userAccountsManagement,
+      label: "Management",
+      icon: IconFolderCog,
+      links: managementLinks,
     },
-    // {
-    //   label: 'Management',
-    //   icon: IconFolderCog,
-    //   links: managementLinks,
-    // },
   ];
 
   const links = arrLinks.map((item) => (
@@ -99,12 +103,12 @@ export function AdminNavbar() {
 const useStyles = createStyles((theme) => ({
   navbar: {
     backgroundColor: theme.white,
-    height: '800px',
-    width: '300px',
+    height: "800px",
+    width: "300px",
     padding: theme.spacing.md,
     paddingBottom: 0,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     borderRight: `1px solid ${theme.colors.gray[3]}`,
   },
 

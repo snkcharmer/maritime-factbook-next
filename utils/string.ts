@@ -1,3 +1,9 @@
+import { IZodValidationError } from "@/types";
+
+interface IParsedError {
+  error: { path: string; message: string }[];
+}
+
 /**
  * Adds an "s" to the word if the number is more than 1.
  * @param count - The number to check.
@@ -15,11 +21,25 @@ export const pluralize = (count: number, word: string): string => {
  * @returns The formatted string.
  */
 export const formatText = (text: string): string => {
-  if (!text) return '';
+  if (!text) return "";
 
   // Replace underscores with spaces and capitalize the first letter of each word
   return text
-    .split('_') // Split the text by underscores
+    .split("_") // Split the text by underscores
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
-    .join(' '); // Join the words with spaces
+    .join(" "); // Join the words with spaces
+};
+
+export const parseZodErrors = (error: IZodValidationError): IParsedError => {
+  if (!error.details || error.details.length === 0)
+    return {
+      error: [{ path: "unknown", message: "An unknown error occurred" }],
+    };
+
+  return {
+    error: error.details.map((detail) => ({
+      path: detail.path,
+      message: detail.message,
+    })),
+  };
 };
