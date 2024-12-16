@@ -55,13 +55,14 @@ const DynamicTable = ({
   console.log(editableTableData?.headers);
 
   return (
-    <div>
+    <div className="table-container">
       <Table
         striped
         highlightOnHover
         withTableBorder
         withColumnBorders
         withRowBorders
+        className="responsive-table"
       >
         <Table.Thead>
           {/* Main Header */}

@@ -11,7 +11,7 @@ import DynamicChart from "./resource-categories/DynamicChart";
 // type CategoryKey = keyof typeof categoryData;
 
 export function AdminDashboardContent() {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Bar");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [fbCategories, setFbCategories] = useState<ISelectOption[]>([]);
 
   const { data, fetchFbCategories } = useFbCategory<TFbCategoryResponse>();
@@ -28,6 +28,8 @@ export function AdminDashboardContent() {
       setFbCategories(
         data.data.map(({ name, id }) => ({ label: name, value: String(id) }))
       );
+    setSelectedCategory(String(data?.data[0].id));
+    getFbTableByFbCategoryId(String(data?.data[0].id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
@@ -35,6 +37,8 @@ export function AdminDashboardContent() {
     if (selectedCategory) getFbTableByFbCategoryId(selectedCategory);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory]);
+
+  console.log("selectedCategory", selectedCategory);
 
   return (
     <Grid>
@@ -59,12 +63,10 @@ export function AdminDashboardContent() {
           <Grid gutter={50}>
             {fbTableData?.map((row, idx) => (
               <GridCol span={{ sm: 12, md: 12, lg: 6 }} key={idx}>
-                <Stack gap={20}>
+                <Stack gap={30}>
                   <Title order={3}>{row.name}</Title>
-                  <SimpleGrid>
-                    <DynamicChart tableData={row.data[0]} />
-                    <DynamicTable tableData={row.data[0]} />
-                  </SimpleGrid>
+                  <DynamicChart tableData={row.data[0]} />
+                  <DynamicTable tableData={row.data[0]} />
                 </Stack>
               </GridCol>
             ))}

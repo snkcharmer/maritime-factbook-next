@@ -27,6 +27,24 @@ table th {
   padding: 4px 1rem;
 }
 
+.responsive-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.responsive-table th,
+.responsive-table td {
+  word-wrap: break-word;
+  overflow: hidden;
+  text-align: center;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .dark-bg-btn {
   background: #101e47;
   padding: 0.5rem 1rem;
