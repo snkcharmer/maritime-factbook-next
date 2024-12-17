@@ -1,12 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link'; // Import Link from Next.js
 import { Accordion, TextInput, Group, Badge, Box, Stack } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 
 export interface IAccordionData {
   category: string;
-  items: { title: string; date: string }[];
+  items: { title: string; date: string; href?: string }[]; // Added optional href
 }
 
 interface ISearchableAccordionProps {
@@ -18,26 +19,22 @@ export default function SearchableAccordion({
 }: ISearchableAccordionProps) {
   const [search, setSearch] = useState<string>('');
 
-  // Filter the data based on search input
   const filteredData = data
     .map((section) => {
-      // Check if category matches search
       const categoryMatches = section.category
         .toLowerCase()
         .includes(search.toLowerCase());
 
-      // Filter items based on title
       const filteredItems = section.items.filter((item) =>
         item.title.toLowerCase().includes(search.toLowerCase())
       );
 
-      // Return the section if either category matches OR there are matching items
       if (categoryMatches || filteredItems.length > 0) {
         return { ...section, items: filteredItems };
       }
       return null;
     })
-    .filter((section) => section !== null); // Remove null sections
+    .filter((section) => section !== null);
 
   return (
     <Stack>
@@ -72,8 +69,22 @@ export default function SearchableAccordion({
                       '&:last-child': { borderBottom: 'none' },
                     }}
                   >
-                    <Box>{item.title}</Box>
-                    <Badge>{item.date}</Badge>
+                    {item.href ? (
+                      <Link href={item.href} className="cursor-pointer">
+                        <Group
+                          justify="space-between"
+                          style={{ width: '100%' }}
+                        >
+                          <Box>{item.title}</Box>
+                          <Badge>{item.date}</Badge>
+                        </Group>
+                      </Link>
+                    ) : (
+                      <>
+                        <Box>{item.title}</Box>
+                        <Badge>{item.date}</Badge>
+                      </>
+                    )}
                   </Group>
                 ))}
               </Accordion.Panel>
