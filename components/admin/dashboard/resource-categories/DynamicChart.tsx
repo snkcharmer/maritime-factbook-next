@@ -53,19 +53,26 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
 
 const getColor = (index: number) => {
   const colors = [
-    '#3DA9A6', // Teal (common in bars, lines)
-    '#FFB950', // Orange (used for highlights, lines)
-    '#2B2D42', // Dark Gray (axis lines, labels)
-    '#8D99AE', // Light Gray-Blue (grid lines, subtle text)
-    '#EDF2F4', // Light Gray (background)
-    '#4CAF50', // Green (used in pie/donut charts)
-    '#009688', // Aqua Green (additional highlights)
-    '#FFC107', // Yellow (in bar charts or pie slices)
-    '#00BFA6', // Vibrant Teal
-    '#1E88E5', // Blue
-    '#757575', // Neutral Gray
-    '#6C757D', // Muted Grayish
-    '#343A40', // Darker Charcoal
+    'rgba(0, 123, 255, 0.8',
+    'rgba(255, 152, 0, 0.8',
+    'rgba(233, 30, 99, 0.8',
+    'rgba(0, 150, 136, 0.8',
+    'rgba(255, 193, 7, 0.8',
+    'rgba(156, 39, 176, 0.8',
+    'rgba(0, 188, 212, 0.8',
+    'rgba(3, 169, 244, 0.8',
+    'rgba(139, 195, 74, 0.8',
+    'rgba(244, 67, 54, 0.8',
+    'rgba(103, 58, 183, 0.8',
+    'rgba(255, 99, 132, 0.8',
+    'rgba(255, 159, 64, 0.8',
+    'rgba(75, 192, 192, 0.8',
+    'rgba(54, 162, 235, 0.8',
+    'rgba(153, 102, 255, 0.8',
+    'rgba(255, 205, 86, 0.8',
+    'rgba(255, 87, 51, 0.8',
+    'rgba(39, 174, 96, 0.8',
+    'rgba(233, 30, 99, 0.8',
   ];
   return colors[index % colors.length];
 };
