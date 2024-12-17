@@ -44,9 +44,16 @@ export default function CategoryPage() {
               <Accordion.Item value={`${i}`}>
                 <Accordion.Control>{row.name}</Accordion.Control>
                 <Accordion.Panel>
-                  <Stack gap={0}>
-                    <Text fw="bold">Source:</Text>
-                    <Text>{row.source}</Text>
+                  <Stack gap="xl">
+                    <Text size="md">
+                      <Text fw="bold">Source:</Text>
+                      {row.source}
+                    </Text>
+                    {row.note && (
+                      <Text size="md">
+                        <Text fw="bold">Note:</Text> {row.note}
+                      </Text>
+                    )}
                     {row.data[0].rows.length ? (
                       <DynamicChart tableData={row.data[0]} />
                     ) : (

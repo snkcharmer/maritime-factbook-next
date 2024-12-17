@@ -9,6 +9,7 @@ export interface IFbTable extends IDefaultAPI {
   fbCategoryId: string | null;
   name: string;
   slug: string;
+  note: string;
   // chartType: ChartTypesEnum | null;
   chartType: TChartType | null;
   source: string;

@@ -11,6 +11,7 @@ import {
   Title,
   Group,
   Drawer,
+  Textarea,
 } from '@mantine/core';
 import { IconLink } from '@tabler/icons-react';
 import { useFbCategory, useFbTable, useUser } from '@/hooks';
@@ -40,9 +41,11 @@ export default function DynamicTableMaker() {
   // const [selectedChartType, setSelectedChartType] = useState<TChartType>('bar');
   const [tableName, setTableName] = useState<string>('');
   const [tableSource, setTableSource] = useState<string>('');
+  const [tableNote, setTableNote] = useState<string>('');
 
   const resetForm = () => {
     setTableName('');
+    setTableNote('');
     setTableSource('');
   };
 
@@ -53,6 +56,7 @@ export default function DynamicTableMaker() {
         userId: user?.id,
         name: tableName,
         source: tableSource,
+        note: tableNote,
         chartType: 'Bar' as TChartType,
         data,
       });
@@ -116,6 +120,12 @@ export default function DynamicTableMaker() {
             label="Table Source"
           />
         </SimpleGrid>
+        <Textarea
+          label="Note:"
+          onChange={(e) => setTableNote(e.target.value)}
+          minRows={4}
+          rows={5}
+        />
       </Stack>
       <Space h={40} />
       <Group justify="space-between">

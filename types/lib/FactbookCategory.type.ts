@@ -5,6 +5,7 @@ export interface IFbCategory extends IDefaultAPI {
   name: string;
   description: string;
   slug: string;
+  executiveSummary: string;
 }
 
 export type TFbCategoryResponse = IPaginatedResponse<IFbCategory>;
