@@ -55,7 +55,6 @@ const getColor = (index: number) => {
   const colors = [
     'rgba(0, 123, 255, 0.8',
     'rgba(255, 152, 0, 0.8',
-    'rgba(233, 30, 99, 0.8',
     'rgba(0, 150, 136, 0.8',
     'rgba(255, 193, 7, 0.8',
     'rgba(156, 39, 176, 0.8',
