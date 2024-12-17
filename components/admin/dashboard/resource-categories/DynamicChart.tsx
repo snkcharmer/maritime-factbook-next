@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { Bar } from "react-chartjs-2";
+import React, { useMemo } from 'react';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,7 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -19,7 +19,7 @@ ChartJS.register(
   Legend
 );
 
-export type TChartType = "bar" | "line" | "pie";
+export type TChartType = 'bar' | 'line' | 'pie';
 
 const DynamicChart = ({ tableData }: { tableData: any }) => {
   const xLabels = useMemo(
@@ -45,7 +45,7 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
   };
 
   return (
-    <div style={{ width: "100%", height: "auto" }} className="">
+    <div style={{ width: '100%', height: 'auto' }} className="">
       <Bar data={data} />
     </div>
   );
@@ -53,12 +53,19 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
 
 const getColor = (index: number) => {
   const colors = [
-    "#4285F4",
-    "#FBBC05",
-    "#EA4335",
-    "#34A853",
-    "#FF9900",
-    "#AA46BE",
+    '#3DA9A6', // Teal (common in bars, lines)
+    '#FFB950', // Orange (used for highlights, lines)
+    '#2B2D42', // Dark Gray (axis lines, labels)
+    '#8D99AE', // Light Gray-Blue (grid lines, subtle text)
+    '#EDF2F4', // Light Gray (background)
+    '#4CAF50', // Green (used in pie/donut charts)
+    '#009688', // Aqua Green (additional highlights)
+    '#FFC107', // Yellow (in bar charts or pie slices)
+    '#00BFA6', // Vibrant Teal
+    '#1E88E5', // Blue
+    '#757575', // Neutral Gray
+    '#6C757D', // Muted Grayish
+    '#343A40', // Darker Charcoal
   ];
   return colors[index % colors.length];
 };
