@@ -131,7 +131,7 @@ export function Header() {
                   </div> */}
                 </HoverCard.Dropdown>
               </HoverCard>
-              <a href="#https://nmp.gov.ph/" className={classes.link}>
+              <a href="https://nmp.gov.ph/" className={classes.link}>
                 About NMP
               </a>
               <a
