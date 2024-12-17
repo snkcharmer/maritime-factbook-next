@@ -1,12 +1,12 @@
-"use client";
-import AssigneesDrawer from "@/components/admin/dashboard/resource-categories/AssigneesDrawer";
-import AssignTableModal from "@/components/admin/dashboard/resource-categories/AssignTableModal";
-import DynamicChart from "@/components/admin/dashboard/resource-categories/DynamicChart";
-import { UpsertTableMaker } from "@/components/admin/table-maker";
-import { DynamicTable, Toastify } from "@/components/reusable";
-import { ITableData } from "@/components/reusable/lib/DynamicTable";
-import { useFbTable, useFbTableAssignee, useUser } from "@/hooks";
-import { IFbTable, IFbTableAssignee, TUserResponse } from "@/types";
+'use client';
+import AssigneesDrawer from '@/components/admin/dashboard/resource-categories/AssigneesDrawer';
+import AssignTableModal from '@/components/admin/dashboard/resource-categories/AssignTableModal';
+import DynamicChart from '@/components/admin/dashboard/resource-categories/DynamicChart';
+import { UpsertTableMaker } from '@/components/admin/table-maker';
+import { DynamicTable, Toastify } from '@/components/reusable';
+import { ITableData } from '@/components/reusable/lib/DynamicTable';
+import { useFbTable, useFbTableAssignee, useUser } from '@/hooks';
+import { IFbTable, IFbTableAssignee, TUserResponse } from '@/types';
 import {
   ActionIcon,
   Button,
@@ -17,15 +17,15 @@ import {
   Space,
   Stack,
   Text,
-} from "@mantine/core";
+} from '@mantine/core';
 import {
   IconRefresh,
   IconTableAlias,
   IconUserPlus,
   IconUsersGroup,
-} from "@tabler/icons-react";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+} from '@tabler/icons-react';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 const TableViewer = () => {
   const { fetchAllUsers, data: users, user } = useUser<TUserResponse>();
@@ -52,10 +52,10 @@ const TableViewer = () => {
   const handleSyncTables = async () => {
     try {
       const assignedTables = await fetchFbTableAssigneeByFbTableId(
-        data?.id || ""
+        data?.id || ''
       );
       if (!Array.isArray(assignedTables)) {
-        console.error("Invalid assignedTables:", assignedTables);
+        console.error('Invalid assignedTables:', assignedTables);
         return;
       }
 
@@ -105,7 +105,13 @@ const TableViewer = () => {
       });
 
       if (!data?.data?.[0]) {
-        console.error("Invalid `data` structure:", data);
+        console.error('Invalid `data` structure:', data);
+        return;
+      }
+
+      if (!mergedTable.length) {
+        setTableSyncing(false);
+        Toastify({ message: 'No tables to sync.', type: 'info' });
         return;
       }
 
@@ -125,7 +131,7 @@ const TableViewer = () => {
     } catch (error) {
       setTableSyncing(false);
       // Toastify({ message: JSON.stringify(error), type: 'error' });
-      console.error("Error during sync:", error);
+      console.error('Error during sync:', error);
     }
   };
 
@@ -136,14 +142,14 @@ const TableViewer = () => {
         data
       );
       if (!res) {
-        Toastify({ message: res || "", type: "warning" });
+        Toastify({ message: res || '', type: 'warning' });
         return;
       }
       setIsEdit(false);
       setTableData(data);
-      Toastify({ message: "Table successfully updated.", type: "success" });
+      Toastify({ message: 'Table successfully updated.', type: 'success' });
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
     }
   };
 
@@ -231,7 +237,7 @@ const TableViewer = () => {
             aria-label="Sync Tables"
             onClick={handleSyncTables}
           >
-            <IconRefresh style={{ width: "70%", height: "70%" }} stroke={1.5} />
+            <IconRefresh style={{ width: '70%', height: '70%' }} stroke={1.5} />
           </ActionIcon>
         </Group>
       </Group>
@@ -267,13 +273,13 @@ const TableViewer = () => {
       <AssignTableModal
         opened={openedAssignUser}
         onClose={handleCloseAssignUser}
-        fbTableId={fbTableData?.id || ""}
+        fbTableId={fbTableData?.id || ''}
         users={filteredUser || []}
       />
       <AssigneesDrawer
         opened={openedAssignees}
         onClose={handleCloseAssignees}
-        fbTableId={fbTableData?.id || ""}
+        fbTableId={fbTableData?.id || ''}
       />
     </Stack>
   );

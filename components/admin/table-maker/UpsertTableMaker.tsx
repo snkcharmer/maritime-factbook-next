@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 import {
   Table,
   TextInput,
@@ -8,8 +8,9 @@ import {
   ActionIcon,
   Stack,
   Title,
-} from "@mantine/core";
-import { IconTrash, IconPlus } from "@tabler/icons-react";
+  Group,
+} from '@mantine/core';
+import { IconTrash, IconPlus } from '@tabler/icons-react';
 
 interface Header {
   label: string;
@@ -23,7 +24,7 @@ interface IUpsertTableMakerProps {
 
 const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
   const [headers, setHeaders] = useState<Header[]>([
-    { label: "Main Header 1", subHeaders: ["Sub Header 1"] },
+    { label: 'Main Header 1', subHeaders: ['Sub Header 1'] },
   ]);
   const [tableData, setTableData] = useState<string[][]>([]);
   const [submittingTable, setSubmittingTable] = useState<boolean>(false);
@@ -36,22 +37,37 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
   }, [data]);
 
   const addMainHeader = () => {
-    setHeaders((prev) => [...prev, { label: "", subHeaders: [""] }]);
-    setTableData((prev) => prev.map((row) => [...row, ""]));
+    setHeaders((prev) => [...prev, { label: '', subHeaders: [''] }]);
+    setTableData((prev) => prev.map((row) => [...row, '']));
   };
 
   const addSubHeader = (mainHeaderIndex: number) => {
     setHeaders((prev) => {
       const updated = [...prev];
-      updated[mainHeaderIndex].subHeaders.push("");
+      updated[mainHeaderIndex].subHeaders.push(''); // Add a new sub-header
       return updated;
     });
+
+    setTableData((prev) => {
+      const columnStartIndex = headers
+        .slice(0, mainHeaderIndex + 1)
+        .reduce((sum, header, idx) => {
+          return idx < mainHeaderIndex
+            ? sum + header.subHeaders.length
+            : sum + header.subHeaders.length - 1;
+        }, 0);
+
+      return prev.map((row) => [
+        ...row.slice(0, columnStartIndex),
+        '',
+        ...row.slice(columnStartIndex),
+      ]);
+    });
+  };
+
+  const addCell = (targetRow: number) => {
     setTableData((prev) =>
-      prev.map((row) => [
-        ...row.slice(0, mainHeaderIndex + 1),
-        "",
-        ...row.slice(mainHeaderIndex + 1),
-      ])
+      prev.map((row, rowIndex) => (rowIndex === targetRow ? [...row, ''] : row))
     );
   };
 
@@ -60,7 +76,7 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
       (sum, header) => sum + header.subHeaders.length,
       0
     );
-    setTableData((prev) => [...prev, Array(totalColumns).fill("")]);
+    setTableData((prev) => [...prev, Array(totalColumns).fill('')]);
   };
 
   const updateMainHeader = (index: number, value: string) => {
@@ -148,7 +164,7 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
             {headers.map((header, idx) => (
               <th key={idx} colSpan={header.subHeaders.length || 1}>
                 <div
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                 >
                   <TextInput
                     value={header.label}
@@ -173,9 +189,9 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
                 <th key={`${mainIdx}-${subIdx}`}>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                     }}
                   >
                     <TextInput
@@ -219,9 +235,18 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
                 </td>
               ))}
               <td>
-                <ActionIcon color="red" onClick={() => deleteRow(rowIdx)}>
-                  <IconTrash size={16} />
-                </ActionIcon>
+                <Group align="center">
+                  <ActionIcon color="red" onClick={() => deleteRow(rowIdx)}>
+                    <IconTrash size={16} />
+                  </ActionIcon>
+                  <Button
+                    variant="light"
+                    size="xs"
+                    onClick={() => addCell(rowIdx)}
+                  >
+                    <IconPlus size={14} /> Add Cell
+                  </Button>
+                </Group>
               </td>
             </tr>
           ))}
@@ -235,7 +260,7 @@ const UpsertTableMaker = ({ data, onSave }: IUpsertTableMakerProps) => {
         disabled={submittingTable}
         loading={submittingTable}
       >
-        {submittingTable ? "Submitting" : "Save Table"}
+        {submittingTable ? 'Submitting' : 'Save Table'}
       </Button>
     </Stack>
   );

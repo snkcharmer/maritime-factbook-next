@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Button,
   TextInput,
@@ -11,16 +11,16 @@ import {
   Title,
   Group,
   Drawer,
-} from "@mantine/core";
-import { IconLink } from "@tabler/icons-react";
-import { useFbCategory, useFbTable, useUser } from "@/hooks";
-import { IFbSubCategoryByCategoryResponse, TFbTableResponse } from "@/types";
-import { useDisclosure } from "@mantine/hooks";
-import { FakeSkeleton, Toastify } from "@/components/reusable";
-import { createPath } from "@/utils/route";
-import { ADMIN_ROUTES } from "@/constants";
-import { TChartType } from "../dashboard/resource-categories/DynamicChart";
-import UpsertTableMaker from "./UpsertTableMaker";
+} from '@mantine/core';
+import { IconLink } from '@tabler/icons-react';
+import { useFbCategory, useFbTable, useUser } from '@/hooks';
+import { IFbSubCategoryByCategoryResponse, TFbTableResponse } from '@/types';
+import { useDisclosure } from '@mantine/hooks';
+import { FakeSkeleton, Toastify } from '@/components/reusable';
+import { createPath } from '@/utils/route';
+import { ADMIN_ROUTES } from '@/constants';
+import { TChartType } from '../dashboard/resource-categories/DynamicChart';
+import UpsertTableMaker from './UpsertTableMaker';
 
 export default function DynamicTableMaker() {
   const [opened, { open, close }] = useDisclosure(false);
@@ -37,33 +37,33 @@ export default function DynamicTableMaker() {
   const { createFbTable } = useFbTable();
   const { user } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedChartType, setSelectedChartType] = useState<TChartType>("bar");
-  const [tableName, setTableName] = useState<string>("");
-  const [tableSource, setTableSource] = useState<string>("");
+  // const [selectedChartType, setSelectedChartType] = useState<TChartType>('bar');
+  const [tableName, setTableName] = useState<string>('');
+  const [tableSource, setTableSource] = useState<string>('');
 
   const resetForm = () => {
-    setTableName("");
-    setTableSource("");
+    setTableName('');
+    setTableSource('');
   };
 
   const saveTable = async (data: any) => {
     try {
       const res = await createFbTable({
-        fbCategoryId: selectedCategory || "",
+        fbCategoryId: selectedCategory || '',
         userId: user?.id,
         name: tableName,
         source: tableSource,
-        chartType: selectedChartType,
+        chartType: 'Bar' as TChartType,
         data,
       });
       if (!res) {
-        Toastify({ message: res || "", type: "warning" });
+        Toastify({ message: res || '', type: 'warning' });
         return;
       }
       resetForm();
-      Toastify({ message: "Table successfully saved.", type: "success" });
+      Toastify({ message: 'Table successfully saved.', type: 'success' });
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
     }
   };
 
@@ -77,7 +77,7 @@ export default function DynamicTableMaker() {
       <Stack gap={10}>
         <SimpleGrid cols={2}>
           <Select
-            value={selectedCategory || ""}
+            value={selectedCategory || ''}
             onChange={(val) => {
               setSelectedCategory(val);
             }}
@@ -101,11 +101,13 @@ export default function DynamicTableMaker() {
         </SimpleGrid>
         <SimpleGrid cols={2}>
           <Select
-            value={selectedChartType || "bar"}
-            onChange={(value) => setSelectedChartType(value as TChartType)}
-            data={["Bar"]}
+            // value={selectedChartType || 'Bar'}
+            value="Bar"
+            // onChange={(value) => setSelectedChartType(value as TChartType)}
+            data={['Bar']}
             placeholder="Select Chart Type"
             label="Chart Type"
+            disabled
           />
           <TextInput
             value={tableSource}
