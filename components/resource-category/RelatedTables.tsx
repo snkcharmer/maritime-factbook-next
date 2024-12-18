@@ -12,6 +12,7 @@ const RelatedTables = ({ category }: { category: IFbCategory }) => {
 
   useEffect(() => {
     if (category) getFbTableByFbCategoryId(category.id!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
   return (

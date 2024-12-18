@@ -174,7 +174,7 @@ const ResourcesTable = ({
   refetch,
 }: {
   data: IFbTable[];
-  refetch: () => {};
+  refetch: () => void;
 }) => {
   return (
     <Table>

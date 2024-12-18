@@ -1,4 +1,3 @@
-import CategoryList from "@/components/landing/CategoryList";
 import { Header } from "@/components/landing/Header";
 import { LandingContainer } from "@/components/landing/LandingContainer";
 import ResourceCategoryHero from "@/components/resource-category/ResourceCategoryHero";

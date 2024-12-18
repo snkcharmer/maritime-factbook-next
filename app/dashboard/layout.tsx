@@ -7,7 +7,6 @@ import React from "react";
 import { useUser } from "@/hooks";
 import { UserRoleEnum } from "@/context/enum";
 import { DataProviderNavbar } from "@/components/data-provider/navbar/DataProviderNavbar";
-import { ROUTES } from "@/constants";
 import { Loader, NotFound } from "@/components/reusable";
 
 export default function Admin({ children }: { children: React.ReactNode }) {

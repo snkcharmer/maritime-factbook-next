@@ -1,5 +1,5 @@
 "use client";
-import { Container, Text, Title, Grid, Stack, Divider } from "@mantine/core";
+import { Text, Title, Stack, Divider } from "@mantine/core";
 import { createStyles } from "@mantine/emotion";
 
 const BriefDescription = () => {
