@@ -89,7 +89,7 @@ export const useFbTable = <T>() => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: updatedData.data }),
+        body: JSON.stringify(updatedData),
       }
     );
   };

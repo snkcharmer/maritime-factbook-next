@@ -7,6 +7,7 @@ import Hero from "@/components/landing/Hero";
 import { LandingContainer } from "@/components/landing/LandingContainer";
 import { Footer, SearchableAccordion } from "@/components/reusable";
 import { IAccordionData } from "@/components/reusable/lib/SearchableAccordion";
+import { StatusEnum } from "@/context/enum";
 import { useFbCategory, useFbTable } from "@/hooks";
 import { TFbCategoryResponse } from "@/types";
 import { formatDate } from "@/utils/date";
@@ -31,10 +32,15 @@ export default function Home() {
         const fbTableResponse = await getFbTableByFbCategoryId(
           row.id as string
         );
-        if (fbTableResponse && fbTableResponse.length) {
+        const fbTableFiltered =
+          fbTableResponse?.filter(
+            ({ status }) => status === StatusEnum.ACTIVE
+          ) || [];
+
+        if (fbTableFiltered && fbTableFiltered.length) {
           const newAccordionEntry: IAccordionData = {
             category: row.name,
-            items: fbTableResponse.map((tblRow) => ({
+            items: fbTableFiltered.map((tblRow) => ({
               title: tblRow.name || "",
               date: formatDate(tblRow.createdAt || ""),
               href: createPath({

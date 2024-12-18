@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Table, ActionIcon, Group, rem, Menu } from "@mantine/core";
 import {
   IconCheck,
@@ -31,10 +31,7 @@ const TableRows = ({
 
   // State to manage row-specific switch states
   const [statusState, setStatusState] = useState<{ [key: string]: boolean }>(
-    rowData?.reduce((acc, row) => {
-      acc[row.id as string] = row.status === StatusEnum.ACTIVE;
-      return acc;
-    }, {} as { [key: string]: boolean })
+    {}
   );
 
   const handleDelete = async (id: string) => {
@@ -64,6 +61,19 @@ const TableRows = ({
     refetch();
   };
 
+  useEffect(() => {
+    if (rowData) {
+      setStatusState(
+        rowData?.reduce((acc, row) => {
+          acc[row.id as string] = row.status === StatusEnum.ACTIVE;
+          return acc;
+        }, {} as { [key: string]: boolean })
+      );
+    }
+  }, [rowData]);
+
+  console.log("statusState", statusState);
+
   if (loading)
     return (
       <>
@@ -85,7 +95,6 @@ const TableRows = ({
       <Table.Td>{row.name}</Table.Td>
       <Table.Td>{row.source}</Table.Td>
       <Table.Td align="center" width={120}>
-        {row.status}
         <Group justify="center">
           <Menu shadow="md" width={200}>
             <Menu.Target>
