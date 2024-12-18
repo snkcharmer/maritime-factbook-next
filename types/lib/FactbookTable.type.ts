@@ -1,8 +1,9 @@
-import { IDefaultAPI } from './Others.type';
-import { IPaginatedResponse } from './Pagination.type';
-import { IUser } from './User.type';
-import { IFbCategory } from './FactbookCategory.type';
-import { TChartType } from '@/components/admin/dashboard/resource-categories/DynamicChart';
+import { IDefaultAPI } from "./Others.type";
+import { IPaginatedResponse } from "./Pagination.type";
+import { IUser } from "./User.type";
+import { IFbCategory } from "./FactbookCategory.type";
+import { TChartType } from "@/components/admin/dashboard/resource-categories/DynamicChart";
+import { StatusEnum } from "@/context/enum";
 
 export interface IFbTable extends IDefaultAPI {
   userId: string;
@@ -16,6 +17,7 @@ export interface IFbTable extends IDefaultAPI {
   data: any;
   user?: IUser;
   fbCategory?: IFbCategory;
+  status: StatusEnum;
 }
 
 export type TFbTableResponse = IPaginatedResponse<IFbTable>;

@@ -14,10 +14,14 @@
   }
 }
 
+:root {
+  --background: #f4f4f4;
+}
+
 body {
+  font-family: var(--font-inter), sans-serif;
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 table tr,

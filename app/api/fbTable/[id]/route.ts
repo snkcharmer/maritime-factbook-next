@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function GET(
   req: Request,
@@ -36,9 +36,9 @@ export async function PATCH(
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${id}`,
       {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updatedData),
       }
@@ -55,5 +55,33 @@ export async function PATCH(
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const fbTableId = req.url.split("/").pop();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/fbTable/${fbTableId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Failed to delete fbTable entry" },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error in DELETE /api/fbTable:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

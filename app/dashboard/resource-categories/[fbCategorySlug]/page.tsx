@@ -1,11 +1,11 @@
-'use client';
-import { FakeSkeleton, PageContainer } from '@/components/reusable';
-import { useFbCategory, useFbTable } from '@/hooks';
-import { IFbCategory, IFbTable } from '@/types';
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { Text } from '@mantine/core';
-import ResourcesTable from '@/components/admin/dashboard/resource-categories/ResourcesTable';
+"use client";
+import { FakeSkeleton, PageContainer } from "@/components/reusable";
+import { useFbCategory, useFbTable } from "@/hooks";
+import { IFbCategory, IFbTable } from "@/types";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import { Text } from "@mantine/core";
+import ResourcesTable from "@/components/admin/dashboard/resource-categories/ResourcesTable";
 
 export default function CategoryPage() {
   const { fbCategorySlug } = useParams();
@@ -16,6 +16,8 @@ export default function CategoryPage() {
   } = useFbCategory<IFbCategory>();
   const { data: fbTables, getFbTableByFbCategoryId } = useFbTable<IFbTable[]>();
 
+  const refetch = () => getFbTableByFbCategoryId(String(fbCategory?.id));
+
   useEffect(() => {
     if (fbCategorySlug) {
       getFbCategoryBySlug(fbCategorySlug as string);
@@ -25,7 +27,7 @@ export default function CategoryPage() {
 
   useEffect(() => {
     if (fbCategory) {
-      getFbTableByFbCategoryId(String(fbCategory.id));
+      refetch();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fbCategory]);
@@ -37,7 +39,7 @@ export default function CategoryPage() {
       ) : (
         <Text>{fbCategory?.name}</Text>
       )}
-      <ResourcesTable data={fbTables || []} />
+      <ResourcesTable data={fbTables || []} refetch={refetch} />
     </PageContainer>
   );
 }

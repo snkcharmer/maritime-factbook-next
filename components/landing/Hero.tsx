@@ -1,109 +1,172 @@
 "use client";
-import { Container, Text, Title } from "@mantine/core";
+import { Container, Text, Title, Button } from "@mantine/core";
 import { createStyles } from "@mantine/emotion";
-import Image from "next/image";
 
 export default function Hero() {
   const { classes } = useStyles();
-  return (
-    // <Container size={1200} py={50} maw={1100}>
-    <div className={classes.inner}>
-      <Container size="lg" className="flex items-center justify-between">
-        <div className={classes.content}>
-          <Title className={classes.title}>
-            Welcome to The
-            <br />
-            Philippine Maritime Manpower Factbook!
-          </Title>
-          <Text c="white" mt="md" className="text-justify" size="xl">
-            The Philippine Maritime Manpower Factbook is a portal containing
-            consolidated relevant and updated maritime industry-related data and
-            statistics that seeks to provide a picture of the global and
-            Philippine maritime manpower sector, presented in facts and figures
-            that are derived from the data of various relevant data producer
-            agencies, researches, and published reports. This interactive
-            platform provides data that is readily accessible to industry
-            stakeholders in aid of policy formulation and program development.
-          </Text>
 
-          {/* <Group mt={30}>
-            <Button radius="xl" size="md" className={classes.control}>
-              Get started
-            </Button>
+  // Scroll handler for the CTA button
+  const handleScrollToSecondFold = () => {
+    const secondFoldElement = document.getElementById("second-fold");
+    if (secondFoldElement) {
+      const headerOffset = 100; // Adjust this value to match header height
+      const elementPosition = secondFoldElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <div className={classes.wrapper}>
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className={classes.backgroundVideo}
+      >
+        <source src="/bg-hero.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Gradient Overlay */}
+      <div className={classes.overlay}></div>
+
+      {/* Content */}
+      <div className={classes.inner}>
+        <Container size="lg">
+          <div className={classes.content}>
+            <Text className={classes.supTitle}>Welcome to the</Text>
+            <Title className={classes.title}>
+              Philippine Maritime Manpower Factbook!
+            </Title>
+            <Text className={classes.description}>
+              The Philippine Maritime Manpower Factbook is a portal containing
+              consolidated relevant and updated maritime industry-related data
+              and statistics that seeks to provide a picture of the global and
+              Philippine maritime manpower sector. This interactive platform
+              provides data that is readily accessible to industry stakeholders
+              in aid of policy formulation and program development.
+            </Text>
+
+            {/* CTA Button */}
             <Button
-              variant="default"
-              radius="xl"
-              size="md"
-              className={classes.control}
+              onClick={handleScrollToSecondFold}
+              className={classes.ctaButton}
+              size="lg"
+              radius="md"
+              mt="xl"
             >
-              Source code
+              Explore the Factbook
             </Button>
-          </Group> */}
-        </div>
-        <Image
-          src="/home-hero.webp"
-          className={classes.image}
-          alt=""
-          width={500}
-          height={600}
-        />
-      </Container>
+          </div>
+        </Container>
+      </div>
     </div>
-    // {/* </Container> */}
   );
 }
+
 const useStyles = createStyles((theme) => ({
-  inner: {
-    paddingTop: "0rem",
-    paddingBottom: "4rem",
-    alignItems: "center",
+  wrapper: {
+    position: "relative",
+    width: "100%",
+    padding: "5rem 0",
+    overflow: "hidden",
+  },
+
+  backgroundVideo: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    zIndex: -2,
+  },
+
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
     background:
-      "linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero.jpg) 50%",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
+      "linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7))",
+    zIndex: -1,
+  },
+
+  inner: {
+    position: "relative",
+    zIndex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    textAlign: "center",
+    animation: "fadeInUp 1.2s ease-out",
   },
 
   content: {
-    maxWidth: "480px",
-    marginRight: `calc(${theme.spacing.xl} * 3)`,
+    background: "#0939adc7",
+    padding: "3rem",
+    borderRadius: "20px",
+    maxWidth: "1000px",
+    margin: "0 auto",
+    boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
+  },
 
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      maxWidth: "100%",
-      marginRight: 0,
-    },
+  supTitle: {
+    color: "white",
+    fontSize: "24px",
+    lineHeight: 1.2,
+    fontWeight: 900,
   },
 
   title: {
     color: "white",
-    fontFamily: `'Greycliff CF', ${theme.fontFamily}`,
     fontSize: "44px",
     lineHeight: 1.2,
     fontWeight: 900,
+    marginTop: "0.5rem",
+    marginBottom: "1rem",
 
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      fontSize: "28px",
+    [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
+      fontSize: "32px",
     },
   },
 
-  control: {
-    [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      flex: 1,
+  description: {
+    color: "white",
+    fontSize: "18px",
+    lineHeight: 1.6,
+    marginTop: "0.5rem",
+  },
+
+  ctaButton: {
+    backgroundColor: "#f59e1c",
+    color: "white",
+    fontSize: "18px",
+    padding: "10px 20px",
+    transition: "background-color 0.3s ease",
+
+    "&:hover": {
+      backgroundColor: "#e68900",
     },
   },
 
-  image: {
-    width: "500px",
-    height: "600px",
-
-    [`@media (max-width: ${theme.breakpoints.md}px)`]: {
-      display: "none",
+  "@keyframes fadeInUp": {
+    from: {
+      opacity: 0,
+      transform: "translateY(50px)",
     },
-  },
-
-  highlight: {
-    position: "relative",
-    backgroundColor: theme.colors.blue[0], // Use Mantine's predefined colors
-    borderRadius: theme.radius.sm,
-    padding: "4px 12px",
+    to: {
+      opacity: 1,
+      transform: "translateY(0)",
+    },
   },
 }));

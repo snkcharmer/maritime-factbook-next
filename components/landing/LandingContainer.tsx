@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Container } from '@mantine/core';
-import type { ReactNode } from 'react';
+import { Container } from "@mantine/core";
+import type { ReactNode } from "react";
 
 interface LandingContainerProps {
   children: ReactNode;

@@ -1,33 +1,35 @@
-'use client';
+"use client";
 import {
   Box,
   Center,
   Container,
-  Divider,
   Group,
   HoverCard,
-  SimpleGrid,
+  Stack,
   Text,
   ThemeIcon,
   UnstyledButton,
   useMantineTheme,
-} from '@mantine/core';
-import { createStyles } from '@mantine/emotion';
-import Link from 'next/link';
-import Image from 'next/image';
-import { IconChevronDown, IconDatabase } from '@tabler/icons-react';
-import { ROUTES } from '@/constants';
-import { useFbCategory } from '@/hooks';
-import { TFbCategoryResponse } from '@/types';
-import { createPath } from '@/utils/route';
-import { useState, useEffect } from 'react';
-import { ICardItem, staticCardItems } from './CategoryList';
+} from "@mantine/core";
+import { createStyles } from "@mantine/emotion";
+import Link from "next/link";
+import Image from "next/image";
+import { IconChevronDown, IconDatabase } from "@tabler/icons-react";
+import { ROUTES } from "@/constants";
+import { useFbCategory } from "@/hooks";
+import { TFbCategoryResponse } from "@/types";
+import { createPath } from "@/utils/route";
+import { useState, useEffect } from "react";
+import { ICardItem, staticCardItems } from "./CategoryList";
 
 export function Header() {
   const theme = useMantineTheme();
-  const { classes } = useStyles();
+  const { classes, cx } = useStyles();
   const { data, fetchFbCategories } = useFbCategory<TFbCategoryResponse>();
   const [cardItems, setCardItems] = useState<ICardItem[]>([]);
+
+  // Scroll state
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     fetchFbCategories();
@@ -38,7 +40,7 @@ export function Header() {
     if (data?.data) {
       const mergedItems = data.data.map((item, index) => ({
         title: item.name,
-        icon: staticCardItems[index]?.icon || IconDatabase, // Use corresponding static icon or default
+        icon: staticCardItems[index]?.icon || IconDatabase,
         href: createPath({
           path: ROUTES.resourceCategoriesHome,
           dynamicParams: { fbCategorySlug: item.slug },
@@ -48,6 +50,20 @@ export function Header() {
       setCardItems(mergedItems);
     }
   }, [data]);
+
+  // Scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = cardItems.map((item, i) => (
     <UnstyledButton
@@ -69,136 +85,121 @@ export function Header() {
   ));
 
   return (
-    <>
-      <header className={classes.header}>
-        <Container size="lg">
-          <Group justify="space-between" h="100%">
-            <Link href="/">
-              <Group gap={8}>
-                <Image src="/logo.png" alt="" width={50} height={50} />
-                <Text>Maritime Manpower Factbook</Text>
-              </Group>
-            </Link>
-
-            <Group h="100%" gap={0} visibleFrom="sm">
-              <Link href="/" className={classes.link}>
-                Home
-              </Link>
-              <HoverCard
-                width={600}
-                position="bottom"
-                radius="md"
-                shadow="md"
-                withinPortal
-              >
-                <HoverCard.Target>
-                  <a href="#" className={classes.link}>
-                    <Center inline>
-                      <Box component="span" mr={5}>
-                        Categories
-                      </Box>
-                      <IconChevronDown size={16} color={theme.colors.blue[6]} />
-                    </Center>
-                  </a>
-                </HoverCard.Target>
-
-                <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
-                  <Group justify="space-between" px="md">
-                    <Text fw={500}>Categories</Text>
-                    {/* <Anchor href="#" fz="xs">
-                      View all
-                    </Anchor> */}
-                  </Group>
-
-                  <Divider my="sm" />
-
-                  <SimpleGrid cols={2} spacing={0}>
-                    {links}
-                  </SimpleGrid>
-
-                  {/* <div className={classes.dropdownFooter}>
-                    <Group justify="space-between">
-                      <div>
-                        <Text fw={500} fz="sm">
-                          Get started
-                        </Text>
-                        <Text size="xs" c="dimmed">
-                          Their food sources have decreased, and their numbers
-                        </Text>
-                      </div>
-                      <Button variant="default">Get started</Button>
-                    </Group>
-                  </div> */}
-                </HoverCard.Dropdown>
-              </HoverCard>
-              <a href="https://nmp.gov.ph/" className={classes.link}>
-                About NMP
-              </a>
-              <a
-                href="https://nmp.gov.ph/verification-of-certificate/contact/"
-                className={classes.link}
-              >
-                Contact Us
-              </a>
+    <header className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+      <Container size="lg">
+        <Group justify="space-between" h="100%">
+          <Link href="/">
+            <Group gap={8}>
+              <Image
+                src="/logo.png"
+                alt=""
+                width={50}
+                height={50}
+                className={cx(classes.logo, { [classes.logoSmall]: scrolled })}
+              />
+              <Text lh={1}>
+                Philippine Maritime
+                <br /> Manpower Factbook
+              </Text>
             </Group>
-            {/* 
-            <Group visibleFrom="sm">
-              <Button component={Link} href="/login" variant="default">
-                Log in
-              </Button>
-              <Button>Sign up</Button>
-            </Group> */}
+          </Link>
+
+          <Group h="100%" gap={0} visibleFrom="sm">
+            <Link href="/" className={classes.link}>
+              Home
+            </Link>
+            <HoverCard
+              width={600}
+              radius="md"
+              shadow="md"
+              withinPortal
+              zIndex={999}
+            >
+              <HoverCard.Target>
+                <a href="#" className={classes.link}>
+                  <Center inline>
+                    <Box component="span" mr={5}>
+                      Categories
+                    </Box>
+                    <IconChevronDown size={16} color={theme.colors.blue[6]} />
+                  </Center>
+                </a>
+              </HoverCard.Target>
+
+              <HoverCard.Dropdown style={{ overflow: "hidden" }}>
+                <Stack gap={0}>{links}</Stack>
+              </HoverCard.Dropdown>
+            </HoverCard>
+            <a href="https://nmp.gov.ph/history" className={classes.link}>
+              About NMP
+            </a>
+            <a
+              href="https://nmp.gov.ph/verification-of-certificate/contact/"
+              className={classes.link}
+            >
+              Contact Us
+            </a>
           </Group>
-        </Container>
-      </header>
-    </>
+        </Group>
+      </Container>
+    </header>
   );
 }
 
 const useStyles = createStyles((theme) => ({
   header: {
-    paddingTop: '0.8rem',
-    paddingBottom: '0.8rem',
-    borderBottom: `1px solid ${theme.colors.gray[3]}`,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 299,
+    //     backgroundColor: "rgba(255, 255, 255, 0.95)",
+    backgroundColor: "#101e47",
+    color: "white",
+    backdropFilter: "blur(10px)",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    paddingTop: "0.8rem",
+    paddingBottom: "0.8rem",
+    transition: "padding 0.3s ease",
+  },
+
+  scrolled: {
+    paddingTop: "0.5rem",
+    paddingBottom: "0.5rem",
+  },
+
+  logo: {
+    transition: "transform 0.3s ease",
+  },
+
+  logoSmall: {
+    transform: "scale(0.9)",
   },
 
   link: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '100%',
+    display: "flex",
+    alignItems: "center",
+    height: "100%",
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
-    textDecoration: 'none',
+    textDecoration: "none",
     fontWeight: 500,
     fontSize: theme.fontSizes.sm,
     color: theme.colors.black,
-
-    [`@media (max-width: ${theme.breakpoints.sm})`]: {
-      height: '42px',
-      width: '100%',
-    },
-
-    '&:hover': {
-      backgroundColor: theme.colors.gray[0],
+    transition: "color 0.3s ease, transform 0.3s ease",
+    "&:hover": {
+      color: theme.colors.blue[6],
+      transform: "translateY(-2px)",
     },
   },
 
   subLink: {
-    width: '100%',
+    width: "100%",
     padding: `${theme.spacing.xs} ${theme.spacing.md}`,
     borderRadius: theme.radius.md,
 
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.colors.gray[0],
     },
-  },
-
-  dropdownFooter: {
-    backgroundColor: theme.colors.gray[0],
-    margin: `calc(${theme.spacing.md} * -1)`,
-    marginTop: theme.spacing.sm,
-    padding: `${theme.spacing.md} calc(${theme.spacing.md} * 2)`,
-    paddingBottom: theme.spacing.xl,
-    borderTop: `1px solid ${theme.colors.gray[1]}`,
   },
 }));

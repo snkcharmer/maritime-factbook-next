@@ -7,10 +7,16 @@ import React from "react";
 import { useUser } from "@/hooks";
 import { UserRoleEnum } from "@/context/enum";
 import { DataProviderNavbar } from "@/components/data-provider/navbar/DataProviderNavbar";
+import { ROUTES } from "@/constants";
+import { Loader, NotFound } from "@/components/reusable";
 
 export default function Admin({ children }: { children: React.ReactNode }) {
-  const { user } = useUser();
+  const { user, loading } = useUser();
   const [opened, { toggle }] = useDisclosure();
+
+  if (loading) return <Loader />;
+
+  if (!user) return <NotFound />;
 
   return (
     <AppShell

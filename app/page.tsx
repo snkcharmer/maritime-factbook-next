@@ -1,17 +1,18 @@
-'use client';
+"use client";
 
-import CategoryList from '@/components/landing/CategoryList';
-import { Header } from '@/components/landing/Header';
-import Hero from '@/components/landing/Hero';
-import { LandingContainer } from '@/components/landing/LandingContainer';
-import { Footer, SearchableAccordion } from '@/components/reusable';
-import { IAccordionData } from '@/components/reusable/lib/SearchableAccordion';
-import { useFbCategory, useFbTable } from '@/hooks';
-import { TFbCategoryResponse } from '@/types';
-import { formatDate } from '@/utils/date';
-import { createPath, ROUTES } from '@/utils/route';
-import { Space } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import BriefDescription from "@/components/landing/BriefDescription";
+import CategoryList from "@/components/landing/CategoryList";
+import { Header } from "@/components/landing/Header";
+import Hero from "@/components/landing/Hero";
+import { LandingContainer } from "@/components/landing/LandingContainer";
+import { Footer, SearchableAccordion } from "@/components/reusable";
+import { IAccordionData } from "@/components/reusable/lib/SearchableAccordion";
+import { useFbCategory, useFbTable } from "@/hooks";
+import { TFbCategoryResponse } from "@/types";
+import { formatDate } from "@/utils/date";
+import { createPath, ROUTES } from "@/utils/route";
+import { Space } from "@mantine/core";
+import React, { useEffect, useState } from "react";
 
 export default function Home() {
   const { data: fbCategoryData, fetchFbCategories } =
@@ -34,8 +35,8 @@ export default function Home() {
           const newAccordionEntry: IAccordionData = {
             category: row.name,
             items: fbTableResponse.map((tblRow) => ({
-              title: tblRow.name || '',
-              date: formatDate(tblRow.createdAt || ''),
+              title: tblRow.name || "",
+              date: formatDate(tblRow.createdAt || ""),
               href: createPath({
                 path: ROUTES.fbTableHome,
                 dynamicParams: {
@@ -55,9 +56,11 @@ export default function Home() {
   return (
     <React.Fragment>
       <Header />
+      <Space h={70} />
       <Hero />
       <LandingContainer>
         <Space h={20} />
+        <BriefDescription />
         <SearchableAccordion data={accordionData} />
         <CategoryList />
       </LandingContainer>

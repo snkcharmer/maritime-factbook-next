@@ -3,11 +3,29 @@ import AssigneesDrawer from "@/components/admin/dashboard/resource-categories/As
 import AssignTableModal from "@/components/admin/dashboard/resource-categories/AssignTableModal";
 import DynamicChart from "@/components/admin/dashboard/resource-categories/DynamicChart";
 import { UpsertTableMaker } from "@/components/admin/table-maker";
+import RelatedTables from "@/components/resource-category/RelatedTables";
 import { DynamicTable, Toastify } from "@/components/reusable";
 import { ITableData } from "@/components/reusable/lib/DynamicTable";
+import { ROUTES } from "@/constants";
 import { useFbTable, useFbTableAssignee, useUser } from "@/hooks";
-import { IFbTable, IFbTableAssignee, TUserResponse } from "@/types";
-import { Center, Group, Loader, Space, Stack, Text } from "@mantine/core";
+import {
+  IFbCategory,
+  IFbTable,
+  IFbTableAssignee,
+  TUserResponse,
+} from "@/types";
+import { createPath } from "@/utils/route";
+import {
+  Anchor,
+  Breadcrumbs,
+  Center,
+  Group,
+  Loader,
+  Space,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -149,31 +167,50 @@ const TableViewer = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log("tableData", tableData);
-
   return (
-    <Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Resource Category:</Text>
-        <Text>{fbTableData?.fbCategory?.name}</Text>
-      </Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Table Name:</Text>
-        <Text>{fbTableData?.name}</Text>
-      </Stack>
-      <Stack gap={0}>
-        <Text fw="bold">Source:</Text>
-        <Text>{fbTableData?.source}</Text>
-      </Stack>
-      {tableData?.rows.length && <DynamicChart tableData={tableData} />}
-      {tableData && !tableSyncing ? (
-        <Stack>
-          {!isEdit ? (
-            <DynamicTable tableData={tableData} />
-          ) : (
-            <UpsertTableMaker data={tableData} onSave={saveTable} />
-          )}
-          {/* <Select
+    <>
+      <Breadcrumbs mb={20}>
+        <Anchor href={ROUTES.home} size="sm">
+          Home
+        </Anchor>
+        <Anchor
+          href={createPath({
+            path: ROUTES.resourceCategoriesHome,
+            dynamicParams: {
+              fbCategorySlug: fbTableData?.fbCategory?.slug as string,
+            },
+          })}
+          size="sm"
+        >
+          {fbTableData?.fbCategory?.name}
+        </Anchor>
+        <Anchor
+          className="truncate w-1/4"
+          href={createPath({
+            path: ROUTES.fbTableHome,
+            dynamicParams: {
+              fbCategorySlug: fbTableData?.fbCategory?.slug as string,
+              fbTableSlug: fbTableSlug as string,
+            },
+          })}
+          size="sm"
+        >
+          {fbTableData?.name}
+        </Anchor>
+      </Breadcrumbs>
+      <Stack>
+        <Title order={2} className="font-bold text-[1.8rem] text-blue-700">
+          {fbTableData?.name}
+        </Title>
+        {tableData?.rows.length ? <DynamicChart tableData={tableData} /> : ""}
+        {tableData && !tableSyncing ? (
+          <Stack>
+            {!isEdit ? (
+              <DynamicTable tableData={tableData} />
+            ) : (
+              <UpsertTableMaker data={tableData} onSave={saveTable} />
+            )}
+            {/* <Select
             label="Select Chart Type"
             value={chartType}
             onChange={(value) => setChartType(value as TChartType)}
@@ -185,28 +222,34 @@ const TableViewer = () => {
             ]}
             defaultValue="bar"
           /> */}
+          </Stack>
+        ) : (
+          <Center mt={120}>
+            <Group>
+              <Loader color="blue" type="dots" />
+              Table Syncing ...
+            </Group>
+          </Center>
+        )}
+        <Stack gap={0}>
+          <Text fs="italic">Source: {fbTableData?.source}</Text>
         </Stack>
-      ) : (
-        <Center mt={120}>
-          <Group>
-            <Loader color="blue" type="dots" />
-            Table Syncing ...
-          </Group>
-        </Center>
-      )}
-      <Space h={300} />
-      <AssignTableModal
-        opened={openedAssignUser}
-        onClose={handleCloseAssignUser}
-        fbTableId={fbTableData?.id || ""}
-        users={filteredUser || []}
-      />
-      <AssigneesDrawer
-        opened={openedAssignees}
-        onClose={handleCloseAssignees}
-        fbTableId={fbTableData?.id || ""}
-      />
-    </Stack>
+        <Space h={50} />
+        <RelatedTables category={fbTableData?.fbCategory as IFbCategory} />
+        <Space h={300} />
+        <AssignTableModal
+          opened={openedAssignUser}
+          onClose={handleCloseAssignUser}
+          fbTableId={fbTableData?.id || ""}
+          users={filteredUser || []}
+        />
+        <AssigneesDrawer
+          opened={openedAssignees}
+          onClose={handleCloseAssignees}
+          fbTableId={fbTableData?.id || ""}
+        />
+      </Stack>
+    </>
   );
 };
 

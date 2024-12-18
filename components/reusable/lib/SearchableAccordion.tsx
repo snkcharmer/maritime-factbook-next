@@ -1,13 +1,21 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link'; // Import Link from Next.js
-import { Accordion, TextInput, Group, Badge, Box, Stack } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  Accordion,
+  TextInput,
+  Group,
+  Badge,
+  Box,
+  Stack,
+  Text,
+} from "@mantine/core";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 
 export interface IAccordionData {
   category: string;
-  items: { title: string; date: string; href?: string }[]; // Added optional href
+  items: { title: string; date: string; href?: string }[];
 }
 
 interface ISearchableAccordionProps {
@@ -17,7 +25,7 @@ interface ISearchableAccordionProps {
 export default function SearchableAccordion({
   data,
 }: ISearchableAccordionProps) {
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
 
   const filteredData = data
     .map((section) => {
@@ -46,13 +54,21 @@ export default function SearchableAccordion({
         mb="md"
       />
 
-      <Accordion variant="contained" defaultValue="0">
+      <Accordion
+        variant="contained"
+        //   defaultValue="0"
+        chevronPosition="left"
+        chevron={<IconPlus />}
+        bg="white"
+      >
         {filteredData.map((section, i) =>
           section!.items.length > 0 || section!.category ? (
             <Accordion.Item value={`${i}`} key={i}>
               <Accordion.Control>
                 <Group justify="space-between">
-                  <Box>{section!.category}</Box>
+                  <Box>
+                    <Text size="xl">{section!.category}</Text>
+                  </Box>
                   <Badge size="sm" color="blue">
                     {section!.items.length}
                   </Badge>
@@ -60,22 +76,23 @@ export default function SearchableAccordion({
               </Accordion.Control>
               <Accordion.Panel>
                 {section!.items.map((item, index) => (
-                  <Group
+                  <Stack
                     key={index}
-                    justify="space-between"
-                    py={8}
+                    py={16}
                     sx={{
-                      borderBottom: '1px solid #e9ecef',
-                      '&:last-child': { borderBottom: 'none' },
+                      borderBottom: "1px solid #e9ecef",
+                      "&:last-child": { borderBottom: "none" },
                     }}
                   >
                     {item.href ? (
                       <Link href={item.href} className="cursor-pointer">
                         <Group
                           justify="space-between"
-                          style={{ width: '100%' }}
+                          style={{ width: "100%" }}
                         >
-                          <Box>{item.title}</Box>
+                          <Box w="80%">
+                            <Text size="xl">{item.title}</Text>
+                          </Box>
                           <Badge>{item.date}</Badge>
                         </Group>
                       </Link>
@@ -85,7 +102,7 @@ export default function SearchableAccordion({
                         <Badge>{item.date}</Badge>
                       </>
                     )}
-                  </Group>
+                  </Stack>
                 ))}
               </Accordion.Panel>
             </Accordion.Item>
