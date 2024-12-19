@@ -40,7 +40,7 @@ export function Header() {
     if (data?.data) {
       const mergedItems = data.data.map((item, index) => ({
         title: item.name,
-        icon: staticCardItems[index]?.icon || IconDatabase,
+        icon: staticCardItems[index]?.icon2 || "",
         href: createPath({
           path: ROUTES.resourceCategoriesHome,
           dynamicParams: { fbCategorySlug: item.slug },
@@ -73,9 +73,12 @@ export function Header() {
       href={item.href}
     >
       <Group wrap="nowrap">
-        <ThemeIcon size={34} variant="default" radius="md">
-          <item.icon size={22} color={theme.colors.blue[6]} />
-        </ThemeIcon>
+        <Image
+          src={item.icon}
+          alt={item.title || "Category"}
+          width={40}
+          height={40}
+        />
 
         <Text size="sm" fw={500}>
           {item.title}
@@ -124,7 +127,7 @@ export function Header() {
               Home
             </Link>
             <HoverCard
-              width={600}
+              width={400}
               radius="md"
               shadow="md"
               withinPortal
