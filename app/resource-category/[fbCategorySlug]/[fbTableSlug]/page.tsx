@@ -31,7 +31,7 @@ import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { IconFileTypePdf, IconPdf } from "@tabler/icons-react";
+import { IconFileTypePdf } from "@tabler/icons-react";
 
 const TableViewer = () => {
   const { fetchAllUsers, data: users, user } = useUser<TUserResponse>();

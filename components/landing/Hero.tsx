@@ -1,15 +1,6 @@
 "use client";
-import {
-  Container,
-  Text,
-  Title,
-  Button,
-  Group,
-  SimpleGrid,
-} from "@mantine/core";
 import { createStyles } from "@mantine/emotion";
 import Image from "next/image";
-import Link from "next/link";
 
 export default function Hero() {
   const { classes } = useStyles();
