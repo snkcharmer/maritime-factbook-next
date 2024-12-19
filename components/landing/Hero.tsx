@@ -6,19 +6,19 @@ export default function Hero() {
   const { classes } = useStyles();
 
   // Scroll handler for the CTA button
-  const handleScrollToSecondFold = () => {
-    const secondFoldElement = document.getElementById("second-fold");
-    if (secondFoldElement) {
-      const headerOffset = 100; // Adjust this value to match header height
-      const elementPosition = secondFoldElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+  //   const handleScrollToSecondFold = () => {
+  //     const secondFoldElement = document.getElementById("second-fold");
+  //     if (secondFoldElement) {
+  //       const headerOffset = 100; // Adjust this value to match header height
+  //       const elementPosition = secondFoldElement.getBoundingClientRect().top;
+  //       const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
+  //       window.scrollTo({
+  //         top: offsetPosition,
+  //         behavior: "smooth",
+  //       });
+  //     }
+  //   };
 
   return (
     <div className={classes.wrapper}>
