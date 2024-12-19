@@ -27,34 +27,52 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (fbCategoryData) {
-      fbCategoryData.data.forEach(async (row) => {
-        const fbTableResponse = await getFbTableByFbCategoryId(
-          row.id as string
-        );
-        const fbTableFiltered = fbTableResponse
-          ? fbTableResponse.filter(({ status }) => status === StatusEnum.ACTIVE)
-          : [];
+    const fetchData = async () => {
+      if (fbCategoryData) {
+        // Sort the data
+        const sortedData = fbCategoryData.data.sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateA - dateB;
+        });
 
-        if (fbTableFiltered && fbTableFiltered.length) {
-          const newAccordionEntry: IAccordionData = {
-            category: row.name,
-            items: fbTableFiltered.map((tblRow) => ({
-              title: tblRow.name || "",
-              date: formatDate(tblRow.createdAt || ""),
-              href: createPath({
-                path: ROUTES.fbTableHome,
-                dynamicParams: {
-                  fbCategorySlug: tblRow.fbCategory?.slug as string,
-                  fbTableSlug: tblRow.slug,
-                },
-              }),
-            })),
-          };
-          setAccordionData((prevData) => [...prevData, newAccordionEntry]);
+        const newAccordionData: IAccordionData[] = [];
+
+        for (const row of sortedData) {
+          const fbTableResponse = await getFbTableByFbCategoryId(
+            row.id as string
+          );
+
+          const fbTableFiltered = fbTableResponse
+            ? fbTableResponse.filter(
+                ({ status }) => status === StatusEnum.ACTIVE
+              )
+            : [];
+
+          if (fbTableFiltered && fbTableFiltered.length) {
+            const accordionEntry: IAccordionData = {
+              category: row.name,
+              items: fbTableFiltered.map((tblRow) => ({
+                title: tblRow.name || "",
+                date: formatDate(tblRow.createdAt || ""),
+                href: createPath({
+                  path: ROUTES.fbTableHome,
+                  dynamicParams: {
+                    fbCategorySlug: tblRow.fbCategory?.slug as string,
+                    fbTableSlug: tblRow.slug,
+                  },
+                }),
+              })),
+            };
+
+            newAccordionData.push(accordionEntry);
+          }
         }
-      });
-    }
+        setAccordionData(newAccordionData);
+      }
+    };
+
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fbCategoryData]);
 
