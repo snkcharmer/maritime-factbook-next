@@ -111,6 +111,12 @@ const TableViewer = () => {
         return;
       }
 
+      if (!mergedTable.length) {
+        setTableSyncing(false);
+        Toastify({ message: "No tables to sync.", type: "info" });
+        return;
+      }
+
       await updateFbTable(String(data?.id), {
         data: {
           headers: data?.data[0].headers,
