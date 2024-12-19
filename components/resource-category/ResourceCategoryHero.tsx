@@ -1,10 +1,10 @@
-'use client';
-import { useFbCategory } from '@/hooks';
-import { IFbCategory } from '@/types';
-import { Container, Text, Title } from '@mantine/core';
-import { createStyles } from '@mantine/emotion';
-import { useParams } from 'next/navigation';
-import { useEffect } from 'react';
+"use client";
+import { useFbCategory } from "@/hooks";
+import { IFbCategory } from "@/types";
+import { Container, Text, Title } from "@mantine/core";
+import { createStyles } from "@mantine/emotion";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Hero() {
   const { classes } = useStyles();
@@ -28,29 +28,28 @@ export default function Hero() {
         </Text>
       </Container>
     </div>
-    // {/* </Container> */}
   );
 }
 const useStyles = createStyles((theme) => ({
   inner: {
-    paddingTop: '2rem',
-    paddingBottom: '2rem',
-    alignItems: 'center',
+    paddingTop: "2rem",
+    paddingBottom: "2rem",
+    alignItems: "center",
     background:
-      'linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero.jpg) 50%',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
+      "linear-gradient(0deg,rgba(0,0,0,.3),rgba(0,0,0,.3)),url(/bg-hero2.jpg) 50%",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
   },
 
   title: {
-    color: 'white',
+    color: "white",
     fontFamily: `'Greycliff CF', ${theme.fontFamily}`,
-    fontSize: '44px',
+    fontSize: "44px",
     lineHeight: 1.2,
     fontWeight: 900,
 
     [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
-      fontSize: '28px',
+      fontSize: "28px",
     },
   },
 }));

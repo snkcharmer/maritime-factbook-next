@@ -18,6 +18,7 @@ import { createPath } from "@/utils/route";
 import {
   Anchor,
   Breadcrumbs,
+  Button,
   Center,
   Group,
   Loader,
@@ -28,6 +29,9 @@ import {
 } from "@mantine/core";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
+import { IconFileTypePdf, IconPdf } from "@tabler/icons-react";
 
 const TableViewer = () => {
   const { fetchAllUsers, data: users, user } = useUser<TUserResponse>();
@@ -154,6 +158,61 @@ const TableViewer = () => {
     }
   };
 
+  const generatePDF = async () => {
+    const element = document.getElementById("printArea");
+    if (element) {
+      // Apply CSS to make all text inside the table black
+      const style = document.createElement("style");
+      style.innerHTML = `
+          #printArea table, #printArea table *, #printArea .source-text {
+            color: black !important;
+          }
+          #printArea table td,
+          #printArea .source-text {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+          }
+          #printArea .tableName {
+            margin-bottom: 2rem;
+          }
+        `;
+      document.head.appendChild(style);
+
+      const canvas = await html2canvas(element, { scale: 2 });
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+      });
+      const imgData = canvas.toDataURL("image/png");
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const padding = 10; // Define padding in mm
+      const scaleFactor = Math.min(
+        (pdfWidth - 2 * padding) / imgWidth,
+        (pdfHeight - 2 * padding) / imgHeight
+      );
+      const scaledWidth = imgWidth * scaleFactor;
+      const scaledHeight = imgHeight * scaleFactor;
+      pdf.addImage(
+        imgData,
+        "PNG",
+        padding,
+        padding,
+        scaledWidth,
+        scaledHeight,
+        "",
+        "FAST"
+      );
+      pdf.save(fbTableData?.name);
+
+      // Remove the style element after generating the PDF
+      document.head.removeChild(style);
+    }
+  };
+
   useEffect(() => {
     if (fbTableSlug) {
       getFbTableBySlug(fbTableSlug as string);
@@ -204,18 +263,29 @@ const TableViewer = () => {
         </Anchor>
       </Breadcrumbs>
       <Stack>
-        <Title order={2} className="font-bold text-[1.8rem] text-blue-700">
-          {fbTableData?.name}
-        </Title>
-        {tableData?.rows.length ? <DynamicChart tableData={tableData} /> : ""}
-        {tableData && !tableSyncing ? (
-          <Stack>
-            {!isEdit ? (
-              <DynamicTable tableData={tableData} />
-            ) : (
-              <UpsertTableMaker data={tableData} onSave={saveTable} />
-            )}
-            {/* <Select
+        <Button
+          onClick={generatePDF}
+          leftSection={<IconFileTypePdf />}
+          className="w-fit"
+        >
+          Download as PDF
+        </Button>
+        <div id="printArea">
+          <Title
+            order={2}
+            className="font-bold text-[1.8rem] text-blue-700 tableName"
+          >
+            {fbTableData?.name}
+          </Title>
+          {tableData?.rows.length ? <DynamicChart tableData={tableData} /> : ""}
+          {tableData && !tableSyncing ? (
+            <Stack>
+              {!isEdit ? (
+                <DynamicTable tableData={tableData} />
+              ) : (
+                <UpsertTableMaker data={tableData} onSave={saveTable} />
+              )}
+              {/* <Select
             label="Select Chart Type"
             value={chartType}
             onChange={(value) => setChartType(value as TChartType)}
@@ -227,18 +297,21 @@ const TableViewer = () => {
             ]}
             defaultValue="bar"
           /> */}
+            </Stack>
+          ) : (
+            <Center mt={120}>
+              <Group>
+                <Loader color="blue" type="dots" />
+                Table Syncing ...
+              </Group>
+            </Center>
+          )}
+          <Stack gap={0}>
+            <Text fs="italic" className="source-text">
+              Source: {fbTableData?.source}
+            </Text>
           </Stack>
-        ) : (
-          <Center mt={120}>
-            <Group>
-              <Loader color="blue" type="dots" />
-              Table Syncing ...
-            </Group>
-          </Center>
-        )}
-        <Stack gap={0}>
-          <Text fs="italic">Source: {fbTableData?.source}</Text>
-        </Stack>
+        </div>
         <Space h={50} />
         <RelatedTables category={fbTableData?.fbCategory as IFbCategory} />
         <Space h={300} />

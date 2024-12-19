@@ -1,6 +1,7 @@
-import { IFbTableAssignee } from '@/types';
-import { handleRequest } from '@/utils/handleRequest';
-import { useState } from 'react';
+"use client";
+import { IFbTableAssignee } from "@/types";
+import { handleRequest } from "@/utils/handleRequest";
+import { useState } from "react";
 
 export const useFbTableAssignee = <T>() => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,9 +15,9 @@ export const useFbTableAssignee = <T>() => {
       setError,
       setData,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       }
@@ -66,9 +67,9 @@ export const useFbTableAssignee = <T>() => {
       setError,
       setData,
       {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       }

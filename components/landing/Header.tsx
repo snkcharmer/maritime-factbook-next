@@ -91,16 +91,31 @@ export function Header() {
           <Link href="/">
             <Group gap={8}>
               <Image
+                src="/dmw.png"
+                alt=""
+                width={50}
+                height={50}
+                className={cx(classes.logo, { [classes.logoSmall]: scrolled })}
+              />
+              <Image
                 src="/logo.png"
                 alt=""
                 width={50}
                 height={50}
                 className={cx(classes.logo, { [classes.logoSmall]: scrolled })}
               />
-              <Text lh={1}>
+              <Image
+                src="/bagong-pilipinas.png"
+                alt=""
+                width={50}
+                height={50}
+                className={cx(classes.logo, { [classes.logoSmall]: scrolled })}
+              />
+
+              {/* <Text lh={1}>
                 Philippine Maritime
                 <br /> Manpower Factbook
-              </Text>
+              </Text> */}
             </Group>
           </Link>
 
