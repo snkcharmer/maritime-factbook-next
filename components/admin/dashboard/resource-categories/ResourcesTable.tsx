@@ -131,6 +131,14 @@ const TableRows = ({
                 Delete
               </Menu.Item>
               <Menu.Item
+                component="a"
+                href={createPath({
+                  path: ADMIN_ROUTES.resourceCategoriesTableEdit,
+                  dynamicParams: {
+                    fbCategorySlug: String(row.fbCategory?.slug),
+                    fbTableSlug: row.slug,
+                  },
+                })}
                 leftSection={
                   <IconEdit style={{ width: rem(14), height: rem(14) }} />
                 }

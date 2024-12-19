@@ -1,4 +1,4 @@
-import { ADMIN_ROUTES, ROUTES } from '@/constants';
+import { ADMIN_ROUTES, ROUTES } from "@/constants";
 
 export interface TRouteParams {
   fbTable: { dynamicParams: { fbTableSlug: string } };
@@ -17,15 +17,15 @@ export interface TRouteParams {
 export type TRoute =
   | {
       path: `${typeof ROUTES.assignedTables}`;
-      dynamicParams: TRouteParams['fbTable']['dynamicParams'];
+      dynamicParams: TRouteParams["fbTable"]["dynamicParams"];
     }
   | {
       path: `${typeof ROUTES.assignedTablesView}`;
-      dynamicParams: TRouteParams['assignedTablesView']['dynamicParams'];
+      dynamicParams: TRouteParams["assignedTablesView"]["dynamicParams"];
     }
   | {
       path: `${typeof ROUTES.resourceCategoriesHome}`;
-      dynamicParams: TRouteParams['resourceCategoriesHome']['dynamicParams'];
+      dynamicParams: TRouteParams["resourceCategoriesHome"]["dynamicParams"];
     }
   | {
       path: `${typeof ROUTES.fbTableHome}`;
@@ -39,5 +39,9 @@ export type TAdminRoute =
     }
   | {
       path: `${typeof ADMIN_ROUTES.resourceCategoriesTable}`;
-      dynamicParams: TRouteParams['fbCategoryTable']['dynamicParams'];
+      dynamicParams: TRouteParams["fbCategoryTable"]["dynamicParams"];
+    }
+  | {
+      path: `${typeof ADMIN_ROUTES.resourceCategoriesTableEdit}`;
+      dynamicParams: TRouteParams["fbCategoryTable"]["dynamicParams"];
     };

@@ -15,7 +15,11 @@ import {
 } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
 import { useFbCategory, useFbTable, useUser } from "@/hooks";
-import { IFbSubCategoryByCategoryResponse, TFbTableResponse } from "@/types";
+import {
+  IFbSubCategoryByCategoryResponse,
+  IFbTable,
+  TFbTableResponse,
+} from "@/types";
 import { useDisclosure } from "@mantine/hooks";
 import { FakeSkeleton, Toastify } from "@/components/reusable";
 import { createPath } from "@/utils/route";
@@ -32,7 +36,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Superscript from "@tiptap/extension-superscript";
 import SubScript from "@tiptap/extension-subscript";
 
-export default function DynamicTableMaker() {
+export default function DynamicTableMaker({ data }: { data?: IFbTable }) {
   const [opened, { open, close }] = useDisclosure(false);
   const {
     data: categories,
@@ -44,7 +48,7 @@ export default function DynamicTableMaker() {
     fetchFbTables,
     loading: fetchingFbTables,
   } = useFbTable<TFbTableResponse>();
-  const { createFbTable } = useFbTable();
+  const { createFbTable, updateFbTable } = useFbTable();
   const { user } = useUser();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedChartType, setSelectedChartType] = useState<ChartTypesEnum>(
@@ -64,7 +68,7 @@ export default function DynamicTableMaker() {
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
-    content: "",
+    content: tableNote,
     onUpdate: ({ editor }) => {
       setTableNote(editor.getHTML());
     },
@@ -76,22 +80,29 @@ export default function DynamicTableMaker() {
     setTableSource("");
   };
 
-  const saveTable = async (data: any) => {
+  const saveTable = async (tblData: any) => {
+    const formData = {
+      fbCategoryId: selectedCategory || "",
+      userId: user?.id,
+      name: tableName,
+      source: tableSource,
+      note: tableNote,
+      chartType: selectedChartType,
+      data: tblData,
+    };
     try {
-      const res = await createFbTable({
-        fbCategoryId: selectedCategory || "",
-        userId: user?.id,
-        name: tableName,
-        source: tableSource,
-        note: tableNote,
-        chartType: selectedChartType,
-        data,
-      });
+      let res;
+      if (!data) {
+        res = await createFbTable(formData);
+        resetForm();
+      } else {
+        res = await updateFbTable(data.id!, formData);
+      }
       if (!res) {
         Toastify({ message: res || "", type: "warning" });
         return;
       }
-      resetForm();
+
       Toastify({ message: "Table successfully saved.", type: "success" });
     } catch (err) {
       console.log("error", err);
@@ -102,6 +113,22 @@ export default function DynamicTableMaker() {
     fetchFbCategories();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      setTableName(data.name);
+      setTableSource(data.source);
+      setTableNote(data.note);
+      setSelectedCategory(String(data.fbCategory?.id));
+      setSelectedChartType(data.chartType);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (editor && data) {
+      editor.commands.setContent(data.note || "");
+    }
+  }, [editor, data]);
 
   return (
     <>
@@ -249,7 +276,10 @@ export default function DynamicTableMaker() {
           )}
         </Stack>
       </Drawer>
-      <UpsertTableMaker onSave={(data) => saveTable(data)} />
+      <UpsertTableMaker
+        onSave={(data) => saveTable(data)}
+        data={data?.data[0]}
+      />
       <Space h={300} />
     </>
   );

@@ -1,11 +1,14 @@
 export const ADMIN_ROUTES = {
-  dashboard: '/dashboard',
-  dashboardTableMaker: '/dashboard/table-maker',
+  dashboard: "/dashboard",
+  dashboardTableMaker: "/dashboard/table-maker",
   get resourceCategories() {
     return `${this.dashboard}/resource-categories/[fbCategorySlug]` as const;
   },
   get resourceCategoriesTable() {
     return `${this.resourceCategories}/[fbTableSlug]` as const;
+  },
+  get resourceCategoriesTableEdit() {
+    return `${this.resourceCategories}/[fbTableSlug]/edit` as const;
   },
   get resourceCategoriesManagement() {
     return `${this.dashboard}/management/resource-categories` as const;
@@ -16,10 +19,10 @@ export const ADMIN_ROUTES = {
 };
 
 export const ROUTES = {
-  home: '/',
-  dashboard: '/dashboard',
-  login: '/login',
-  registration: '/registration',
+  home: "/",
+  dashboard: "/dashboard",
+  login: "/login",
+  registration: "/registration",
   get assignedTables() {
     return `${this.dashboard}/assigned-tables` as const;
   },
