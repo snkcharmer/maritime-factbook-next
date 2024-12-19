@@ -262,14 +262,14 @@ const TableViewer = () => {
           {fbTableData?.name}
         </Anchor>
       </Breadcrumbs>
+      <Button
+        onClick={generatePDF}
+        leftSection={<IconFileTypePdf />}
+        className="w-fit"
+      >
+        Download as PDF
+      </Button>
       <Stack>
-        <Button
-          onClick={generatePDF}
-          leftSection={<IconFileTypePdf />}
-          className="w-fit"
-        >
-          Download as PDF
-        </Button>
         <div id="printArea">
           <Title
             order={2}
