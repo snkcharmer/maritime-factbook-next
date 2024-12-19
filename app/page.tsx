@@ -32,10 +32,9 @@ export default function Home() {
         const fbTableResponse = await getFbTableByFbCategoryId(
           row.id as string
         );
-        const fbTableFiltered =
-          fbTableResponse?.filter(
-            ({ status }) => status === StatusEnum.ACTIVE
-          ) || [];
+        const fbTableFiltered = fbTableResponse
+          ? fbTableResponse.filter(({ status }) => status === StatusEnum.ACTIVE)
+          : [];
 
         if (fbTableFiltered && fbTableFiltered.length) {
           const newAccordionEntry: IAccordionData = {

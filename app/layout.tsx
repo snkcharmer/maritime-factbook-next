@@ -5,17 +5,17 @@ import "@mantine/tiptap/styles.css";
 import "mantine-datatable/styles.layer.css";
 import "./layout.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
 import React, { Suspense } from "react";
 import "./globals.css";
 import AppProvider from "@/providers/AppProvider";
 import Loading from "./loading";
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
-  variable: "--font-inter",
+  variable: "--font-montserrat",
 });
 
 export const metadata = {
@@ -46,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={montserrat.variable}>
       <head>
         {/* <ColorSchemeScript /> */}
         <link rel="shortcut icon" href="/favicon.svg" />

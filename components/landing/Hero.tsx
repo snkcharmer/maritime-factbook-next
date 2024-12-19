@@ -1,6 +1,7 @@
 "use client";
 import { Container, Text, Title, Button } from "@mantine/core";
 import { createStyles } from "@mantine/emotion";
+import Image from "next/image";
 
 export default function Hero() {
   const { classes } = useStyles();
@@ -22,51 +23,14 @@ export default function Hero() {
 
   return (
     <div className={classes.wrapper}>
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className={classes.backgroundVideo}
-      >
-        <source src="/bg-hero.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {/* Gradient Overlay */}
-      <div className={classes.overlay}></div>
-
-      {/* Content */}
-      <div className={classes.inner}>
-        <Container size="lg">
-          <div className={classes.content}>
-            <Text className={classes.supTitle}>Welcome to the</Text>
-            <Title className={classes.title}>
-              Philippine Maritime Manpower Factbook!
-            </Title>
-            <Text className={classes.description}>
-              The Philippine Maritime Manpower Factbook is a portal containing
-              consolidated relevant and updated maritime industry-related data
-              and statistics that seeks to provide a picture of the global and
-              Philippine maritime manpower sector. This interactive platform
-              provides data that is readily accessible to industry stakeholders
-              in aid of policy formulation and program development.
-            </Text>
-
-            {/* CTA Button */}
-            <Button
-              onClick={handleScrollToSecondFold}
-              className={classes.ctaButton}
-              size="lg"
-              radius="md"
-              mt="xl"
-            >
-              Explore the Factbook
-            </Button>
-          </div>
-        </Container>
-      </div>
+      <Image
+        src="/bg-hero.jpg"
+        alt="Philippine Maritime Manpower Factbook"
+        width={1200}
+        height={300}
+        loading="lazy"
+        layout="responsive"
+      />
     </div>
   );
 }
@@ -74,8 +38,8 @@ export default function Hero() {
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: "relative",
-    width: "100%",
-    padding: "5rem 0",
+    //     width: "100%",
+    //     padding: "5rem 0",
     overflow: "hidden",
   },
 
