@@ -41,17 +41,12 @@ export default function Hero() {
       <div className={classes.inner}>
         <Container size="lg">
           <div className={classes.content}>
-            <Text className={classes.supTitle}>Welcome to the</Text>
+            <Text className={classes.supTitle}></Text>
             <Title className={classes.title}>
-              Philippine Maritime Manpower Factbook!
+              THE PHILIPPINE MARITIME MANPOWER FACTBOOK
             </Title>
             <Text className={classes.description}>
-              The Philippine Maritime Manpower Factbook is a portal containing
-              consolidated relevant and updated maritime industry-related data
-              and statistics that seeks to provide a picture of the global and
-              Philippine maritime manpower sector. This interactive platform
-              provides data that is readily accessible to industry stakeholders
-              in aid of policy formulation and program development.
+            An online platform providing comprehensive, relevant and up-to-date maritime data 
             </Text>
 
             {/* CTA Button */}
@@ -115,7 +110,7 @@ const useStyles = createStyles((theme) => ({
     background: "#0939adc7",
     padding: "3rem",
     borderRadius: "20px",
-    maxWidth: "1000px",
+    maxWidth: "1200px",
     margin: "0 auto",
     boxShadow: "0 8px 16px rgba(0, 0, 0, 0.4)",
   },
@@ -129,7 +124,7 @@ const useStyles = createStyles((theme) => ({
 
   title: {
     color: "white",
-    fontSize: "44px",
+    fontSize: "38px",
     lineHeight: 1.2,
     fontWeight: 900,
     marginTop: "0.5rem",
