@@ -4,7 +4,7 @@ import AssignTableModal from "@/components/admin/dashboard/resource-categories/A
 import DynamicChart from "@/components/admin/dashboard/resource-categories/DynamicChart";
 import { UpsertTableMaker } from "@/components/admin/table-maker";
 import RelatedTables from "@/components/resource-category/RelatedTables";
-import { DynamicTable, Toastify } from "@/components/reusable";
+import { DynamicTable, HTMLRenderer, Toastify } from "@/components/reusable";
 import { ITableData } from "@/components/reusable/lib/DynamicTable";
 import { ROUTES } from "@/constants";
 import { useFbTable, useFbTableAssignee, useUser } from "@/hooks";
@@ -312,10 +312,11 @@ const TableViewer = () => {
               </Group>
             </Center>
           )}
-          <Stack gap={0}>
+          <Stack>
             <Text fs="italic" className="source-text">
               Source: {fbTableData?.source}
             </Text>
+            <HTMLRenderer htmlContent={fbTableData?.note} />
           </Stack>
         </div>
         <Space h={50} />
