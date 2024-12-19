@@ -32,6 +32,7 @@ import React, { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { IconFileTypePdf } from "@tabler/icons-react";
+import { ChartTypesEnum } from "@/context/enum";
 
 const TableViewer = () => {
   const { fetchAllUsers, data: users, user } = useUser<TUserResponse>();
@@ -277,7 +278,12 @@ const TableViewer = () => {
           >
             {fbTableData?.name}
           </Title>
-          {tableData?.rows.length ? <DynamicChart tableData={tableData} /> : ""}
+          {fbTableData?.chartType !== ChartTypesEnum.TABLE &&
+          tableData?.rows.length ? (
+            <DynamicChart tableData={tableData} />
+          ) : (
+            ""
+          )}
           {tableData && !tableSyncing ? (
             <Stack>
               {!isEdit ? (

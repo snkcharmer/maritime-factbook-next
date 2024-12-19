@@ -2,8 +2,7 @@ import { IDefaultAPI } from "./Others.type";
 import { IPaginatedResponse } from "./Pagination.type";
 import { IUser } from "./User.type";
 import { IFbCategory } from "./FactbookCategory.type";
-import { TChartType } from "@/components/admin/dashboard/resource-categories/DynamicChart";
-import { StatusEnum } from "@/context/enum";
+import { ChartTypesEnum, StatusEnum } from "@/context/enum";
 
 export interface IFbTable extends IDefaultAPI {
   userId: string;
@@ -11,8 +10,7 @@ export interface IFbTable extends IDefaultAPI {
   name: string;
   slug: string;
   note: string;
-  // chartType: ChartTypesEnum | null;
-  chartType: TChartType | null;
+  chartType: ChartTypesEnum;
   source: string;
   data: any;
   user?: IUser;

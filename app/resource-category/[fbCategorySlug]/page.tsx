@@ -18,7 +18,7 @@ import DynamicChart from "@/components/admin/dashboard/resource-categories/Dynam
 import { IconChevronsRight, IconPlus } from "@tabler/icons-react";
 import { ROUTES } from "@/constants";
 import { createPath } from "@/utils/route";
-import { StatusEnum } from "@/context/enum";
+import { ChartTypesEnum, StatusEnum } from "@/context/enum";
 
 export default function CategoryPage() {
   const { fbCategorySlug } = useParams();
@@ -88,7 +88,8 @@ export default function CategoryPage() {
                           <Text fw="bold">Note:</Text> {row.note}
                         </Text>
                       )}
-                      {row.data[0].rows.length ? (
+                      {row.chartType !== ChartTypesEnum.TABLE &&
+                      row.data[0].rows.length ? (
                         <DynamicChart tableData={row.data[0]} />
                       ) : (
                         ""

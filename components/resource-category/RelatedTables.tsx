@@ -1,9 +1,8 @@
 "use client";
 import { useFbTable } from "@/hooks";
 import { IFbCategory, IFbTable } from "@/types";
-import { Button, Card, SimpleGrid, Text, Title } from "@mantine/core";
+import { Button, Card, SimpleGrid, Space, Text, Title } from "@mantine/core";
 import React, { useEffect } from "react";
-import DynamicChart from "../admin/dashboard/resource-categories/DynamicChart";
 import { IconChevronsRight } from "@tabler/icons-react";
 import { createPath, ROUTES } from "@/utils/route";
 
@@ -21,18 +20,43 @@ const RelatedTables = ({ category }: { category: IFbCategory }) => {
         Related tables
       </Title>
       <SimpleGrid
-        cols={{ base: 1, sm: 2, lg: 2 }}
+        cols={{ base: 1, sm: 2, lg: 4 }}
         spacing={{ base: 10, sm: "xl" }}
         verticalSpacing={{ base: "md", sm: "xl" }}
       >
         {data
           ?.filter(({ data }) => data[0].rows.length > 0)
           .map((row, idx) => (
-            <Card shadow="md" withBorder key={idx}>
-              <DynamicChart tableData={row.data[0]} />
-              <Text size="sm" mt={10}>
+            <Card
+              shadow="md"
+              withBorder
+              key={idx}
+              radius={20}
+              className="relative"
+            >
+              {/* <div className="p-2">
+                {row.chartType !== ChartTypesEnum.TABLE ? (
+                  <Image
+                    src="/bar-chart.png"
+                    alt=""
+                    width={150}
+                    height={150}
+                    className="mx-auto"
+                  />
+                ) : (
+                  <Image
+                    src="/table.png"
+                    alt=""
+                    width={150}
+                    height={150}
+                    className="mx-auto"
+                  />
+                )}
+              </div> */}
+              <Text size="sm" className="">
                 {row.name}
               </Text>
+              <Space h={30} />
               <Button
                 component="a"
                 href={createPath({
@@ -42,8 +66,9 @@ const RelatedTables = ({ category }: { category: IFbCategory }) => {
                     fbTableSlug: row.slug as string,
                   },
                 })}
-                className="ml-auto w-[130px] mt-6 flex flex-wrap justify-end"
+                className="ml-auto w-[130px] mt-6 flex flex-wrap justify-end absolute bottom-2 right-2"
                 variant="subtle"
+                size="xs"
                 leftSection={<IconChevronsRight />}
               >
                 See more

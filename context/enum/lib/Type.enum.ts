@@ -1,5 +1,6 @@
 export enum ChartTypesEnum {
-  BAR = 'Bar',
-  PIE = 'Pie',
-  LINE = 'Line',
+  BAR = "Bar",
+  PIE = "Pie",
+  LINE = "Line",
+  TABLE = "Table",
 }

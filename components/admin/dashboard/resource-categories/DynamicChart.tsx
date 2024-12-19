@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Bar } from 'react-chartjs-2';
+import React, { useMemo } from "react";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,7 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -19,7 +19,7 @@ ChartJS.register(
   Legend
 );
 
-export type TChartType = 'bar' | 'line' | 'pie';
+export type TChartType = "bar" | "line" | "pie" | "table";
 
 const DynamicChart = ({ tableData }: { tableData: any }) => {
   const xLabels = useMemo(
@@ -45,7 +45,7 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
   };
 
   return (
-    <div style={{ width: '100%', height: 'auto' }} className="">
+    <div style={{ width: "100%", height: "auto" }} className="">
       <Bar data={data} />
     </div>
   );
@@ -53,25 +53,25 @@ const DynamicChart = ({ tableData }: { tableData: any }) => {
 
 const getColor = (index: number) => {
   const colors = [
-    'rgba(0, 123, 255, 0.8',
-    'rgba(255, 152, 0, 0.8',
-    'rgba(0, 150, 136, 0.8',
-    'rgba(255, 193, 7, 0.8',
-    'rgba(156, 39, 176, 0.8',
-    'rgba(0, 188, 212, 0.8',
-    'rgba(3, 169, 244, 0.8',
-    'rgba(139, 195, 74, 0.8',
-    'rgba(244, 67, 54, 0.8',
-    'rgba(103, 58, 183, 0.8',
-    'rgba(255, 99, 132, 0.8',
-    'rgba(255, 159, 64, 0.8',
-    'rgba(75, 192, 192, 0.8',
-    'rgba(54, 162, 235, 0.8',
-    'rgba(153, 102, 255, 0.8',
-    'rgba(255, 205, 86, 0.8',
-    'rgba(255, 87, 51, 0.8',
-    'rgba(39, 174, 96, 0.8',
-    'rgba(233, 30, 99, 0.8',
+    "rgba(0, 123, 255, 0.8",
+    "rgba(255, 152, 0, 0.8",
+    "rgba(0, 150, 136, 0.8",
+    "rgba(255, 193, 7, 0.8",
+    "rgba(156, 39, 176, 0.8",
+    "rgba(0, 188, 212, 0.8",
+    "rgba(3, 169, 244, 0.8",
+    "rgba(139, 195, 74, 0.8",
+    "rgba(244, 67, 54, 0.8",
+    "rgba(103, 58, 183, 0.8",
+    "rgba(255, 99, 132, 0.8",
+    "rgba(255, 159, 64, 0.8",
+    "rgba(75, 192, 192, 0.8",
+    "rgba(54, 162, 235, 0.8",
+    "rgba(153, 102, 255, 0.8",
+    "rgba(255, 205, 86, 0.8",
+    "rgba(255, 87, 51, 0.8",
+    "rgba(39, 174, 96, 0.8",
+    "rgba(233, 30, 99, 0.8",
   ];
   return colors[index % colors.length];
 };
