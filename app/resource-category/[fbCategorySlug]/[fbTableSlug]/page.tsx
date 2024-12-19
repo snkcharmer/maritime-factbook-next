@@ -113,7 +113,6 @@ const TableViewer = () => {
 
       if (!mergedTable.length) {
         setTableSyncing(false);
-        Toastify({ message: "No tables to sync.", type: "info" });
         return;
       }
 
