@@ -7,14 +7,13 @@ import {
   HoverCard,
   Stack,
   Text,
-  ThemeIcon,
   UnstyledButton,
   useMantineTheme,
 } from "@mantine/core";
 import { createStyles } from "@mantine/emotion";
 import Link from "next/link";
 import Image from "next/image";
-import { IconChevronDown, IconDatabase } from "@tabler/icons-react";
+import { IconChevronDown } from "@tabler/icons-react";
 import { ROUTES } from "@/constants";
 import { useFbCategory } from "@/hooks";
 import { TFbCategoryResponse } from "@/types";
